@@ -1,4 +1,6 @@
-# Link Guardian
+# Grilled Phish
+
+*Blocks fake look-alike websites before you click.*
 
 A browser extension that catches **look-alike scam links**, like `paypa1.com`, `pаypal.com` (Cyrillic а),
 `arnazon.com`, `paypal.com.secure-verify.xyz` and `poste-italiane-verifica.com`, so you don't have to read domains yourself.
@@ -20,12 +22,12 @@ A browser extension that catches **look-alike scam links**, like `paypa1.com`, `
 **Chrome / Edge / Brave**
 1. Open `chrome://extensions`
 2. Turn on **Developer mode** (top right)
-3. Click **Load unpacked** and pick this `link-guardian` folder
+3. Click **Load unpacked** and pick this `grilled-phish` folder
 
 **Firefox**
 1. Open `about:debugging#/runtime/this-firefox`
 2. Click **Load Temporary Add-on…** and pick `manifest.json`
-3. In `about:addons` → Link Guardian → Permissions, allow access to all websites
+3. In `about:addons` → Grilled Phish → Permissions, allow access to all websites
    (Firefox asks for this separately). Temporary add-ons are removed when Firefox restarts.
    For a permanent install it has to be signed through addons.mozilla.org.
 
@@ -103,6 +105,40 @@ node --test test/detector.test.js
 
 `test/demo.html` is a page full of fake links for trying the extension by hand. Serve it with
 `python3 -m http.server` and open `http://localhost:8000/test/demo.html`.
+
+## Security
+
+A phishing page is hostile code running in the same page as the extension, so the extension is built to resist it.
+`test/attacks.html` is a hostile test page that tries each attack below. All of them are blocked in Chromium:
+
+| Attack by a hostile page | Defence |
+|---|---|
+| Removing the "blocked" mark from a fake link | links are re-checked at the moment of the click, never trusting page-editable markers |
+| Swapping a link's address during the click | the Navigation API cancels the navigation (Chrome/Edge); on Firefox the address change is caught while the click is still being handled |
+| Script redirects / form posts to a fake site | the Navigation API catches them in Chrome/Edge |
+| Silencing the password lock (swallowing key/focus events) | the extension starts before any page script (`document_start`), so its handlers always run first |
+| Deleting the red warning | it's re-added at once; after the second attempt a native browser alert appears, which pages can't remove |
+| Covering the dialog with fake buttons | the dialog is a modal in the browser's top layer, and page pop-ups and fullscreen are closed while it's open |
+| Clicking blocked links from page scripts | script-generated clicks are silently ignored |
+| Detecting that the visitor has the extension | nothing is added to a page unless it contains something dangerous |
+
+Other measures:
+- No `innerHTML`, `eval` or remote code. All text, including attacker-controlled domain names, is inserted as plain text.
+- Web pages can't message the extension. Settings messages are accepted only from the extension's own pages.
+- Minimal permissions: `storage` and `activeTab`. Content scripts run on all sites, but the extension has no extra host permissions.
+- List downloads must stay on HTTPS (redirects included) and pass validation before use.
+- The GitHub workflow pins third-party actions to exact commits and only the update job can write to the repo.
+- "Open anyway" and "I trust this site" warn about phone/chat scams, because scammers coach victims through them.
+
+**Remaining risks (by design or not yet covered):**
+- **Anything inside a web page can be imitated.** A scam page could draw its own fake "✓ verified by Grilled Phish" box.
+  Grilled Phish never shows "safe" messages inside pages. The trustworthy signal is the **toolbar badge**
+  (red `!` = fake, green `✓` = the real site), which the browser draws and pages can't touch.
+- On **Firefox**, script redirects to a fake site aren't stopped before they happen (no Navigation API). The fake page
+  is still recognised on arrival: red banner and locked password fields.
+- Password/card fields built without real form inputs (custom widgets, canvas) aren't locked. The banner is still shown.
+- On pages where something is blocked, the page can tell the extension is installed.
+- Privacy: with the age check on, registries see the domain names being checked (see above).
 
 ## Credits
 

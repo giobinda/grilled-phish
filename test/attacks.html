@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Grilled Phish - hostile page test</title>
+<script>
+  // These run BEFORE the extension's content script (page scripts in <head>).
+  window.__attackLog = [];
+  // Attack 2: swap a harmless link to a phishing URL at click time.
+  window.addEventListener('click', (e) => {
+    const a = e.target.closest && e.target.closest('#swap');
+    if (a) { a.href = 'https://paypa1.com/steal'; window.__attackLog.push('swapped'); }
+  }, true);
+  // Attack 3: silence the password lock by stopping focus/key events first.
+  for (const t of ['focusin', 'keydown']) {
+    window.addEventListener(t, (e) => {
+      if (e.target && e.target.type === 'password') e.stopImmediatePropagation();
+    }, true);
+  }
+</script>
+</head>
+<body>
+<h1>Hostile page</h1>
+<p><a id="unmark" href="https://paypa1.com/login">fake link that the page will un-mark</a></p>
+<p><a id="swap" href="https://wikipedia.org/">harmless-looking link that is swapped on click</a></p>
+<p><a id="lateswap" href="https://wikipedia.org/">link swapped by its own click handler (after our check)</a></p>
+<p><a id="synthetic" href="https://paypa1.com/auto">fake link the page clicks by itself</a></p>
+<p><input id="pw" type="password" placeholder="password"></p>
+<script>
+  // Attack 2b: swap in a handler on the link itself, which runs after the extension's check.
+  document.getElementById('lateswap').addEventListener('click', function () { this.href = 'https://paypa1.com/late'; });
+  setTimeout(() => {
+    // Attack 1: remove the extension's "blocked" marker and badge.
+    for (const el of document.querySelectorAll('[data-grilledphish]')) {
+      el.removeAttribute('data-grilledphish'); window.__attackLog.push('unmarked');
+    }
+    document.querySelectorAll('[data-grilledphish-badge]').forEach((b) => b.remove());
+    // Attack 4: delete everything the extension injected at the top level (banner).
+    for (const el of [...document.documentElement.children]) {
+      if (el !== document.head && el !== document.body) { el.remove(); window.__attackLog.push('removed-banner'); }
+    }
+    // Attack 5: detect that the visitor has the extension.
+    window.__detected = !!document.getElementById('grilledphish-style');
+  }, 1500);
+</script>
+</body>
+</html>

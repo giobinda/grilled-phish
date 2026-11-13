@@ -1,19 +1,28 @@
 /*
- * Link Guardian - content script.
+ * Grilled Phish - content script.
  *  - Puts a red box around dangerous links and disables them.
  *  - Clicking one opens a big warning; opening it anyway needs a checkbox
  *    plus a 5 second wait.
  *  - If the current page itself is a fake, shows a red banner and locks
  *    password / card fields behind the same warning.
+ *
+ * Security notes (a phishing page is hostile code running next to us):
+ *  - Runs at document_start, so our event listeners are registered before any
+ *    page script and cannot be silenced with stopImmediatePropagation().
+ *  - Never trusts DOM markers the page can edit: links are re-checked at click time.
+ *  - Our UI lives in closed shadow roots; the dialog is a modal <dialog> in the
+ *    browser's top layer; removed banners/dialogs are re-attached.
+ *  - Nothing is added to ordinary pages, so they cannot detect the extension.
+ *  - The trustworthy signal is the toolbar badge, which pages cannot fake.
  */
 (() => {
   'use strict';
-  if (window.__linkGuardianLoaded) return;
-  window.__linkGuardianLoaded = true;
+  if (window.__grilledPhishLoaded) return;
+  window.__grilledPhishLoaded = true;
 
-  const D = globalThis.LinkGuardDetector;
-  const ATTR = 'data-linkguard';
-  const BADGE_ATTR = 'data-linkguard-badge';
+  const D = globalThis.GrilledPhishDetector;
+  const ATTR = 'data-grilledphish';
+  const BADGE_ATTR = 'data-grilledphish-badge';
   const UNLOCK_SECONDS = 5;
 
   let trusted = [];
@@ -25,6 +34,17 @@
   let agePending = new Set();
   let ageTimer = null;
   let pageBannerShown = false;
+  let pageDanger = null;          // analysis result when the current page is a fake
+  let ready = false;              // settings loaded
+  let styleNode = null;
+  let bannerHost = null;
+  let bannerRemovals = 0;
+  let alerted = false;
+  let dialogKeepAlive = null;     // re-attaches the open dialog if the page removes it
+  let lastReported = null;
+  let activeClick = null;         // { event, link } while a click on a not-blocked link is being dispatched
+  let allowNavigationTo = null;   // set when the user chose "Open anyway"
+  let navigationSeen = false;     // the Navigation API intercepted something (Chrome/Edge)
   const resultCache = new Map();
   const blocked = new WeakMap(); // <a> -> analysis result
   let dialogOpen = false;
@@ -57,12 +77,14 @@
     }
   `;
 
+  // Added only when something is blocked, so ordinary pages can't detect us.
   function injectPageStyle() {
-    if (document.getElementById('linkguard-style')) return;
-    const style = document.createElement('style');
-    style.id = 'linkguard-style';
-    style.textContent = PAGE_CSS;
-    (document.head || document.documentElement).appendChild(style);
+    if (styleNode?.isConnected) return;
+    if (!styleNode) {
+      styleNode = document.createElement('style');
+      styleNode.textContent = PAGE_CSS;
+    }
+    (document.head || document.documentElement).appendChild(styleNode);
   }
 
   // ---------------------------------------------------------------- analysis
@@ -155,10 +177,15 @@
     if (changed) refresh();
   }
 
+  let refreshTimer = null;
   function refresh() {
-    resultCache.clear();
-    checkPage();
-    scan(document);
+    if (refreshTimer) return;
+    refreshTimer = setTimeout(() => {
+      refreshTimer = null;
+      resultCache.clear();
+      checkPage();
+      scan(document);
+    }, 100);
   }
 
   function processLink(a) {
@@ -172,10 +199,11 @@
 
   function block(a, r) {
     blocked.set(a, r);
+    injectPageStyle();
     if (a.getAttribute(ATTR) === 'blocked') return;
     a.setAttribute(ATTR, 'blocked');
     a.setAttribute('aria-disabled', 'true');
-    a.setAttribute('title', 'Blocked by Link Guardian: this link is probably a scam');
+    a.setAttribute('title', 'Blocked by Grilled Phish: this link is probably a scam');
     const badge = document.createElement('span');
     badge.setAttribute(BADGE_ATTR, '');
     badge.setAttribute('role', 'button');
@@ -186,7 +214,7 @@
       openWarning(blocked.get(a), { kind: 'link', href: a.href, target: a.target });
     });
     a.after(badge);
-    a.__linkGuardBadge = badge;
+    a.__grilledPhishBadge = badge;
   }
 
   function unblock(a) {
@@ -194,7 +222,7 @@
     a.removeAttribute(ATTR);
     a.removeAttribute('aria-disabled');
     a.removeAttribute('title');
-    a.__linkGuardBadge?.remove();
+    a.__grilledPhishBadge?.remove();
   }
 
   function scan(rootNode) {
@@ -209,11 +237,20 @@
   }
 
   // ---------------------------------------------------------------- blocking clicks
-  function findBlockedLink(e) {
-    for (const el of e.composedPath()) {
-      if (el instanceof Element && el.getAttribute(ATTR) === 'blocked') return el;
+  function linkFromEvent(e) {
+    for (const n of e.composedPath()) {
+      if (n instanceof Element && n.matches('a[href], area[href]')) return n;
     }
     return null;
+  }
+
+  // Re-checks the link as it is RIGHT NOW: the page may have removed our marker
+  // or swapped the address just before the click.
+  function findBlockedLink(e) {
+    const a = linkFromEvent(e);
+    if (!a || !ready) return null;
+    processLink(a);
+    return blocked.has(a) ? a : null;
   }
 
   function stop(e) {
@@ -223,9 +260,21 @@
 
   function onActivate(e) {
     const a = findBlockedLink(e);
-    if (!a) return;
+    if (!a) {
+      // Remember the click: if the page swaps this link's address later in the
+      // same event, the MutationObserver below can still cancel it.
+      if (e.type === 'click' || e.type === 'auxclick') {
+        const link = linkFromEvent(e);
+        if (link) {
+          activeClick = { event: e, link };
+          setTimeout(() => { if (activeClick?.event === e) activeClick = null; }, 0);
+        }
+      }
+      return;
+    }
     stop(e);
-    if (e.type === 'click' || e.type === 'auxclick') {
+    // Script-generated clicks are blocked silently (no dialog spam from the page).
+    if (e.isTrusted && (e.type === 'click' || e.type === 'auxclick')) {
       openWarning(blocked.get(a), { kind: 'link', href: a.href, target: a.target });
     }
   }
@@ -235,25 +284,48 @@
     window.addEventListener(type, onActivate, true);
   }
   window.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' && findBlockedLink(e)) {
-      stop(e);
-      const a = findBlockedLink(e);
-      openWarning(blocked.get(a), { kind: 'link', href: a.href, target: a.target });
-    }
+    if (e.key !== 'Enter') return;
+    const a = findBlockedLink(e);
+    if (!a) return;
+    stop(e);
+    if (e.isTrusted) openWarning(blocked.get(a), { kind: 'link', href: a.href, target: a.target });
   }, true);
+
+  // Password / card fields on a fake page. Registered now (document_start), before
+  // any page script, so the page cannot swallow these events first.
+  const SENSITIVE = 'input[type="password"], input[autocomplete^="cc-"], input[autocomplete="one-time-code"], ' +
+    'input[name*="card" i], input[name*="cvv" i], input[name*="iban" i], input[name*="pin" i]';
+  const sensitiveField = (e) => e.composedPath().find((n) => n instanceof Element && n.matches(SENSITIVE));
+
+  window.addEventListener('focusin', (e) => {
+    if (!pageDanger || passwordsUnlocked) return;
+    const field = sensitiveField(e);
+    if (!field) return;
+    field.blur();
+    openWarning(pageDanger, { kind: 'password', field });
+  }, true);
+  for (const type of ['keydown', 'beforeinput', 'paste', 'drop']) {
+    window.addEventListener(type, (e) => {
+      if (!pageDanger || passwordsUnlocked) return;
+      const field = sensitiveField(e);
+      if (!field) return;
+      stop(e);
+      field.blur();
+      if (e.isTrusted && !dialogOpen) openWarning(pageDanger, { kind: 'password', field });
+    }, true);
+  }
 
   // ---------------------------------------------------------------- warning dialog
   const DIALOG_CSS = `
     :host { all: initial; }
-    .backdrop {
-      position: fixed; inset: 0; z-index: 2147483647;
-      background: rgba(0, 0, 0, 0.75);
-      display: flex; align-items: center; justify-content: center;
-      padding: 16px; box-sizing: border-box;
+    dialog {
+      padding: 0; border: none; background: transparent; overflow: visible;
+      width: calc(100% - 32px); max-width: 640px;
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     }
+    dialog::backdrop { background: rgba(0, 0, 0, 0.75); }
     .box {
-      background: #fff; color: #111; max-width: 640px; width: 100%;
+      background: #fff; color: #111; width: 100%;
       max-height: calc(100vh - 32px); overflow: auto;
       border: 8px solid #d40000; border-radius: 16px; padding: 28px;
       box-sizing: border-box; box-shadow: 0 20px 60px rgba(0,0,0,.5);
@@ -286,6 +358,7 @@
       background: #fff; color: #b00000; border: 2px solid #b00000; border-radius: 8px; cursor: pointer;
     }
     .anyway:disabled { color: #999; border-color: #ccc; cursor: not-allowed; }
+    .phone { font-size: 17px; color: #b00000; font-weight: 600; margin: 4px 0 12px; }
   `;
 
   // Shows the domain with foreign/look-alike characters highlighted in red.
@@ -343,10 +416,12 @@
     style.textContent = DIALOG_CSS;
     shadow.appendChild(style);
 
-    const backdrop = el('div', { class: 'backdrop' });
-    const box = el('div', { class: 'box', role: 'alertdialog', 'aria-modal': 'true', 'aria-labelledby': 'lg-title' });
-    backdrop.appendChild(box);
-    shadow.appendChild(backdrop);
+    // A modal <dialog> sits in the browser's top layer and makes the page inert,
+    // so the page can't cover it with fake buttons or click behind it.
+    const dlg = el('dialog', { 'aria-labelledby': 'lg-title' });
+    const box = el('div', { class: 'box' });
+    dlg.appendChild(box);
+    shadow.appendChild(dlg);
 
     const isPassword = action.kind === 'password';
     box.appendChild(el('h1', { id: 'lg-title' }, isPassword
@@ -384,6 +459,8 @@
     const details = el('details');
     details.appendChild(el('summary', {}, 'I know what I am doing…'));
     const risky = el('div', { class: 'risky' });
+    risky.appendChild(el('p', { class: 'phone' },
+      '☎️ If someone on the phone, in a chat or in a message is telling you to do this, it is a scam. Stop and hang up.'));
     const label = el('label');
     const check = el('input', { type: 'checkbox' });
     label.appendChild(check);
@@ -421,8 +498,10 @@
 
     const close = () => {
       clearInterval(timer);
+      clearInterval(topLayerGuard);
+      dialogKeepAlive = null;
+      try { dlg.close(); } catch { /* already closed */ }
       host.remove();
-      document.removeEventListener('keydown', onKey, true);
       dialogOpen = false;
     };
 
@@ -436,25 +515,27 @@
       }
     };
 
-    // Keep keyboard focus inside the dialog; Esc = the safe choice.
-    const onKey = (e) => {
-      if (e.key === 'Escape') { stop(e); goSafe(); return; }
-      if (e.key === 'Tab') {
-        const focusables = [safeBtn, details.querySelector('summary'),
-          ...(details.open ? [check, anyway] : [])].filter((n) => !n.disabled);
-        const idx = focusables.indexOf(shadow.activeElement);
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        const next = (idx + (e.shiftKey ? -1 : 1) + focusables.length) % focusables.length;
-        focusables[next].focus();
-      }
-    };
-    document.addEventListener('keydown', onKey, true);
-
+    // Esc = the safe choice. Clicking the dark backdrop = the safe choice.
+    dlg.addEventListener('cancel', (e) => { e.preventDefault(); goSafe(); });
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) goSafe(); });
     safeBtn.addEventListener('click', goSafe);
-    backdrop.addEventListener('click', (e) => { if (e.target === backdrop) goSafe(); });
-    anyway.addEventListener('click', () => {
-      if (anyway.disabled || !check.checked) return;
+
+    // If the page removes the dialog or puts its own popups/fullscreen above it, undo that.
+    dialogKeepAlive = () => {
+      if (!host.isConnected) document.documentElement.appendChild(host);
+      if (!dlg.open) { try { dlg.showModal(); } catch { /* not connected yet */ } }
+    };
+    const topLayerGuard = setInterval(() => {
+      try {
+        document.querySelectorAll(':popover-open').forEach((p) => p.hidePopover());
+        document.querySelectorAll('dialog:modal').forEach((d) => d.close());
+        if (document.fullscreenElement) document.exitFullscreen();
+      } catch { /* older browser */ }
+      dialogKeepAlive?.();
+    }, 250);
+
+    anyway.addEventListener('click', (e) => {
+      if (!e.isTrusted || anyway.disabled || !check.checked) return;
       close();
       if (isPassword) {
         passwordsUnlocked = true;
@@ -462,11 +543,13 @@
       } else if (action.target === '_blank') {
         window.open(action.href, '_blank', 'noopener,noreferrer');
       } else {
+        allowNavigationTo = action.href;
         window.location.assign(action.href);
       }
     });
 
     document.documentElement.appendChild(host);
+    dlg.showModal();
     safeBtn.focus();
   }
 
@@ -509,26 +592,25 @@
     });
     bar.append(msg, why, leave);
     shadow.appendChild(bar);
+    bannerHost = host;
     document.documentElement.appendChild(host);
   }
 
-  const SENSITIVE = 'input[type="password"], input[autocomplete^="cc-"], input[autocomplete="one-time-code"], ' +
-    'input[name*="card" i], input[name*="cvv" i], input[name*="iban" i], input[name*="pin" i]';
-
-  function guardSensitiveFields(r) {
-    window.addEventListener('focusin', (e) => {
-      if (passwordsUnlocked) return;
-      const field = e.composedPath().find((n) => n instanceof Element && n.matches(SENSITIVE));
-      if (!field) return;
-      field.blur();
-      openWarning(r, { kind: 'password', field });
-    }, true);
-    // Also stop typing if the field already had focus before we loaded.
-    window.addEventListener('keydown', (e) => {
-      if (passwordsUnlocked || dialogOpen) return;
-      const field = e.composedPath().find((n) => n instanceof Element && n.matches(SENSITIVE));
-      if (field) { stop(e); field.blur(); openWarning(r, { kind: 'password', field }); }
-    }, true);
+  // Called on every DOM change. A page deleting our warning is itself proof of a
+  // scam: put it back, and after the second attempt use a native alert, which
+  // the page cannot remove.
+  function guardInjected() {
+    if (bannerHost && !bannerHost.isConnected) {
+      document.documentElement.appendChild(bannerHost);
+      bannerRemovals++;
+      if (bannerRemovals >= 2 && !alerted) {
+        alerted = true;
+        setTimeout(() => alert(
+          'Grilled Phish: this website tried to hide our scam warning.\n\n' +
+          'It is almost certainly a fake. Do not type any password, code or card number. Close this page.'), 0);
+      }
+    }
+    dialogKeepAlive?.();
   }
 
   // ---------------------------------------------------------------- start
@@ -545,31 +627,71 @@
 
   // Checks the page we're on (top frame only). Called again when ages arrive.
   function checkPage() {
-    if (window.top !== window || pageBannerShown) return;
+    if (window.top !== window) return;
     pageResult = analyze(location.href, '');
     if (pageResult.verdict === 'danger') {
+      pageDanger = pageResult;
       showPageBanner(pageResult);
-      guardSensitiveFields(pageResult);
     }
+    reportVerdict(pageDanger ? 'danger' : pageResult.verdict);
   }
+
+  // Toolbar badge (red "!" / green check): drawn by the browser, so a page can't fake or hide it.
+  function reportVerdict(verdict) {
+    if (verdict === lastReported) return;
+    lastReported = verdict;
+    try { chrome.runtime.sendMessage({ type: 'pageVerdict', verdict }).catch(() => {}); } catch { /* reloaded */ }
+  }
+
+  // Last line of defence for this page: every navigation it attempts (a link whose
+  // address was swapped after our check, a script redirect, a form submission)
+  // is announced here first and can be cancelled. Chrome/Edge (Navigation API).
+  if (globalThis.navigation?.addEventListener) {
+    navigation.addEventListener('navigate', (e) => {
+      if (!ready || !e.cancelable || e.hashChange || e.downloadRequest != null) return;
+      const url = e.destination?.url;
+      if (!url || url === allowNavigationTo) return;
+      const r = analyze(url, '');
+      if (r.verdict !== 'danger') return;
+      e.preventDefault();
+      navigationSeen = true;
+      openWarning(r, { kind: 'link', href: url, target: '' });
+    });
+  }
+
+  // Firefox fallback: the page changed the clicked link's address during the click.
+  function checkActiveClick() {
+    if (!activeClick) return;
+    const { event, link } = activeClick;
+    processLink(link);
+    if (!blocked.has(link)) return;
+    activeClick = null;
+    event.preventDefault();
+    if (event.isTrusted && !navigationSeen) openWarning(blocked.get(link), { kind: 'link', href: link.href, target: link.target });
+  }
+
+  // Observing starts immediately (document_start) so removals of our UI are seen
+  // at once; link checks wait until the settings are loaded.
+  new MutationObserver((mutations) => {
+    guardInjected();
+    if (!ready) return;
+    for (const m of mutations) {
+      if (m.type === 'attributes') {
+        if (m.target.matches?.('a[href], area[href]')) processLink(m.target);
+      } else {
+        m.addedNodes.forEach(scan);
+        // A new <base> element changes where every relative link points.
+        if ([...m.addedNodes].some((n) => n.nodeName === 'BASE')) rescanAll();
+      }
+    }
+    checkActiveClick();
+  }).observe(document, { childList: true, subtree: true, attributes: true, attributeFilter: ['href'] });
 
   async function start() {
     await loadSettings();
-    injectPageStyle();
+    ready = true;
     checkPage();
     scan(document);
-
-    new MutationObserver((mutations) => {
-      for (const m of mutations) {
-        if (m.type === 'attributes') {
-          if (m.target.matches?.('a[href], area[href]')) processLink(m.target);
-        } else {
-          m.addedNodes.forEach(scan);
-        }
-      }
-    }).observe(document.documentElement, {
-      childList: true, subtree: true, attributes: true, attributeFilter: ['href'],
-    });
 
     chrome.storage.onChanged.addListener((changes, area) => {
       if (area !== 'sync') return;

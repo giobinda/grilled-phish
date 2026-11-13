@@ -1,5 +1,5 @@
 (() => {
-  const D = globalThis.LinkGuardDetector;
+  const D = globalThis.GrilledPhishDetector;
   const list = document.getElementById('list');
   const msg = document.getElementById('msg');
   const input = document.getElementById('site');

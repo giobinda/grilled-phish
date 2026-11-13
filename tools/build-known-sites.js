@@ -8,7 +8,7 @@
  * Usage:  node tools/build-known-sites.js [--top 100000] [--list-id 947W2]
  * No dependencies; needs Node 18+.
  *
- * Entries that Link Guardian's own brand rules flag as fakes (popular typo-
+ * Entries that Grilled Phish's own brand rules flag as fakes (popular typo-
  * squatters such as instragram.com) are removed, so they can never count as
  * "well-known". They are listed in data/known-sites-dropped.txt for review.
  */
@@ -70,7 +70,7 @@ async function fetchRetry(url, tries = 5) {
   if (kept.length < 1000) throw new Error(`Only ${kept.length} domains - refusing to write a broken list`);
 
   const header = [
-    '# Link Guardian - well-known websites, most visited first.',
+    '# Grilled Phish - well-known websites, most visited first.',
     `# Source: Tranco list ${listId} (https://tranco-list.eu/list/${listId})${created ? ', created ' + created : ''}`,
     `# Built: ${new Date().toISOString().slice(0, 10)}, ${kept.length} domains. "Known" means popular, not safe.`,
   ];

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Link Guardian",
-  "version": "0.3.0",
+  "name": "Grilled Phish",
+  "version": "0.4.0",
   "description": "Puts a red box around fake look-alike links (paypa1.com, pаypal.com...) and blocks them until you really confirm.",
   "permissions": [
     "storage",
@@ -23,12 +23,12 @@
         "lib/detector.js",
         "content/content.js"
       ],
-      "run_at": "document_end",
+      "run_at": "document_start",
       "all_frames": true
     }
   ],
   "action": {
-    "default_title": "Link Guardian",
+    "default_title": "Grilled Phish",
     "default_popup": "popup/popup.html"
   },
   "options_ui": {
@@ -37,7 +37,7 @@
   },
   "browser_specific_settings": {
     "gecko": {
-      "id": "link-guardian@local",
+      "id": "grilled-phish@local",
       "strict_min_version": "115.0"
     }
   }

@@ -1,5 +1,5 @@
 /*
- * Link Guardian - background worker.
+ * Grilled Phish - background worker.
  * Looks up when a domain was registered, using RDAP: the official public
  * registration database run by each domain ending's registry (.com ->
  * Verisign, .xyz -> CentralNic...). The IANA bootstrap file says which
@@ -19,8 +19,8 @@
 'use strict';
 
 // Chrome runs this file as a service worker; Firefox loads detector.js first via manifest.
-if (typeof importScripts === 'function' && !globalThis.LinkGuardDetector) importScripts('lib/detector.js');
-const D = globalThis.LinkGuardDetector;
+if (typeof importScripts === 'function' && !globalThis.GrilledPhishDetector) importScripts('lib/detector.js');
+const D = globalThis.GrilledPhishDetector;
 
 const BOOTSTRAP_URL = 'https://data.iana.org/rdap/dns.json';
 const DAY = 86400000;
@@ -215,6 +215,7 @@ async function maybeUpdateList(force) {
     const res = await fetch(knownSitesUrl, { signal: ctrl.signal, credentials: 'omit', cache: 'no-cache' });
     clearTimeout(t);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    if (!res.url.startsWith('https://')) throw new Error('redirected to a non-https address');
     const text = await res.text();
     parseList(text); // validate before storing
     await chrome.storage.local.set({ knownSitesDownload: { text, url: knownSitesUrl, fetchedAt: Date.now() } });
@@ -228,7 +229,34 @@ async function maybeUpdateList(force) {
   }
 }
 
-chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
+// ---------------------------------------------------------------- toolbar badge
+// Drawn by the browser itself, so a phishing page can neither fake nor hide it.
+const BADGES = {
+  danger: { text: '!', color: '#d40000', title: 'Grilled Phish: FAKE or dangerous website' },
+  trusted: { text: '✓', color: '#1a7f37', title: 'Grilled Phish: the real website' },
+};
+chrome.tabs.onUpdated.addListener((tabId, change) => {
+  if (change.status === 'loading') {
+    chrome.action.setBadgeText({ tabId, text: '' }).catch(() => {});
+    chrome.action.setTitle({ tabId, title: 'Grilled Phish' }).catch(() => {});
+  }
+});
+
+chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+  // Settings messages only from our own pages (options/popup), never from content
+  // scripts, which run inside web pages.
+  const fromExtensionPage = sender.id === chrome.runtime.id &&
+    typeof sender.url === 'string' && sender.url.startsWith(chrome.runtime.getURL(''));
+
+  if (msg?.type === 'pageVerdict') {
+    const tabId = sender.tab?.id;
+    if (tabId == null || sender.frameId !== 0) return false;
+    const b = BADGES[msg.verdict] || { text: '', color: '#000000', title: 'Grilled Phish' };
+    chrome.action.setBadgeText({ tabId, text: b.text }).catch(() => {});
+    chrome.action.setTitle({ tabId, title: b.title }).catch(() => {});
+    if (b.text) chrome.action.setBadgeBackgroundColor({ tabId, color: b.color }).catch(() => {});
+    return false;
+  }
   if (msg?.type === 'domainInfo' && Array.isArray(msg.hosts)) {
     getIndex().then((index) => {
       const out = {};
@@ -241,6 +269,7 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
     return true;
   }
   if (msg?.type === 'knownSitesStatus' || msg?.type === 'knownSitesUpdate') {
+    if (!fromExtensionPage) return false;
     (async () => {
       if (msg.type === 'knownSitesUpdate') {
         const { knownSitesUrl = '' } = await chrome.storage.sync.get({ knownSitesUrl: '' });

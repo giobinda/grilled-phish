@@ -1,5 +1,5 @@
 (async () => {
-  const D = globalThis.LinkGuardDetector;
+  const D = globalThis.GrilledPhishDetector;
   const $ = (id) => document.getElementById(id);
 
   $('settings').addEventListener('click', () => chrome.runtime.openOptionsPage());
@@ -75,7 +75,15 @@
     $('trust').hidden = false;
   }
 
+  // Two steps: scammers on the phone ask victims to "mark the site as safe".
+  let armed = false;
   $('trust').addEventListener('click', async () => {
+    if (!armed) {
+      armed = true;
+      $('trustWarn').hidden = false;
+      $('trust').textContent = 'Yes, I have used this site for years';
+      return;
+    }
     const list = new Set(trusted);
     list.add(r.registrable);
     await chrome.storage.sync.set({ trusted: [...list].sort() });
