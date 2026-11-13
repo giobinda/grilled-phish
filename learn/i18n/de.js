@@ -66,6 +66,16 @@ GP_LEARN_I18N.de = {
     '<strong>Melden Sie es</strong> (siehe unten). So wird die gefälschte Website schneller für alle abgeschaltet.',
   ],
 
+  neverH: '8. Grilled Phish wird Sie niemals kontaktieren',
+  never: [
+    '<strong>Wir sammeln niemals Ihre Daten.</strong> Es gibt kein Konto und keinen Grilled-Phish-Server: Nichts über Sie oder die Websites, die Sie besuchen, gelangt jemals zu uns.',
+    '<strong>Wir schreiben Ihnen nie und rufen Sie nie an.</strong> Keine E-Mails, SMS, Chats oder Anrufe. Wir fragen nie nach Passwörtern, Codes, Geld oder Zugriff auf Ihren Computer.',
+    '<strong>Wir schicken Ihnen niemals Links.</strong> Grilled Phish zeigt Links nur innerhalb der Erweiterung selbst.',
+    '<strong>Niemand von Grilled Phish wird Sie jemals bitten, es auszuschalten, zu entfernen oder eine Website als vertrauenswürdig zu markieren.</strong>',
+  ],
+  neverScam: 'Wenn sich jemand bei Ihnen meldet und behauptet, von Grilled Phish zu sein, ist es Betrug.',
+  neverSite: 'Unsere einzige Website:',
+
   practiceH: 'Üben',
   practice: 'Sehen Sie sich 8 echt wirkende E-Mails an und entscheiden Sie, welche Betrug sind. Kostenlos, ohne Anmeldung.',
 

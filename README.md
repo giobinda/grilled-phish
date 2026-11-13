@@ -147,6 +147,26 @@ values, and add the code to `LANGS` in `learn/learn.js`.
 
 **The translations were written by an AI and have not yet been reviewed by native speakers.**
 
+## Grilled Phish will never contact you
+
+Scammers like to pretend to be the security tool itself ("Grilled Phish support here, please
+turn it off / mark this site as safe / install this update"). So, in every language, the settings
+page, the popup and the guide say plainly:
+
+- **We never collect your data.** There is no account and no Grilled Phish server; nothing about
+  you or the websites you visit reaches us. (The age check asks the official registry about a
+  site's *name*, and list updates are downloaded from this repository; see Privacy.)
+- **We never write to you or call you**: no emails, texts, chats or phone calls, and we never ask
+  for passwords, codes, money or remote access.
+- **We never send links.** Links are shown only inside the extension itself.
+- **Nobody from Grilled Phish will ever ask you to turn it off, remove it or trust a website.**
+- **Our only website is https://github.com/giobinda/grilled-phish.** Anyone else claiming to be
+  us is a scammer.
+
+`test/links.test.js` enforces the "no links" promise: every web address in the shipped extension
+must be on an approved list (this repository, the official registry directory, and the official
+sources in the guide), and extension pages may not load remote scripts, frames or forms.
+
 ## Privacy (age check)
 
 To find a site's age, `background.js` sends **only the domain name** (`best-deals.shop`, never the full address)

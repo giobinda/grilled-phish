@@ -66,6 +66,16 @@ GP_LEARN_I18N.en = {
     '<strong>Report it</strong> (see below). It helps get the fake website closed for everyone.',
   ],
 
+  neverH: '8. Grilled Phish will never contact you',
+  never: [
+    '<strong>We never collect your data.</strong> There is no account and no Grilled Phish server: nothing about you or the websites you visit ever reaches us.',
+    '<strong>We never write to you or call you.</strong> No emails, text messages, chats or phone calls. We never ask for passwords, codes, money or access to your computer.',
+    '<strong>We never send you links.</strong> Grilled Phish only shows links inside the extension itself.',
+    '<strong>Nobody from Grilled Phish will ever ask you to turn it off, remove it or mark a website as trusted.</strong>',
+  ],
+  neverScam: 'If someone contacts you saying they are from Grilled Phish, it is a scam.',
+  neverSite: 'Our only website:',
+
   practiceH: 'Practice',
   practice: 'look at 8 real-looking emails and decide which ones are scams. Free, no account needed.',
 

@@ -39,6 +39,11 @@ mark { background: var(--mark); color: #fff; border-radius: 4px; padding: 0 2px;
 .rules { padding-inline-start: 28px; }
 .rules li { margin: 12px 0; }
 .note { padding: 14px 16px; border-inline-start: 6px solid var(--bad); background: var(--card); border-radius: 6px; }
+.never { list-style: none; padding: 0; }
+.never li { margin: 10px 0; padding-inline-start: 34px; position: relative; }
+.never li::before { content: '🚫'; position: absolute; inset-inline-start: 0; }
+.official { font-size: 20px; }
+.official code { font-size: 20px; }
 .links { list-style: none; padding: 0; }
 .links li { padding: 14px 16px; margin: 10px 0; background: var(--card); border: 2px solid var(--line); border-radius: 12px; }
 .links a { font-weight: 700; }

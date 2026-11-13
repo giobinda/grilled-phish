@@ -319,5 +319,26 @@
   },
   "optCouldNot": {
     "message": "⚠ Tidak dapat memperbarui: $1"
+  },
+  "aboutH": {
+    "message": "🛡️ Grilled Phish tidak akan pernah menghubungi Anda"
+  },
+  "aboutData": {
+    "message": "Kami tidak pernah mengumpulkan data Anda. Tidak ada akun dan tidak ada server Grilled Phish: tidak ada apa pun tentang Anda atau situs yang Anda kunjungi yang sampai ke kami."
+  },
+  "aboutWrite": {
+    "message": "Kami tidak pernah mengirimi Anda pesan atau menelepon. Tidak ada email, SMS, chat, atau panggilan. Kami tidak pernah meminta kata sandi, kode, uang, atau akses ke komputer Anda."
+  },
+  "aboutLinks": {
+    "message": "Kami tidak pernah mengirimi Anda tautan. Grilled Phish hanya menampilkan tautan di dalam ekstensi itu sendiri."
+  },
+  "aboutOff": {
+    "message": "Tidak ada seorang pun dari Grilled Phish yang akan meminta Anda mematikan, menghapus, atau menandai situs sebagai tepercaya."
+  },
+  "aboutScam": {
+    "message": "Jika seseorang menghubungi Anda dan mengaku dari Grilled Phish, itu penipuan."
+  },
+  "aboutSite": {
+    "message": "Satu-satunya situs kami:"
   }
 }

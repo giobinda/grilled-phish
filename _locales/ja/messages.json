@@ -319,5 +319,26 @@
   },
   "optCouldNot": {
     "message": "⚠ 更新できませんでした：$1"
+  },
+  "aboutH": {
+    "message": "🛡️ Grilled Phish があなたに連絡することはありません"
+  },
+  "aboutData": {
+    "message": "あなたのデータを集めることはありません。アカウントも Grilled Phish のサーバーもないので、あなたのことや見ているサイトの情報が私たちに届くことはありません。"
+  },
+  "aboutWrite": {
+    "message": "メールや電話をすることはありません。メール、SMS、チャット、電話はいっさいしません。パスワード、認証コード、お金、パソコンへのアクセスを求めることもありません。"
+  },
+  "aboutLinks": {
+    "message": "リンクを送ることはありません。Grilled Phish がリンクを表示するのは、この拡張機能の中だけです。"
+  },
+  "aboutOff": {
+    "message": "Grilled Phish の関係者が、オフにする、削除する、サイトを信頼済みにする、といったことを頼むことはありません。"
+  },
+  "aboutScam": {
+    "message": "Grilled Phish を名乗って連絡してくる人は、詐欺師です。"
+  },
+  "aboutSite": {
+    "message": "私たちの唯一のサイト："
   }
 }

@@ -66,6 +66,16 @@ GP_LEARN_I18N.fr = {
     '<strong>Signalez-le</strong> (voir plus bas). Cela aide à faire fermer le faux site pour tout le monde.',
   ],
 
+  neverH: '8. Grilled Phish ne vous contactera jamais',
+  never: [
+    '<strong>Nous ne collectons jamais vos données.</strong> Il n’y a ni compte ni serveur Grilled Phish : rien sur vous ni sur les sites que vous visitez ne nous parvient jamais.',
+    '<strong>Nous ne vous écrivons et ne vous appelons jamais.</strong> Ni e-mail, ni SMS, ni discussion, ni appel. Nous ne demandons jamais de mot de passe, de code, d’argent ni l’accès à votre ordinateur.',
+    '<strong>Nous ne vous envoyons jamais de liens.</strong> Grilled Phish n’affiche des liens qu’à l’intérieur de l’extension elle-même.',
+    '<strong>Personne de Grilled Phish ne vous demandera jamais de le désactiver, de le supprimer ou de marquer un site comme fiable.</strong>',
+  ],
+  neverScam: 'Si quelqu’un vous contacte en disant venir de Grilled Phish, c’est une arnaque.',
+  neverSite: 'Notre seul site :',
+
   practiceH: 'Entraînez-vous',
   practice: 'regardez 8 e-mails réalistes et décidez lesquels sont des arnaques. Gratuit, sans inscription.',
 

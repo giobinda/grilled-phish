@@ -319,5 +319,26 @@
   },
   "optCouldNot": {
     "message": "⚠ Aktualisierung fehlgeschlagen: $1"
+  },
+  "aboutH": {
+    "message": "🛡️ Grilled Phish wird Sie niemals kontaktieren"
+  },
+  "aboutData": {
+    "message": "Wir sammeln niemals Ihre Daten. Es gibt kein Konto und keinen Grilled-Phish-Server: Nichts über Sie oder die Websites, die Sie besuchen, gelangt jemals zu uns."
+  },
+  "aboutWrite": {
+    "message": "Wir schreiben Ihnen nie und rufen Sie nie an. Keine E-Mails, SMS, Chats oder Anrufe. Wir fragen nie nach Passwörtern, Codes, Geld oder Zugriff auf Ihren Computer."
+  },
+  "aboutLinks": {
+    "message": "Wir schicken Ihnen niemals Links. Grilled Phish zeigt Links nur innerhalb der Erweiterung selbst."
+  },
+  "aboutOff": {
+    "message": "Niemand von Grilled Phish wird Sie jemals bitten, es auszuschalten, zu entfernen oder eine Website als vertrauenswürdig zu markieren."
+  },
+  "aboutScam": {
+    "message": "Wenn sich jemand bei Ihnen meldet und behauptet, von Grilled Phish zu sein, ist es Betrug."
+  },
+  "aboutSite": {
+    "message": "Unsere einzige Website:"
   }
 }

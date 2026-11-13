@@ -13,6 +13,8 @@ const LANGS = {
   pt: 'Português', uk: 'Українська', ja: '日本語', de: 'Deutsch', it: 'Italiano', id: 'Bahasa Indonesia',
 };
 const RTL = new Set(['ar']);
+// The project's only website. Grilled Phish never contacts anyone; see the "never" section.
+const OFFICIAL_SITE = 'https://github.com/giobinda/grilled-phish';
 globalThis.GP_LEARN_I18N = {};
 
 // International sources, in English. Each translation describes them in its own language.
@@ -135,6 +137,14 @@ function render(t, code) {
   app.append(h('h2', {}, t.rulesH), list('ol', 'rules', t.rules));
   app.append(h('h2', {}, t.gpH), list('ul', 'signs', t.gp), h('p', { class: 'note' }, t.gpNote));
   app.append(h('h2', {}, t.clickedH), h('p', {}, t.clickedIntro), list('ol', 'rules', t.clicked));
+
+  app.append(h('h2', {}, t.neverH), list('ul', 'never', t.never), h('p', { class: 'note' }, `<strong>${t.neverScam}</strong>`));
+  const site = h('p', { class: 'official' });
+  site.append(h('span', {}, `${t.neverSite} `));
+  const siteLink = h('a', { href: OFFICIAL_SITE, target: '_blank', rel: 'noopener noreferrer' });
+  siteLink.appendChild(h('code')).textContent = OFFICIAL_SITE.replace('https://', '');
+  site.appendChild(siteLink);
+  app.appendChild(site);
 
   app.appendChild(h('h2', {}, t.practiceH));
   const pr = h('p');

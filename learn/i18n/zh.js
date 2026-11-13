@@ -66,6 +66,16 @@ GP_LEARN_I18N.zh = {
     '<strong>举报</strong>（见下方）。这有助于让假网站尽快被关闭，保护其他人。',
   ],
 
+  neverH: '8. Grilled Phish 永远不会联系你',
+  never: [
+    '<strong>我们从不收集你的数据。</strong>没有账户，也没有 Grilled Phish 服务器：关于你或你访问的网站的任何信息都不会到达我们这里。',
+    '<strong>我们从不给你写信或打电话。</strong>没有邮件、短信、聊天消息或电话。我们从不索要密码、验证码、钱财或你电脑的访问权限。',
+    '<strong>我们从不给你发送链接。</strong>Grilled Phish 只在扩展程序内部显示链接。',
+    '<strong>Grilled Phish 的任何人都不会要求你关闭它、删除它，或把某个网站标记为信任。</strong>',
+  ],
+  neverScam: '如果有人联系你并自称来自 Grilled Phish，那就是诈骗。',
+  neverSite: '我们唯一的网站：',
+
   practiceH: '练习',
   practice: '看 8 封逼真的邮件，判断哪些是诈骗。免费，无需注册。',
 

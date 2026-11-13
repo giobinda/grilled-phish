@@ -30,3 +30,10 @@ details { margin-top: 12px; }
 summary { cursor: pointer; color: var(--muted); font-size: 18px; }
 .hint.err { color: var(--bad); }
 button.secondary { background: transparent; color: var(--fg); border: 2px solid var(--line); font-size: 18px; }
+
+.never { margin-top: 40px; padding: 4px 20px 12px; border: 3px solid var(--ok); border-radius: 14px; background: var(--card); }
+.never h2 { margin-top: 16px; }
+.never ul { margin: 12px 0; }
+.never li { display: block; border: none; padding: 6px 0; margin: 0; background: none; }
+.never li::before { content: '🚫 '; }
+.never .scam { font-weight: 700; color: var(--bad); }

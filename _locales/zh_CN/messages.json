@@ -319,5 +319,26 @@
   },
   "optCouldNot": {
     "message": "⚠ 无法更新：$1"
+  },
+  "aboutH": {
+    "message": "🛡️ Grilled Phish 永远不会联系你"
+  },
+  "aboutData": {
+    "message": "我们从不收集你的数据。没有账户，也没有 Grilled Phish 服务器：关于你或你访问的网站的任何信息都不会到达我们这里。"
+  },
+  "aboutWrite": {
+    "message": "我们从不给你写信或打电话。没有邮件、短信、聊天消息或电话。我们从不索要密码、验证码、钱财或你电脑的访问权限。"
+  },
+  "aboutLinks": {
+    "message": "我们从不给你发送链接。Grilled Phish 只在扩展程序内部显示链接。"
+  },
+  "aboutOff": {
+    "message": "Grilled Phish 的任何人都不会要求你关闭它、删除它，或把某个网站标记为信任。"
+  },
+  "aboutScam": {
+    "message": "如果有人联系你并自称来自 Grilled Phish，那就是诈骗。"
+  },
+  "aboutSite": {
+    "message": "我们唯一的网站："
   }
 }

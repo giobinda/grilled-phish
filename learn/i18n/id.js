@@ -66,6 +66,16 @@ GP_LEARN_I18N.id = {
     '<strong>Laporkan</strong> (lihat di bawah). Ini membantu menutup situs palsu untuk semua orang.',
   ],
 
+  neverH: '8. Grilled Phish tidak akan pernah menghubungi Anda',
+  never: [
+    '<strong>Kami tidak pernah mengumpulkan data Anda.</strong> Tidak ada akun dan tidak ada server Grilled Phish: tidak ada apa pun tentang Anda atau situs yang Anda kunjungi yang sampai ke kami.',
+    '<strong>Kami tidak pernah mengirimi Anda pesan atau menelepon.</strong> Tidak ada email, SMS, chat, atau panggilan. Kami tidak pernah meminta kata sandi, kode, uang, atau akses ke komputer Anda.',
+    '<strong>Kami tidak pernah mengirimi Anda tautan.</strong> Grilled Phish hanya menampilkan tautan di dalam ekstensi itu sendiri.',
+    '<strong>Tidak ada seorang pun dari Grilled Phish yang akan meminta Anda mematikan, menghapus, atau menandai situs sebagai tepercaya.</strong>',
+  ],
+  neverScam: 'Jika seseorang menghubungi Anda dan mengaku dari Grilled Phish, itu penipuan.',
+  neverSite: 'Satu-satunya situs kami:',
+
   practiceH: 'Berlatih',
   practice: 'lihat 8 email yang tampak asli dan tentukan mana yang penipuan. Gratis, tanpa daftar.',
 
