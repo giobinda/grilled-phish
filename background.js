@@ -5,22 +5,27 @@
  * Verisign, .xyz -> CentralNic...). The IANA bootstrap file says which
  * registry to ask. No third-party middleman sees the query.
  *
- * Also holds the database of well-known websites (data/known-sites.txt, or a
- * newer copy downloaded from the URL set in the options page).
+ * Also holds the database of well-known websites: data/known-sites.txt, or a
+ * newer copy downloaded automatically from the project's GitHub. Downloads are
+ * used only if correctly signed (lib/list-verify.js) and newer than the list in use.
  *
  * Message API (from content script / popup):
  *   { type: 'domainAges', domains: ['a.com', ...] }
  *     -> { 'a.com': { created: ISO | null, status: 'ok' | 'unsupported' | 'notfound' | 'error' } }
  *   { type: 'domainInfo', hosts: ['www.a.com', ...] }
  *     -> { 'www.a.com': { known: rank | null, lookalike: { domain, rank, code, strong } | null } }
- *   { type: 'knownSitesStatus' } -> { count, source, updatedAt, url, error }
- *   { type: 'knownSitesUpdate' } -> same, after trying to download now
+ *   { type: 'knownSitesStatus' } -> { count, source, serial, from, updatedAt, checkedAt, error, autoUpdate }
+ *   { type: 'knownSitesUpdate' } -> same, after checking for a newer list now
  */
 'use strict';
 
 // Chrome runs this file as a service worker; Firefox loads detector.js first via manifest.
-if (typeof importScripts === 'function' && !globalThis.GrilledPhishDetector) importScripts('lib/detector.js');
+if (typeof importScripts === 'function' && !globalThis.GrilledPhishDetector) {
+  importScripts('lib/detector.js', 'lib/list-verify.js', 'lib/list-public-key.js');
+}
 const D = globalThis.GrilledPhishDetector;
+const L = globalThis.GrilledPhishList;
+const LIST_KEYS = globalThis.GRILLED_PHISH_LIST_KEYS;
 
 const BOOTSTRAP_URL = 'https://data.iana.org/rdap/dns.json';
 const DAY = 86400000;
@@ -163,37 +168,36 @@ async function domainAge(domain) {
 const DOMAIN_RE = /^(?:[a-z0-9-]+\.)+[a-z0-9-]{2,}$/;
 
 // ---------------------------------------------------------------- well-known sites
-const LIST_UPDATE_EVERY = 7 * DAY;
-const LIST_MIN = 1000;
-const LIST_MAX = 300000;
+// Where signed updates are published (CDN mirror first, GitHub second). Being
+// signed, the list is safe to fetch from anywhere: a tampered copy is rejected.
+const LIST_URLS = [
+  'https://cdn.jsdelivr.net/gh/giobinda/grilled-phish@main/data/known-sites.txt',
+  'https://raw.githubusercontent.com/giobinda/grilled-phish/main/data/known-sites.txt',
+];
+const LIST_CHECK_EVERY = 3 * DAY;
 let indexPromise = null;
-let listMeta = { count: 0, source: '', updatedAt: null, error: null };
+let updating = null;
+let currentList = null; // { domains, serial, source } in use
+let listMeta = { count: 0, source: '', serial: 0, from: 'built in', updatedAt: null };
 
-function parseList(text) {
-  const lines = text.split(/\r?\n/);
-  const header = lines.filter((l) => l.startsWith('#'));
-  const domains = lines.map((l) => l.trim().toLowerCase()).filter((l) => l && !l.startsWith('#'));
-  if (domains.length < LIST_MIN || domains.length > LIST_MAX) throw new Error(`list has ${domains.length} entries`);
-  const bad = domains.find((d) => !DOMAIN_RE.test(d));
-  if (bad) throw new Error(`invalid entry "${bad.slice(0, 60)}"`);
-  const source = (header.find((h) => /source:/i.test(h)) || '').replace(/^#\s*source:\s*/i, '');
-  return { domains, source };
-}
+const unsigned = (text) => L.splitSigned(text)?.body ?? text;
 
 async function loadIndex() {
+  const bundledText = await (await fetch(chrome.runtime.getURL('data/known-sites.txt'))).text();
+  let use = L.parseList(unsigned(bundledText));
+  let from = 'built in';
+  let updatedAt = null;
   const stored = await getLocal('knownSitesDownload', null);
-  let parsed = null;
-  if (stored?.text) {
-    try { parsed = parseList(stored.text); listMeta.updatedAt = stored.fetchedAt; } catch { parsed = null; }
+  // The stored download is re-verified every time: never trust storage blindly.
+  if (stored?.text && await L.verifySignedList(stored.text, LIST_KEYS)) {
+    try {
+      const dl = L.parseList(unsigned(stored.text));
+      if (dl.serial > use.serial) { use = dl; from = 'downloaded'; updatedAt = stored.fetchedAt; }
+    } catch { /* ignore a broken download */ }
   }
-  if (!parsed) {
-    const text = await (await fetch(chrome.runtime.getURL('data/known-sites.txt'))).text();
-    parsed = parseList(text);
-    listMeta.updatedAt = null;
-  }
-  listMeta.count = parsed.domains.length;
-  listMeta.source = parsed.source + (stored?.text && listMeta.updatedAt ? ' (downloaded)' : ' (built in)');
-  return D.buildKnownIndex(parsed.domains);
+  currentList = use;
+  listMeta = { count: use.domains.length, source: use.source, serial: use.serial, from, updatedAt };
+  return D.buildKnownIndex(use.domains);
 }
 
 function getIndex() {
@@ -204,29 +208,59 @@ function getIndex() {
   return indexPromise;
 }
 
-async function maybeUpdateList(force) {
-  const { knownSitesUrl = '' } = await chrome.storage.sync.get({ knownSitesUrl: '' });
-  if (!/^https:\/\//.test(knownSitesUrl)) return false;
-  const stored = await getLocal('knownSitesDownload', null);
-  if (!force && stored?.url === knownSitesUrl && Date.now() - stored.fetchedAt < LIST_UPDATE_EVERY) return false;
+async function fetchList(url) {
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), 60000);
   try {
-    const ctrl = new AbortController();
-    const t = setTimeout(() => ctrl.abort(), 60000);
-    const res = await fetch(knownSitesUrl, { signal: ctrl.signal, credentials: 'omit', cache: 'no-cache' });
-    clearTimeout(t);
+    // 'no-cache' = ask the server whether the file changed (ETag), reuse the copy if not.
+    const res = await fetch(url, { signal: ctrl.signal, credentials: 'omit', cache: 'no-cache' });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     if (!res.url.startsWith('https://')) throw new Error('redirected to a non-https address');
-    const text = await res.text();
-    parseList(text); // validate before storing
-    await chrome.storage.local.set({ knownSitesDownload: { text, url: knownSitesUrl, fetchedAt: Date.now() } });
-    listMeta.error = null;
-    indexPromise = null; // rebuild with the new list on next use
-    await getIndex();
-    return true;
-  } catch (e) {
-    listMeta.error = `Update failed: ${e.message || e}`;
-    return false;
+    return await res.text();
+  } finally {
+    clearTimeout(t);
   }
+}
+
+// Checks for a newer signed list. Returns true if a new list was installed.
+function maybeUpdateList(force) {
+  if (updating) return updating;
+  updating = (async () => {
+    const { autoUpdateList = true } = await chrome.storage.sync.get({ autoUpdateList: true });
+    if (!autoUpdateList) return false;
+    const check = await getLocal('knownSitesCheck', {});
+    if (!force && check.checkedAt && Date.now() - check.checkedAt < LIST_CHECK_EVERY) return false;
+    await indexPromise; // need the list in use to compare with
+
+    let error = null;
+    for (const url of LIST_URLS) {
+      try {
+        const text = await fetchList(url);
+        if (!(await L.verifySignedList(text, LIST_KEYS))) throw new Error('signature check failed, list ignored');
+        const next = L.parseList(unsigned(text));
+        if (currentList && next.serial <= currentList.serial) { error = null; break; } // already up to date
+        const sanity = L.checkListSanity(next, currentList);
+        if (!sanity.ok) throw new Error(`list refused: ${sanity.reason}`);
+        await chrome.storage.local.set({ knownSitesDownload: { text, url, fetchedAt: Date.now() } });
+        await chrome.storage.local.set({ knownSitesCheck: { checkedAt: Date.now(), error: null } });
+        indexPromise = null;
+        await getIndex();
+        return true;
+      } catch (e) {
+        error = `${new URL(url).hostname}: ${e.message || e}`;
+      }
+    }
+    await chrome.storage.local.set({ knownSitesCheck: { checkedAt: Date.now(), error } });
+    return false;
+  })().catch(() => false).finally(() => { updating = null; });
+  return updating;
+}
+
+async function listStatus() {
+  await getIndex();
+  const check = await getLocal('knownSitesCheck', {});
+  const { autoUpdateList = true } = await chrome.storage.sync.get({ autoUpdateList: true });
+  return { ...listMeta, checkedAt: check.checkedAt || null, error: check.error || null, autoUpdate: autoUpdateList };
 }
 
 // ---------------------------------------------------------------- toolbar badge
@@ -240,6 +274,19 @@ chrome.tabs.onUpdated.addListener((tabId, change) => {
     chrome.action.setBadgeText({ tabId, text: '' }).catch(() => {});
     chrome.action.setTitle({ tabId, title: 'Grilled Phish' }).catch(() => {});
   }
+});
+
+const LEARN_URL = chrome.runtime.getURL('learn/learn.html');
+let lastLearnOpen = 0;
+function openLearn(nextTo) {
+  const props = { url: LEARN_URL };
+  if (nextTo?.index != null) { props.index = nextTo.index + 1; props.windowId = nextTo.windowId; }
+  chrome.tabs.create(props).catch(() => chrome.tabs.create({ url: LEARN_URL }).catch(() => {}));
+}
+
+// First install: show the short guide once, so people know what the red boxes mean.
+chrome.runtime.onInstalled.addListener(({ reason }) => {
+  if (reason === 'install') openLearn(null);
 });
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
@@ -257,6 +304,15 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     if (b.text) chrome.action.setBadgeBackgroundColor({ tabId, color: b.color }).catch(() => {});
     return false;
   }
+  if (msg?.type === 'openLearn') {
+    // From our warning dialog (content script, user click) or our own pages.
+    if (sender.id !== chrome.runtime.id) return false;
+    const now = Date.now();
+    if (now - lastLearnOpen < 2000) return false; // one tab per click, never a flood
+    lastLearnOpen = now;
+    openLearn(sender.tab);
+    return false;
+  }
   if (msg?.type === 'domainInfo' && Array.isArray(msg.hosts)) {
     getIndex().then((index) => {
       const out = {};
@@ -271,15 +327,8 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg?.type === 'knownSitesStatus' || msg?.type === 'knownSitesUpdate') {
     if (!fromExtensionPage) return false;
     (async () => {
-      if (msg.type === 'knownSitesUpdate') {
-        const { knownSitesUrl = '' } = await chrome.storage.sync.get({ knownSitesUrl: '' });
-        if (!knownSitesUrl) await chrome.storage.local.remove('knownSitesDownload'); // back to built-in list
-        else await maybeUpdateList(true);
-        indexPromise = null;
-      }
-      await getIndex();
-      const { knownSitesUrl = '' } = await chrome.storage.sync.get({ knownSitesUrl: '' });
-      sendResponse({ ...listMeta, url: knownSitesUrl });
+      if (msg.type === 'knownSitesUpdate') await maybeUpdateList(true);
+      sendResponse(await listStatus());
     })().catch((e) => sendResponse({ ...listMeta, error: String(e) }));
     return true;
   }

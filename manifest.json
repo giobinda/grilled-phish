@@ -1,8 +1,14 @@
 {
   "manifest_version": 3,
   "name": "Grilled Phish",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Puts a red box around fake look-alike links (paypa1.com, pаypal.com...) and blocks them until you really confirm.",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
   "permissions": [
     "storage",
     "activeTab"
@@ -11,6 +17,8 @@
     "service_worker": "background.js",
     "scripts": [
       "lib/detector.js",
+      "lib/list-verify.js",
+      "lib/list-public-key.js",
       "background.js"
     ]
   },
@@ -29,7 +37,11 @@
   ],
   "action": {
     "default_title": "Grilled Phish",
-    "default_popup": "popup/popup.html"
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png"
+    }
   },
   "options_ui": {
     "page": "options/options.html",

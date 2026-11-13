@@ -64,23 +64,24 @@
   ageDays.addEventListener('change', () => chrome.storage.sync.set({ ageDays: Number(ageDays.value) }));
 
   const listStatus = document.getElementById('listStatus');
-  const listUrl = document.getElementById('listUrl');
+  const autoUpdate = document.getElementById('autoUpdate');
+  const serialDate = (n) => {
+    const t = String(n || '');
+    return t.length >= 8 ? `${t.slice(0, 4)}-${t.slice(4, 6)}-${t.slice(6, 8)}` : 'unknown date';
+  };
   function showListStatus(st) {
     if (!st) { listStatus.textContent = 'List unavailable.'; return; }
-    const when = st.updatedAt ? `, updated ${new Date(st.updatedAt).toLocaleDateString()}` : '';
-    listStatus.textContent = `${(st.count || 0).toLocaleString()} websites — ${st.source || 'unknown source'}${when}.` +
-      (st.error ? ` ⚠ ${st.error}` : '');
+    let text = `${(st.count || 0).toLocaleString()} websites, list of ${serialDate(st.serial)} (${st.from}).`;
+    if (st.checkedAt) text += ` Last checked ${new Date(st.checkedAt).toLocaleString()}.`;
+    if (st.error) text += ` ⚠ Could not update: ${st.error}`;
+    listStatus.textContent = text;
     listStatus.className = st.error ? 'hint err' : 'hint';
+    autoUpdate.checked = st.autoUpdate !== false;
   }
-  chrome.runtime.sendMessage({ type: 'knownSitesStatus' }).then((st) => {
-    showListStatus(st);
-    listUrl.value = st?.url || '';
-  }).catch(() => showListStatus(null));
-  document.getElementById('listSave').addEventListener('click', async () => {
-    const url = listUrl.value.trim();
-    if (url && !/^https:\/\//.test(url)) { listStatus.textContent = 'The address must start with https://'; return; }
-    await chrome.storage.sync.set({ knownSitesUrl: url });
-    listStatus.textContent = url ? 'Downloading…' : 'Switching back to the built-in list…';
+  chrome.runtime.sendMessage({ type: 'knownSitesStatus' }).then(showListStatus).catch(() => showListStatus(null));
+  autoUpdate.addEventListener('change', () => chrome.storage.sync.set({ autoUpdateList: autoUpdate.checked }));
+  document.getElementById('checkNow').addEventListener('click', async () => {
+    listStatus.textContent = 'Checking…';
     showListStatus(await chrome.runtime.sendMessage({ type: 'knownSitesUpdate' }));
   });
 

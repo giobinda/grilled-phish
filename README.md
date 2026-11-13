@@ -1,3 +1,5 @@
+<img src="icons/icon-128.png" width="96" alt="Grilled Phish logo: a fish on a grill">
+
 # Grilled Phish
 
 *Blocks fake look-alike websites before you click.*
@@ -77,17 +79,51 @@ Popular sites also fix false alarms from the built-in brand rules: `google.ru` o
 own sites, so they're allowed. Popular typo-squatters (`instragram.com`, `twiter.com`) are removed from the
 list when it's built, so they stay blocked.
 
-**Rebuild / update the list**
+### Automatic, signed updates
+
+Installed extensions check for a newer list every 3 days. They download it from the jsDelivr CDN, falling back to
+GitHub. Because the list is **digitally signed**, where it's hosted doesn't matter: the extension uses a download only if all
+of these hold:
+
+- the signature matches a public key built into the extension (`lib/list-public-key.js`, ECDSA P-256);
+- its serial number is newer than the list in use, so old lists can't be replayed;
+- the essential sites (google.com, paypal.com, wikipedia.org…) are present;
+- no more than 40% of sites were removed at once.
+
+Otherwise the current list stays in use and Settings shows why. The saved copy is re-verified every time it's loaded.
+Updates can be turned off in Settings.
+
+**Weekly pipeline** (`.github/workflows/update-known-sites.yml`):
+
+1. **build**: no secrets, read-only. Tests the code, downloads Tranco, removes fakes, refuses changes of more than 25%,
+   and posts a summary of additions and removals on the run page.
+2. **sign**: **waits for the maintainer's approval** (GitHub environment `list-signing`). Only this job can read the
+   private key. It signs the file built in step 1, verifies it and commits it.
+
+While the repository is private, step 2 is skipped (approval rules need a public repo or a paid plan).
+
+**Keys and manual builds**
 
 ```
-node tools/build-known-sites.js --top 100000     # writes data/known-sites.txt and a report of dropped entries
+node tools/keygen.js                          # once: private key -> ~/.config/grilled-phish/ (mode 600), public key -> lib/list-public-key.js
+node tools/build-known-sites.js --top 100000  # writes an unsigned data/known-sites.txt (+ report of dropped entries)
+node tools/sign-list.js                       # signs it with the local key, checks it against the shipped public key
+tools/setup-signing.sh                        # once, after going public: approval step + key as an environment secret
 ```
 
-`.github/workflows/update-known-sites.yml` does this every week on GitHub. To have installed extensions pick up the
-new list automatically, open Settings → Well-known websites → Advanced and enter the file's raw URL, e.g.
-`https://raw.githubusercontent.com/<you>/<repo>/main/data/known-sites.txt`. The download is checked before use
-(1,000–300,000 valid domain names). Use only a source you control: a tampered list could make a fake site count as
-well-known. If the download fails, the built-in list is used.
+Keep a backup of the private key (e.g. in a password manager). If it's lost or leaked, run `keygen.js` again with
+a new output path, publish an extension version with the new public key, and remove the old key from
+`lib/list-public-key.js` once nobody runs older versions.
+
+## Learning to spot scams (`learn/learn.html`)
+
+A short, plain-language guide built into the extension (no network needed to read it):
+what phishing is, how to read an address, look-alike letters, warning signs in messages,
+five rules, what to do if you already clicked, plus links to official sources (CISA, UK NCSC,
+AARP, Polizia Postale) and places to report scams. It opens once after installing, and from
+the toolbar popup, the settings page and every warning dialog. The page is not web-accessible,
+so websites can't load it or use it to detect the extension; the dialog asks the background
+worker to open it, and only for a real click.
 
 ## Privacy (age check)
 
@@ -100,7 +136,7 @@ sites with those endings get no age check (the look-alike checks still apply).
 ## Tests
 
 ```
-node --test test/detector.test.js
+node --test test/*.test.js
 ```
 
 `test/demo.html` is a page full of fake links for trying the extension by hand. Serve it with
@@ -126,7 +162,8 @@ Other measures:
 - No `innerHTML`, `eval` or remote code. All text, including attacker-controlled domain names, is inserted as plain text.
 - Web pages can't message the extension. Settings messages are accepted only from the extension's own pages.
 - Minimal permissions: `storage` and `activeTab`. Content scripts run on all sites, but the extension has no extra host permissions.
-- List downloads must stay on HTTPS (redirects included) and pass validation before use.
+- List downloads must stay on HTTPS (redirects included), be signed with the project key, be newer than the list in
+  use, and pass sanity checks before use.
 - The GitHub workflow pins third-party actions to exact commits and only the update job can write to the repo.
 - "Open anyway" and "I trust this site" warn about phone/chat scams, because scammers coach victims through them.
 

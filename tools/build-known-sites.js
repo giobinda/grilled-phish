@@ -17,6 +17,7 @@
 const fs = require('fs');
 const path = require('path');
 const D = require('../lib/detector.js');
+const L = require('../lib/list-verify.js');
 
 const args = process.argv.slice(2);
 const arg = (name, def) => {
@@ -69,13 +70,52 @@ async function fetchRetry(url, tries = 5) {
   }
   if (kept.length < 1000) throw new Error(`Only ${kept.length} domains - refusing to write a broken list`);
 
+  // Serial = build time (YYYYMMDDHHMM). The extension only accepts lists newer than
+  // the one it has, so an attacker can't replay an old (validly signed) list.
+  const now = new Date();
+  const serial = now.toISOString().replace(/\D/g, '').slice(0, 12);
   const header = [
     '# Grilled Phish - well-known websites, most visited first.',
     `# Source: Tranco list ${listId} (https://tranco-list.eu/list/${listId})${created ? ', created ' + created : ''}`,
-    `# Built: ${new Date().toISOString().slice(0, 10)}, ${kept.length} domains. "Known" means popular, not safe.`,
+    `# Built: ${now.toISOString().slice(0, 10)}, ${kept.length} domains. "Known" means popular, not safe.`,
+    `# Serial: ${serial}`,
   ];
+  const text = header.concat(kept).join('\n') + '\n';
+
+  // Compare with the list currently in the repo: stricter than the extension's
+  // own limit, and summarised for the person approving the signature.
+  let previous = null;
+  if (fs.existsSync(OUT)) {
+    const old = fs.readFileSync(OUT, 'utf8');
+    try { previous = L.parseList(L.splitSigned(old)?.body ?? old); } catch { previous = null; }
+  }
+  const next = L.parseList(text);
+  const sanity = L.checkListSanity(next, previous, { maxChurn: 0.25 });
+  if (!sanity.ok && !args.includes('--force')) throw new Error(`New list rejected: ${sanity.reason} (use --force to override)`);
+
   fs.mkdirSync(path.dirname(OUT), { recursive: true });
-  fs.writeFileSync(OUT, header.concat(kept).join('\n') + '\n');
+  fs.writeFileSync(OUT, text); // unsigned: tools/sign-list.js adds the signature
   fs.writeFileSync(DROPPED, ['# rank\tdomain\treason', ...dropped].join('\n') + '\n');
   console.log(`Wrote ${kept.length} domains to ${path.relative(ROOT, OUT)} (${dropped.length} dropped, see ${path.relative(ROOT, DROPPED)})`);
+
+  // Change summary (also shown on the GitHub run page, for the approval step).
+  const oldSet = new Set(previous?.domains || []);
+  const newSet = new Set(kept);
+  const added = kept.filter((d) => !oldSet.has(d));
+  const removed = (previous?.domains || []).filter((d) => !newSet.has(d));
+  const summary = [
+    '## Well-known sites list',
+    '',
+    `- Tranco list: \`${listId}\`, serial \`${serial}\`, **${kept.length}** domains`,
+    `- Compared with the current list: **+${added.length}** added, **-${removed.length}** removed`,
+    `- Dropped as fakes/invalid: ${dropped.length} (see \`data/known-sites-dropped.txt\`)`,
+    '',
+    '**Highest-ranked additions** (check nothing here looks like a scam copy):',
+    '',
+    added.slice(0, 25).map((d) => `\`${d}\``).join(', ') || '_none_',
+    '',
+  ].join('\n');
+  console.log('\n' + summary);
+  if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, summary + '\n');
+  if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, `changed=${added.length + removed.length > 0}\n`);
 })().catch((e) => { console.error(e.message || e); process.exit(1); });

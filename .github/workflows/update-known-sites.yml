@@ -1,7 +1,17 @@
-# Rebuilds data/known-sites.txt from the latest Tranco list every Monday and
-# commits it if it changed. Extensions configured (Settings -> Well-known websites
-# -> Advanced) with this file's raw URL pick up the new list within a week:
-#   https://raw.githubusercontent.com/<you>/<repo>/main/data/known-sites.txt
+# Weekly update of the well-known sites list, in two jobs:
+#
+#   build  - no secrets, read-only. Downloads Tranco, cleans the list, runs the
+#            tests, and posts a summary of what changed on the run page.
+#   sign   - runs only after YOU approve it (GitHub environment "list-signing"
+#            with a required reviewer). Only this job can read the signing key
+#            and push. It signs the exact file built above and commits it.
+#
+# Installed extensions download data/known-sites.txt and use it only if the
+# signature matches the public key they ship with (lib/list-public-key.js).
+#
+# One-time setup when the repository is public: tools/setup-signing.sh
+# (approval rules on private repositories need a paid GitHub plan; while the
+# repository is private the sign job is skipped).
 name: Update well-known sites list
 
 on:
@@ -9,30 +19,69 @@ on:
     - cron: '17 4 * * 1'
   workflow_dispatch:
 
-# Least privilege: only this job can push, and only to this repo.
 permissions:
   contents: read
 
+concurrency:
+  group: known-sites-list
+  cancel-in-progress: false
+
 jobs:
-  update:
+  build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+    outputs:
+      changed: ${{ steps.build.outputs.changed }}
+      public: ${{ steps.visibility.outputs.public }}
     # Third-party actions are pinned to exact commits (a moved tag can't inject code).
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020  # v4
         with:
           node-version: '22'
+      - name: Test the code as committed
+        run: node --test test/*.test.js
       - name: Build list
+        id: build
         run: node tools/build-known-sites.js --top 100000
-      - name: Run tests
-        run: node --test test/detector.test.js
-      - name: Commit if changed
+      - name: Repository visibility
+        id: visibility
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: echo "public=$(gh api repos/${{ github.repository }} --jq '.private | not')" >> "$GITHUB_OUTPUT"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4
+        with:
+          name: known-sites
+          path: |
+            data/known-sites.txt
+            data/known-sites-dropped.txt
+          retention-days: 7
+
+  sign:
+    needs: build
+    if: needs.build.outputs.changed == 'true' && needs.build.outputs.public == 'true'
+    runs-on: ubuntu-latest
+    environment: list-signing   # <- waits for your approval
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020  # v4
+        with:
+          node-version: '22'
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093  # v4
+        with:
+          name: known-sites
+          path: data
+      - name: Sign
+        env:
+          LIST_SIGNING_KEY: ${{ secrets.LIST_SIGNING_KEY }}
+        run: node tools/sign-list.js
+      - name: Verify the signed list
+        run: node --test test/list-verify.test.js
+      - name: Commit
         run: |
-          if git diff --quiet -- data/; then echo "No changes"; exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/
-          git commit -m "Update well-known sites list"
+          git add data/known-sites.txt data/known-sites-dropped.txt
+          git commit -m "Update well-known sites list (signed)"
           git push

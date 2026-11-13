@@ -4,14 +4,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Grilled Phish — trusted sites</title>
+  <link rel="icon" href="../icons/icon-32.png">
   <link rel="stylesheet" href="options.css">
 </head>
 <body>
   <main>
-    <h1>🛡️ My trusted sites</h1>
+    <h1><img src="../icons/icon-128.png" alt="" class="logo"> My trusted sites</h1>
     <p>Add the websites you really use: your bank, your email, your shop.
        Grilled Phish will then <strong>block any fake copy</strong> of them, even with one changed letter.</p>
     <p class="hint">Big companies (PayPal, Google, Amazon, Poste Italiane, banks…) are already protected.</p>
+    <p><a href="../learn/learn.html" target="_blank">📖 How to spot a scam website: a 5-minute guide</a></p>
 
     <form id="add">
       <label for="site">Website address</label>
@@ -43,16 +45,10 @@
        (for example <code>wikipedla.org</code> pretending to be <code>wikipedia.org</code>).
        The check happens on your computer.</p>
     <p id="listStatus" class="hint">Loading…</p>
-    <details>
-      <summary>Advanced: keep the list up to date</summary>
-      <label for="listUrl">Download a newer list weekly from (https only):</label>
-      <div class="row">
-        <input id="listUrl" type="url" placeholder="https://raw.githubusercontent.com/you/grilled-phish/main/data/known-sites.txt" spellcheck="false">
-        <button id="listSave" type="button">Save &amp; update</button>
-      </div>
-      <p class="hint">Leave empty to use the list built into the extension.
-         Only use an address you control: a bad list could make fake sites look well-known.</p>
-    </details>
+    <label class="check"><input id="autoUpdate" type="checkbox"> Keep this list up to date automatically (recommended)</label>
+    <button id="checkNow" type="button" class="secondary">Check for updates now</button>
+    <p class="hint">Updates are digitally signed by Grilled Phish. A list that isn't correctly signed,
+       is older than the one you have, or looks damaged is refused, and the current list stays in use.</p>
   </main>
   <script src="../lib/detector.js"></script>
   <script src="options.js"></script>

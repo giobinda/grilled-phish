@@ -1,0 +1,43 @@
+:root { --ok: #1a7f37; --okbg: #effaf0; --bad: #b00000; --badbg: #fff0f0; --bg: #fafafa; --card: #fff;
+  --fg: #111; --muted: #555; --line: #ccc; --mark: #d40000; --link: #0b57d0; }
+@media (prefers-color-scheme: dark) {
+  :root { --ok: #3fb950; --okbg: #13261a; --bad: #ff6b6b; --badbg: #2a1515; --bg: #121212; --card: #1e1e1e;
+    --fg: #f2f2f2; --muted: #aaa; --line: #444; --mark: #ff4d4d; --link: #8ab4f8; }
+}
+body { margin: 0; background: var(--bg); color: var(--fg); font: 20px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 32px 16px 64px; }
+h1 { font-size: 36px; line-height: 1.2; margin: 0 0 8px; display: flex; align-items: center; gap: 14px; }
+.logo { width: 56px; height: 56px; flex: none; }
+.lead { font-size: 22px; color: var(--muted); margin-top: 0; }
+h2 { font-size: 28px; margin: 44px 0 10px; }
+a { color: var(--link); }
+code { font: 0.95em ui-monospace, Menlo, Consolas, monospace; word-break: break-all; }
+.examples { display: grid; gap: 12px; }
+.ex { padding: 14px 16px; border-radius: 12px; border: 3px solid; background: var(--card); }
+.ex.ok { border-color: var(--ok); background: var(--okbg); }
+.ex.bad { border-color: var(--bad); background: var(--badbg); }
+.ex code { font-size: 22px; }
+.ex b { text-decoration: underline 3px; }
+.ex p { margin: 6px 0 0; font-size: 18px; }
+.tag { display: block; font-weight: 700; font-size: 18px; }
+.pairs { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 12px; overflow: hidden; }
+.pairs th, .pairs td { padding: 10px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.pairs th { font-size: 17px; color: var(--muted); }
+.pairs td { font-size: 18px; }
+.pairs code { font-size: 22px; white-space: nowrap; }
+mark { background: var(--mark); color: #fff; border-radius: 4px; padding: 0 2px; }
+.signs { list-style: none; padding: 0; }
+.signs li { margin: 10px 0; }
+.rules { padding-left: 28px; }
+.rules li { margin: 12px 0; }
+.note { padding: 14px 16px; border-left: 6px solid var(--bad); background: var(--card); border-radius: 6px; }
+.links { list-style: none; padding: 0; }
+.links li { padding: 14px 16px; margin: 10px 0; background: var(--card); border: 2px solid var(--line); border-radius: 12px; }
+.links a { font-weight: 700; }
+.links span { display: block; font-size: 17px; color: var(--muted); }
+.hint { color: var(--muted); font-size: 17px; }
+@media (max-width: 560px) {
+  h1 { font-size: 28px; }
+  .pairs th, .pairs td { padding: 8px 6px; }
+  .pairs code { font-size: 17px; white-space: normal; }
+}

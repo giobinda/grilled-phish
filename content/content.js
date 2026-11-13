@@ -348,6 +348,8 @@
       border: none; border-radius: 12px; cursor: pointer;
     }
     .safe:focus { outline: 4px solid #0b5d22; outline-offset: 3px; }
+    .learn { display: block; margin: 4px auto 0; padding: 8px; font-size: 17px; color: #0b57d0;
+      background: none; border: none; text-decoration: underline; cursor: pointer; }
     details { margin-top: 20px; border-top: 1px solid #ddd; padding-top: 12px; }
     summary { font-size: 16px; color: #666; cursor: pointer; }
     .risky { margin-top: 12px; }
@@ -454,6 +456,15 @@
     const safeBtn = el('button', { class: 'safe', type: 'button' },
       isPassword ? '← Leave this site (safe)' : '← Go back, do not open it (safe)');
     box.appendChild(safeBtn);
+
+    // Opens the extension's own guide in a new tab (via the background worker:
+    // the guide is not web-accessible, so pages can't detect or frame it).
+    const learn = el('button', { class: 'learn', type: 'button' }, '📖 How do I recognize a scam? (5-minute guide)');
+    learn.addEventListener('click', (e) => {
+      if (!e.isTrusted) return;
+      try { chrome.runtime.sendMessage({ type: 'openLearn' }); } catch { /* extension reloaded */ }
+    });
+    box.appendChild(learn);
 
     // The "I really, really want to" path, hidden behind a disclosure.
     const details = el('details');

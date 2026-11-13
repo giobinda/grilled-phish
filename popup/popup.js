@@ -3,6 +3,10 @@
   const $ = (id) => document.getElementById(id);
 
   $('settings').addEventListener('click', () => chrome.runtime.openOptionsPage());
+  $('learn').addEventListener('click', () => {
+    chrome.tabs.create({ url: chrome.runtime.getURL('learn/learn.html') });
+    window.close();
+  });
 
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   const { trusted = [], ageCheck = true, ageDays = 30 } =

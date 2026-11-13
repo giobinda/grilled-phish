@@ -1,6 +1,7 @@
-# Link Guardian - well-known websites, most visited first.
-# Source: Tranco list 947W2 (https://tranco-list.eu/list/947W2)
+# Grilled Phish - well-known websites, most visited first.
+# Source: Tranco list 947W2 (https://tranco-list.eu/list/947W2), created 2026-11-12
 # Built: 2026-11-13, 99874 domains. "Known" means popular, not safe.
+# Serial: 202611131157
 google.com
 cloudflare.com
 ezviz7.com
@@ -99875,3 +99876,4 @@ yapsody.com
 1mt.ru
 lean.org
 ips.ch
+#sig:tOD85QyoRALdJwLT9SzRnRRnRgp8/pyK46IR+aI+mEv8o0w/KUzZSW5e/3mwHSAt8yqPbTpcvabFe86P/tdzTw==
