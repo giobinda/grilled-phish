@@ -1,0 +1,323 @@
+{
+  "extName": {
+    "message": "Grilled Phish"
+  },
+  "extDescription": {
+    "message": "Memberi kotak merah pada tautan palsu yang meniru situs terkenal (paypa1.com, pаypal.com…) dan memblokirnya."
+  },
+  "badgeDanger": {
+    "message": "Grilled Phish: situs PALSU atau berbahaya"
+  },
+  "badgeTrusted": {
+    "message": "Grilled Phish: situs asli"
+  },
+  "rIp": {
+    "message": "Tautan ini menuju alamat berupa angka saja, bukan nama situs. Perusahaan asli tidak melakukan ini."
+  },
+  "scriptLatin": {
+    "message": "Latin"
+  },
+  "scriptCyrillic": {
+    "message": "Sirilik"
+  },
+  "scriptGreek": {
+    "message": "Yunani"
+  },
+  "scriptArmenian": {
+    "message": "Armenia"
+  },
+  "rScript": {
+    "message": "Alamat ini mencampur huruf dari alfabet yang berbeda ($1). Ini trik klasik untuk meniru nama terkenal."
+  },
+  "rHomoglyph": {
+    "message": "Situs ini memakai huruf mirip dari alfabet lain untuk meniru “$1”."
+  },
+  "rSameLabel": {
+    "message": "Situs ini memakai nama “$1”, tetapi BUKAN situs asli $2."
+  },
+  "rSwap": {
+    "message": "Situs ini menukar huruf agar terlihat seperti “$1” (trik seperti “rn” untuk “m”, “1” untuk “l”, “0” untuk “o”)."
+  },
+  "rTypo": {
+    "message": "Nama “$1” hanya berbeda satu huruf dari “$2”."
+  },
+  "rBrandSub": {
+    "message": "“$1” muncul di awal alamat, tetapi situs ini sebenarnya milik “$2”."
+  },
+  "rBait": {
+    "message": "Situs ini menambahkan kata pada nama “$1” agar terlihat resmi, tetapi bukan situs $2."
+  },
+  "rTextMismatch": {
+    "message": "Teksnya bertuliskan “$1”, tetapi tautannya diam-diam menuju “$2”."
+  },
+  "rAge": {
+    "message": "Situs ini dibuat $1. Situs penipuan biasanya baru dan hilang dalam beberapa hari; bank dan toko asli sudah ada selama bertahun-tahun."
+  },
+  "rDbSub": {
+    "message": "Situs ini diawali “$1”, situs terkenal, tetapi sebenarnya milik “$2”."
+  },
+  "rDbLook": {
+    "message": "Situs ini terlihat hampir sama dengan “$1”, situs terkenal, tetapi beberapa hurufnya berbeda."
+  },
+  "ageToday": {
+    "message": "hari ini"
+  },
+  "ageYesterday": {
+    "message": "kemarin"
+  },
+  "ageDaysAgo": {
+    "message": "$1 hari yang lalu"
+  },
+  "ageOnlyDaysAgo": {
+    "message": "baru $1 hari yang lalu"
+  },
+  "ageMonthsAgo": {
+    "message": "$1 bulan yang lalu"
+  },
+  "ageYearsAgo": {
+    "message": "$1 tahun yang lalu"
+  },
+  "linkTitle": {
+    "message": "Diblokir oleh Grilled Phish: tautan ini kemungkinan penipuan"
+  },
+  "linkBadge": {
+    "message": "⛔ Situs palsu — diblokir"
+  },
+  "charOdd": {
+    "message": "Bukan huruf biasa: $1"
+  },
+  "charDiff": {
+    "message": "Huruf ini berbeda dari situs aslinya"
+  },
+  "charZero": {
+    "message": "Ini angka nol, bukan huruf O"
+  },
+  "charOne": {
+    "message": "Ini angka satu, bukan huruf L"
+  },
+  "dlgTitlePassword": {
+    "message": "⛔ STOP — jangan ketik kata sandi Anda di sini"
+  },
+  "dlgTitleLink": {
+    "message": "⛔ STOP — tautan ini kemungkinan penipuan"
+  },
+  "dlgPretending": {
+    "message": "Situs ini berpura-pura menjadi $1, tetapi BUKAN $1."
+  },
+  "dlgBrandNew": {
+    "message": "Situs ini baru saja dibuat ($1). Kebanyakan penipuan memakai situs seperti ini."
+  },
+  "dlgTrick": {
+    "message": "Situs ini mencoba menipu Anda."
+  },
+  "dlgReallyOn": {
+    "message": "Anda sebenarnya berada di:"
+  },
+  "dlgReallyGoes": {
+    "message": "Tautan ini sebenarnya menuju:"
+  },
+  "dlgRealSite": {
+    "message": "Situs asli $1 adalah:"
+  },
+  "dlgWhy": {
+    "message": "Mengapa kami berpikir begitu:"
+  },
+  "dlgLeave": {
+    "message": "← Tinggalkan situs ini (aman)"
+  },
+  "dlgGoBack": {
+    "message": "← Kembali, jangan dibuka (aman)"
+  },
+  "dlgLearn": {
+    "message": "📖 Bagaimana mengenali penipuan? (panduan 5 menit)"
+  },
+  "dlgKnow": {
+    "message": "Saya tahu apa yang saya lakukan…"
+  },
+  "dlgPhone": {
+    "message": "☎️ Jika seseorang di telepon, di chat, atau lewat pesan menyuruh Anda melakukan ini, itu penipuan. Berhenti dan tutup teleponnya."
+  },
+  "dlgConfirmPassword": {
+    "message": "Saya paham situs ini bisa mencuri kata sandi atau uang saya, dan saya tetap ingin mengetik di sini."
+  },
+  "dlgConfirmLink": {
+    "message": "Saya paham situs ini bisa mencuri kata sandi atau uang saya, dan saya tetap ingin membukanya."
+  },
+  "dlgUnlock": {
+    "message": "Tetap buka kunci kolom"
+  },
+  "dlgOpen": {
+    "message": "Tetap buka tautan"
+  },
+  "dlgWait": {
+    "message": "Tunggu $1 detik dan pikirkan baik-baik…"
+  },
+  "banNot": {
+    "message": "⛔ Peringatan: situs ini BUKAN $1."
+  },
+  "banAge": {
+    "message": "⛔ Hati-hati: situs ini dibuat $1."
+  },
+  "banScam": {
+    "message": "⛔ Peringatan: situs ini tampak seperti penipuan."
+  },
+  "banNoType": {
+    "message": "Jangan ketik kata sandi, kode, atau nomor kartu di sini."
+  },
+  "banWhy": {
+    "message": "Mengapa?"
+  },
+  "banLeave": {
+    "message": "Tinggalkan situs ini"
+  },
+  "alertHidden": {
+    "message": "Grilled Phish: situs ini mencoba menyembunyikan peringatan penipuan kami.\n\nHampir pasti ini palsu. Jangan ketik kata sandi, kode, atau nomor kartu apa pun. Tutup halaman ini."
+  },
+  "popChecking": {
+    "message": "Memeriksa…"
+  },
+  "popOn": {
+    "message": "Anda berada di:"
+  },
+  "popTrustWarn": {
+    "message": "Percayai hanya situs yang sudah lama Anda gunakan. Jika seseorang di telepon atau lewat pesan menyuruh Anda menekan ini, jangan: itu penipuan."
+  },
+  "popTrust": {
+    "message": "✓ Saya percaya situs ini"
+  },
+  "popTrustConfirm": {
+    "message": "Ya, saya sudah bertahun-tahun memakai situs ini"
+  },
+  "popUntrust": {
+    "message": "Hapus dari situs tepercaya saya"
+  },
+  "popSettings": {
+    "message": "Situs tepercaya saya…"
+  },
+  "popLearn": {
+    "message": "Cara mengenali penipuan (panduan 5 menit)"
+  },
+  "popAge": {
+    "message": "Situs dibuat $1 ($2)"
+  },
+  "popKnown": {
+    "message": "⭐ Situs terkenal (peringkat #$1 paling banyak dikunjungi di dunia)"
+  },
+  "popNotSite": {
+    "message": "Bukan situs web"
+  },
+  "popOwnTrusted": {
+    "message": "Salah satu situs tepercaya Anda"
+  },
+  "popReal": {
+    "message": "Ini situs asli $1"
+  },
+  "popFake": {
+    "message": "PALSU — ini BUKAN $1"
+  },
+  "popScam": {
+    "message": "Situs ini tampak seperti penipuan"
+  },
+  "popUnknown": {
+    "message": "Situs yang belum Anda tandai sebagai tepercaya"
+  },
+  "optTitle": {
+    "message": "Grilled Phish — situs tepercaya"
+  },
+  "optH1": {
+    "message": "Situs tepercaya saya"
+  },
+  "optIntro": {
+    "message": "Tambahkan situs yang benar-benar Anda gunakan: bank, email, toko Anda. Grilled Phish lalu akan <strong>memblokir setiap salinan palsunya</strong>, bahkan jika hanya satu huruf yang diubah."
+  },
+  "optHint": {
+    "message": "Perusahaan besar (PayPal, Google, Amazon, bank…) sudah dilindungi."
+  },
+  "optLearn": {
+    "message": "📖 Cara mengenali situs penipuan: panduan 5 menit"
+  },
+  "optSiteLabel": {
+    "message": "Alamat situs"
+  },
+  "optPlaceholder": {
+    "message": "misalnya: bankku.co.id"
+  },
+  "optAdd": {
+    "message": "Tambah"
+  },
+  "optEmpty": {
+    "message": "Belum ada situs tepercaya."
+  },
+  "optRemove": {
+    "message": "Hapus"
+  },
+  "optRemoved": {
+    "message": "$1 dihapus."
+  },
+  "optBadAddr": {
+    "message": "Itu tidak tampak seperti alamat situs. Coba sesuatu seperti “bankku.co.id”."
+  },
+  "optCareful": {
+    "message": "Hati-hati! “$1” tampak palsu: $2"
+  },
+  "optAdded": {
+    "message": "✓ $1 ditambahkan."
+  },
+  "optAgeH": {
+    "message": "🗓️ Situs yang baru dibuat"
+  },
+  "optAgeP": {
+    "message": "Kebanyakan situs penipuan dibuat beberapa hari sebelum serangan dan segera hilang. Grilled Phish dapat memeriksa kapan sebuah situs dibuat dan memblokir yang sangat baru."
+  },
+  "optAgeCheck": {
+    "message": "Blokir situs yang lebih baru dari"
+  },
+  "optWeek": {
+    "message": "1 minggu"
+  },
+  "optMonth": {
+    "message": "1 bulan (disarankan)"
+  },
+  "opt3Months": {
+    "message": "3 bulan"
+  },
+  "optAgePrivacy": {
+    "message": "Privasi: untuk ini, hanya nama situs (misalnya <code>best-deals.shop</code>, tidak pernah alamat lengkap atau apa yang Anda lakukan di sana) yang dikirim ke registri resmi akhiran tersebut, seperti Verisign untuk <code>.com</code>. Beberapa akhiran (.it, .de, .es, .eu) tidak menerbitkan tanggal pembuatan, jadi situs tersebut tidak dapat diperiksa."
+  },
+  "optDbH": {
+    "message": "⭐ Situs terkenal"
+  },
+  "optDbP": {
+    "message": "Grilled Phish mengenal situs yang paling banyak dikunjungi di dunia, jadi bisa memblokir tiruannya (misalnya <code>wikipedla.org</code> yang berpura-pura menjadi <code>wikipedia.org</code>). Pemeriksaan dilakukan di komputer Anda."
+  },
+  "optAuto": {
+    "message": "Perbarui daftar ini secara otomatis (disarankan)"
+  },
+  "optCheckNow": {
+    "message": "Periksa pembaruan sekarang"
+  },
+  "optSigned": {
+    "message": "Pembaruan ditandatangani secara digital oleh Grilled Phish. Daftar yang tanda tangannya salah, lebih lama dari yang Anda miliki, atau tampak rusak akan ditolak, dan daftar saat ini tetap digunakan."
+  },
+  "optUnknownDate": {
+    "message": "tanggal tidak diketahui"
+  },
+  "optListUnavailable": {
+    "message": "Daftar tidak tersedia."
+  },
+  "optListStatus": {
+    "message": "$1 situs, daftar tanggal $2 ($3)."
+  },
+  "optFromBuiltIn": {
+    "message": "bawaan"
+  },
+  "optFromDownloaded": {
+    "message": "diunduh"
+  },
+  "optLastChecked": {
+    "message": "Terakhir diperiksa $1."
+  },
+  "optCouldNot": {
+    "message": "⚠ Tidak dapat memperbarui: $1"
+  }
+}

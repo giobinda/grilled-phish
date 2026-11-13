@@ -1,0 +1,323 @@
+{
+  "extName": {
+    "message": "Grilled Phish"
+  },
+  "extDescription": {
+    "message": "Puts a red box around fake look-alike links (paypa1.com, pаypal.com...) and blocks them until you really confirm."
+  },
+  "badgeDanger": {
+    "message": "Grilled Phish: FAKE or dangerous website"
+  },
+  "badgeTrusted": {
+    "message": "Grilled Phish: the real website"
+  },
+  "rIp": {
+    "message": "The link goes to a bare number address instead of a website name. Real companies do not do this."
+  },
+  "scriptLatin": {
+    "message": "Latin"
+  },
+  "scriptCyrillic": {
+    "message": "Cyrillic"
+  },
+  "scriptGreek": {
+    "message": "Greek"
+  },
+  "scriptArmenian": {
+    "message": "Armenian"
+  },
+  "rScript": {
+    "message": "The address mixes letters from different alphabets ($1). This is a classic trick to fake a famous name."
+  },
+  "rHomoglyph": {
+    "message": "It uses look-alike letters from another alphabet to imitate \"$1\"."
+  },
+  "rSameLabel": {
+    "message": "It uses the name \"$1\" but it is NOT $2's real website."
+  },
+  "rSwap": {
+    "message": "It swaps letters to look like \"$1\" (tricks like \"rn\" for \"m\", \"1\" for \"l\", \"0\" for \"o\")."
+  },
+  "rTypo": {
+    "message": "The name \"$1\" is one letter different from \"$2\"."
+  },
+  "rBrandSub": {
+    "message": "\"$1\" appears at the start of the address, but the site really belongs to \"$2\"."
+  },
+  "rBait": {
+    "message": "It adds words to the name \"$1\" to look official, but it is not $2's website."
+  },
+  "rTextMismatch": {
+    "message": "The text says \"$1\", but the link secretly goes to \"$2\"."
+  },
+  "rAge": {
+    "message": "This website was created $1. Scam websites are usually brand new and vanish within days; real banks and shops have existed for years."
+  },
+  "rDbSub": {
+    "message": "It starts with \"$1\", a well-known website, but the site really belongs to \"$2\"."
+  },
+  "rDbLook": {
+    "message": "It looks almost identical to \"$1\", a well-known website, but some letters are different."
+  },
+  "ageToday": {
+    "message": "today"
+  },
+  "ageYesterday": {
+    "message": "yesterday"
+  },
+  "ageDaysAgo": {
+    "message": "$1 days ago"
+  },
+  "ageOnlyDaysAgo": {
+    "message": "only $1 days ago"
+  },
+  "ageMonthsAgo": {
+    "message": "$1 months ago"
+  },
+  "ageYearsAgo": {
+    "message": "$1 years ago"
+  },
+  "linkTitle": {
+    "message": "Blocked by Grilled Phish: this link is probably a scam"
+  },
+  "linkBadge": {
+    "message": "⛔ Fake site — blocked"
+  },
+  "charOdd": {
+    "message": "Not a normal letter: $1"
+  },
+  "charDiff": {
+    "message": "This letter is different from the real website"
+  },
+  "charZero": {
+    "message": "This is the number zero, not the letter O"
+  },
+  "charOne": {
+    "message": "This is the number one, not the letter L"
+  },
+  "dlgTitlePassword": {
+    "message": "⛔ STOP — do not type your password here"
+  },
+  "dlgTitleLink": {
+    "message": "⛔ STOP — this link is probably a scam"
+  },
+  "dlgPretending": {
+    "message": "It is pretending to be $1, but it is NOT $1."
+  },
+  "dlgBrandNew": {
+    "message": "This website is brand new ($1). Most scams use websites like this."
+  },
+  "dlgTrick": {
+    "message": "This website is trying to trick you."
+  },
+  "dlgReallyOn": {
+    "message": "You are really on:"
+  },
+  "dlgReallyGoes": {
+    "message": "This link really goes to:"
+  },
+  "dlgRealSite": {
+    "message": "The real $1 website is:"
+  },
+  "dlgWhy": {
+    "message": "Why we think so:"
+  },
+  "dlgLeave": {
+    "message": "← Leave this site (safe)"
+  },
+  "dlgGoBack": {
+    "message": "← Go back, do not open it (safe)"
+  },
+  "dlgLearn": {
+    "message": "📖 How do I recognize a scam? (5-minute guide)"
+  },
+  "dlgKnow": {
+    "message": "I know what I am doing…"
+  },
+  "dlgPhone": {
+    "message": "☎️ If someone on the phone, in a chat or in a message is telling you to do this, it is a scam. Stop and hang up."
+  },
+  "dlgConfirmPassword": {
+    "message": "I understand this site may steal my password or my money, and I still want to type here."
+  },
+  "dlgConfirmLink": {
+    "message": "I understand this site may steal my passwords or my money, and I still want to open it."
+  },
+  "dlgUnlock": {
+    "message": "Unlock the fields anyway"
+  },
+  "dlgOpen": {
+    "message": "Open the link anyway"
+  },
+  "dlgWait": {
+    "message": "Please wait $1s and think about it…"
+  },
+  "banNot": {
+    "message": "⛔ Warning: this website is NOT $1."
+  },
+  "banAge": {
+    "message": "⛔ Careful: this website was created $1."
+  },
+  "banScam": {
+    "message": "⛔ Warning: this website looks like a scam."
+  },
+  "banNoType": {
+    "message": "Do not type passwords, codes or card numbers here."
+  },
+  "banWhy": {
+    "message": "Why?"
+  },
+  "banLeave": {
+    "message": "Leave this site"
+  },
+  "alertHidden": {
+    "message": "Grilled Phish: this website tried to hide our scam warning.\n\nIt is almost certainly a fake. Do not type any password, code or card number. Close this page."
+  },
+  "popChecking": {
+    "message": "Checking…"
+  },
+  "popOn": {
+    "message": "You are on:"
+  },
+  "popTrustWarn": {
+    "message": "Only trust websites you have used for a long time. If someone on the phone or in a message told you to press this, don't: it is a scam."
+  },
+  "popTrust": {
+    "message": "✓ I trust this site"
+  },
+  "popTrustConfirm": {
+    "message": "Yes, I have used this site for years"
+  },
+  "popUntrust": {
+    "message": "Remove from my trusted sites"
+  },
+  "popSettings": {
+    "message": "My trusted sites…"
+  },
+  "popLearn": {
+    "message": "How to spot a scam (5-minute guide)"
+  },
+  "popAge": {
+    "message": "Website created $1 ($2)"
+  },
+  "popKnown": {
+    "message": "⭐ Well-known website (#$1 most visited in the world)"
+  },
+  "popNotSite": {
+    "message": "Not a website"
+  },
+  "popOwnTrusted": {
+    "message": "One of your trusted sites"
+  },
+  "popReal": {
+    "message": "This is the real $1"
+  },
+  "popFake": {
+    "message": "FAKE — this is NOT $1"
+  },
+  "popScam": {
+    "message": "This site looks like a scam"
+  },
+  "popUnknown": {
+    "message": "A site you have not marked as trusted"
+  },
+  "optTitle": {
+    "message": "Grilled Phish — trusted sites"
+  },
+  "optH1": {
+    "message": "My trusted sites"
+  },
+  "optIntro": {
+    "message": "Add the websites you really use: your bank, your email, your shop. Grilled Phish will then <strong>block any fake copy</strong> of them, even with one changed letter."
+  },
+  "optHint": {
+    "message": "Big companies (PayPal, Google, Amazon, Poste Italiane, banks…) are already protected."
+  },
+  "optLearn": {
+    "message": "📖 How to spot a scam website: a 5-minute guide"
+  },
+  "optSiteLabel": {
+    "message": "Website address"
+  },
+  "optPlaceholder": {
+    "message": "for example: mybank.com"
+  },
+  "optAdd": {
+    "message": "Add"
+  },
+  "optEmpty": {
+    "message": "No trusted sites yet."
+  },
+  "optRemove": {
+    "message": "Remove"
+  },
+  "optRemoved": {
+    "message": "Removed $1."
+  },
+  "optBadAddr": {
+    "message": "That does not look like a website address. Try something like \"mybank.com\"."
+  },
+  "optCareful": {
+    "message": "Careful! \"$1\" looks like a fake: $2"
+  },
+  "optAdded": {
+    "message": "✓ Added $1."
+  },
+  "optAgeH": {
+    "message": "🗓️ Brand-new websites"
+  },
+  "optAgeP": {
+    "message": "Most scam websites are created a few days before the attack and disappear soon after. Grilled Phish can check when a website was created and block very new ones."
+  },
+  "optAgeCheck": {
+    "message": "Block websites that are newer than"
+  },
+  "optWeek": {
+    "message": "1 week"
+  },
+  "optMonth": {
+    "message": "1 month (recommended)"
+  },
+  "opt3Months": {
+    "message": "3 months"
+  },
+  "optAgePrivacy": {
+    "message": "Privacy: to do this, only the website's name (for example <code>best-deals.shop</code>, never the full address or what you do there) is sent to the official registry for that ending, such as Verisign for <code>.com</code>. Some endings (.it, .de, .es, .eu) don't publish creation dates, so those sites can't be checked."
+  },
+  "optDbH": {
+    "message": "⭐ Well-known websites"
+  },
+  "optDbP": {
+    "message": "Grilled Phish knows the most visited websites in the world, so it can block copies of them (for example <code>wikipedla.org</code> pretending to be <code>wikipedia.org</code>). The check happens on your computer."
+  },
+  "optAuto": {
+    "message": "Keep this list up to date automatically (recommended)"
+  },
+  "optCheckNow": {
+    "message": "Check for updates now"
+  },
+  "optSigned": {
+    "message": "Updates are digitally signed by Grilled Phish. A list that isn't correctly signed, is older than the one you have, or looks damaged is refused, and the current list stays in use."
+  },
+  "optUnknownDate": {
+    "message": "unknown date"
+  },
+  "optListUnavailable": {
+    "message": "List unavailable."
+  },
+  "optListStatus": {
+    "message": "$1 websites, list of $2 ($3)."
+  },
+  "optFromBuiltIn": {
+    "message": "built in"
+  },
+  "optFromDownloaded": {
+    "message": "downloaded"
+  },
+  "optLastChecked": {
+    "message": "Last checked $1."
+  },
+  "optCouldNot": {
+    "message": "⚠ Could not update: $1"
+  }
+}

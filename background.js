@@ -266,8 +266,8 @@ async function listStatus() {
 // ---------------------------------------------------------------- toolbar badge
 // Drawn by the browser itself, so a phishing page can neither fake nor hide it.
 const BADGES = {
-  danger: { text: '!', color: '#d40000', title: 'Grilled Phish: FAKE or dangerous website' },
-  trusted: { text: '✓', color: '#1a7f37', title: 'Grilled Phish: the real website' },
+  danger: { text: '!', color: '#d40000', title: chrome.i18n.getMessage('badgeDanger') },
+  trusted: { text: '✓', color: '#1a7f37', title: chrome.i18n.getMessage('badgeTrusted') },
 };
 chrome.tabs.onUpdated.addListener((tabId, change) => {
   if (change.status === 'loading') {

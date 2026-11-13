@@ -1,0 +1,323 @@
+{
+  "extName": {
+    "message": "Grilled Phish"
+  },
+  "extDescription": {
+    "message": "有名サイトをまねた偽リンク（paypa1.com、pаypal.com など）を赤い枠で囲み、本当に確認するまでブロックします。"
+  },
+  "badgeDanger": {
+    "message": "Grilled Phish：偽物または危険なサイト"
+  },
+  "badgeTrusted": {
+    "message": "Grilled Phish：本物のサイト"
+  },
+  "rIp": {
+    "message": "このリンクはサイト名ではなく、数字だけのアドレスに向かっています。まともな会社はこうしたことをしません。"
+  },
+  "scriptLatin": {
+    "message": "ラテン文字"
+  },
+  "scriptCyrillic": {
+    "message": "キリル文字"
+  },
+  "scriptGreek": {
+    "message": "ギリシャ文字"
+  },
+  "scriptArmenian": {
+    "message": "アルメニア文字"
+  },
+  "rScript": {
+    "message": "アドレスに異なる種類の文字が混ざっています（$1）。有名な名前を偽るための典型的な手口です。"
+  },
+  "rHomoglyph": {
+    "message": "別の文字体系のそっくりな文字を使って「$1」になりすましています。"
+  },
+  "rSameLabel": {
+    "message": "「$1」という名前を使っていますが、$2 の本物のサイトではありません。"
+  },
+  "rSwap": {
+    "message": "文字を入れ替えて「$1」に見せかけています（「m」の代わりに「rn」、「l」の代わりに「1」、「o」の代わりに「0」など）。"
+  },
+  "rTypo": {
+    "message": "「$1」という名前は「$2」と1文字だけ違います。"
+  },
+  "rBrandSub": {
+    "message": "アドレスの先頭に「$1」がありますが、実際のサイトの持ち主は「$2」です。"
+  },
+  "rBait": {
+    "message": "「$1」という名前に言葉を付け足して公式らしく見せていますが、$2 のサイトではありません。"
+  },
+  "rTextMismatch": {
+    "message": "表示は「$1」ですが、リンクは実際には「$2」に向かっています。"
+  },
+  "rAge": {
+    "message": "このサイトは$1に作られました。詐欺サイトはたいてい作られたばかりで、数日で消えます。本物の銀行やお店は何年も前からあります。"
+  },
+  "rDbSub": {
+    "message": "有名サイト「$1」で始まっていますが、実際のサイトの持ち主は「$2」です。"
+  },
+  "rDbLook": {
+    "message": "有名サイト「$1」とほとんど同じに見えますが、いくつかの文字が違います。"
+  },
+  "ageToday": {
+    "message": "今日"
+  },
+  "ageYesterday": {
+    "message": "昨日"
+  },
+  "ageDaysAgo": {
+    "message": "$1日前"
+  },
+  "ageOnlyDaysAgo": {
+    "message": "わずか$1日前"
+  },
+  "ageMonthsAgo": {
+    "message": "$1か月前"
+  },
+  "ageYearsAgo": {
+    "message": "$1年前"
+  },
+  "linkTitle": {
+    "message": "Grilled Phish がブロックしました：このリンクはおそらく詐欺です"
+  },
+  "linkBadge": {
+    "message": "⛔ 偽サイト — ブロック済み"
+  },
+  "charOdd": {
+    "message": "普通の文字ではありません：$1"
+  },
+  "charDiff": {
+    "message": "この文字は本物のサイトと違います"
+  },
+  "charZero": {
+    "message": "これは数字のゼロで、英字の O ではありません"
+  },
+  "charOne": {
+    "message": "これは数字の1で、英字の L ではありません"
+  },
+  "dlgTitlePassword": {
+    "message": "⛔ ストップ — ここにパスワードを入力しないでください"
+  },
+  "dlgTitleLink": {
+    "message": "⛔ ストップ — このリンクはおそらく詐欺です"
+  },
+  "dlgPretending": {
+    "message": "$1 になりすましていますが、$1 ではありません。"
+  },
+  "dlgBrandNew": {
+    "message": "このサイトは作られたばかりです（$1）。詐欺の多くはこのようなサイトを使います。"
+  },
+  "dlgTrick": {
+    "message": "このサイトはあなたをだまそうとしています。"
+  },
+  "dlgReallyOn": {
+    "message": "実際にいるサイト："
+  },
+  "dlgReallyGoes": {
+    "message": "このリンクの本当の行き先："
+  },
+  "dlgRealSite": {
+    "message": "$1 の本物のサイト："
+  },
+  "dlgWhy": {
+    "message": "そう判断した理由："
+  },
+  "dlgLeave": {
+    "message": "← このサイトから離れる（安全）"
+  },
+  "dlgGoBack": {
+    "message": "← 戻る、開かない（安全）"
+  },
+  "dlgLearn": {
+    "message": "📖 詐欺の見分け方は？（5分ガイド）"
+  },
+  "dlgKnow": {
+    "message": "自分が何をしているか分かっています…"
+  },
+  "dlgPhone": {
+    "message": "☎️ 電話、チャット、メッセージで誰かにこうするよう言われているなら、それは詐欺です。やめて、電話を切ってください。"
+  },
+  "dlgConfirmPassword": {
+    "message": "このサイトにパスワードやお金を盗まれるおそれがあると理解したうえで、ここに入力します。"
+  },
+  "dlgConfirmLink": {
+    "message": "このサイトにパスワードやお金を盗まれるおそれがあると理解したうえで、開きます。"
+  },
+  "dlgUnlock": {
+    "message": "それでも入力欄のロックを解除する"
+  },
+  "dlgOpen": {
+    "message": "それでもリンクを開く"
+  },
+  "dlgWait": {
+    "message": "$1秒待って、よく考えてください…"
+  },
+  "banNot": {
+    "message": "⛔ 警告：このサイトは $1 ではありません。"
+  },
+  "banAge": {
+    "message": "⛔ 注意：このサイトは$1に作られました。"
+  },
+  "banScam": {
+    "message": "⛔ 警告：このサイトは詐欺の可能性があります。"
+  },
+  "banNoType": {
+    "message": "ここにパスワード、認証コード、カード番号を入力しないでください。"
+  },
+  "banWhy": {
+    "message": "なぜ？"
+  },
+  "banLeave": {
+    "message": "このサイトから離れる"
+  },
+  "alertHidden": {
+    "message": "Grilled Phish：このサイトは詐欺の警告を隠そうとしました。\n\nほぼ確実に偽物です。パスワード、認証コード、カード番号は入力しないでください。このページを閉じてください。"
+  },
+  "popChecking": {
+    "message": "確認中…"
+  },
+  "popOn": {
+    "message": "現在のサイト："
+  },
+  "popTrustWarn": {
+    "message": "長く使っているサイトだけを信頼してください。電話やメッセージでここを押すように言われたなら、押さないでください。詐欺です。"
+  },
+  "popTrust": {
+    "message": "✓ このサイトを信頼する"
+  },
+  "popTrustConfirm": {
+    "message": "はい、このサイトを何年も使っています"
+  },
+  "popUntrust": {
+    "message": "信頼するサイトから外す"
+  },
+  "popSettings": {
+    "message": "信頼するサイト…"
+  },
+  "popLearn": {
+    "message": "詐欺の見分け方（5分ガイド）"
+  },
+  "popAge": {
+    "message": "サイト作成：$1（$2）"
+  },
+  "popKnown": {
+    "message": "⭐ 有名サイト（世界のアクセス数 第$1位）"
+  },
+  "popNotSite": {
+    "message": "ウェブサイトではありません"
+  },
+  "popOwnTrusted": {
+    "message": "あなたが信頼しているサイト"
+  },
+  "popReal": {
+    "message": "これは $1 の本物のサイトです"
+  },
+  "popFake": {
+    "message": "偽物 — これは $1 ではありません"
+  },
+  "popScam": {
+    "message": "このサイトは詐欺の可能性があります"
+  },
+  "popUnknown": {
+    "message": "まだ信頼済みにしていないサイト"
+  },
+  "optTitle": {
+    "message": "Grilled Phish — 信頼するサイト"
+  },
+  "optH1": {
+    "message": "信頼するサイト"
+  },
+  "optIntro": {
+    "message": "実際に使っているサイト（銀行、メール、よく使うお店）を追加してください。Grilled Phish が、1文字だけ違う偽物も含めて<strong>すべての偽コピーをブロック</strong>します。"
+  },
+  "optHint": {
+    "message": "大企業（PayPal、Google、Amazon、銀行など）はすでに保護されています。"
+  },
+  "optLearn": {
+    "message": "📖 詐欺サイトの見分け方：5分ガイド"
+  },
+  "optSiteLabel": {
+    "message": "サイトのアドレス"
+  },
+  "optPlaceholder": {
+    "message": "例：mybank.co.jp"
+  },
+  "optAdd": {
+    "message": "追加"
+  },
+  "optEmpty": {
+    "message": "信頼するサイトはまだありません。"
+  },
+  "optRemove": {
+    "message": "外す"
+  },
+  "optRemoved": {
+    "message": "$1 を外しました。"
+  },
+  "optBadAddr": {
+    "message": "サイトのアドレスではないようです。「mybank.co.jp」のように入力してください。"
+  },
+  "optCareful": {
+    "message": "注意！「$1」は偽物のようです：$2"
+  },
+  "optAdded": {
+    "message": "✓ $1 を追加しました。"
+  },
+  "optAgeH": {
+    "message": "🗓️ 作られたばかりのサイト"
+  },
+  "optAgeP": {
+    "message": "詐欺サイトのほとんどは攻撃の数日前に作られ、すぐに消えます。Grilled Phish はサイトの作成日を確認し、とても新しいサイトをブロックできます。"
+  },
+  "optAgeCheck": {
+    "message": "次の期間より新しいサイトをブロック"
+  },
+  "optWeek": {
+    "message": "1週間"
+  },
+  "optMonth": {
+    "message": "1か月（おすすめ）"
+  },
+  "opt3Months": {
+    "message": "3か月"
+  },
+  "optAgePrivacy": {
+    "message": "プライバシー：このためにサイト名だけ（例 <code>best-deals.shop</code>。完全なアドレスや、そこで何をしているかは送りません）が、その末尾を管理する公式の登録機関（<code>.com</code> なら Verisign）に送られます。一部の末尾（.it、.de、.es、.eu）は作成日を公開していないため、確認できません。"
+  },
+  "optDbH": {
+    "message": "⭐ 有名サイト"
+  },
+  "optDbP": {
+    "message": "Grilled Phish は世界でアクセスの多いサイトを知っているので、その偽物をブロックできます（例：<code>wikipedia.org</code> になりすます <code>wikipedla.org</code>）。確認はあなたのパソコンの中で行われます。"
+  },
+  "optAuto": {
+    "message": "このリストを自動で最新に保つ（おすすめ）"
+  },
+  "optCheckNow": {
+    "message": "今すぐ更新を確認"
+  },
+  "optSigned": {
+    "message": "更新には Grilled Phish の電子署名が付いています。正しく署名されていないリスト、今のものより古いリスト、壊れているように見えるリストは拒否され、現在のリストがそのまま使われます。"
+  },
+  "optUnknownDate": {
+    "message": "日付不明"
+  },
+  "optListUnavailable": {
+    "message": "リストを利用できません。"
+  },
+  "optListStatus": {
+    "message": "$1件のサイト、$2 のリスト（$3）。"
+  },
+  "optFromBuiltIn": {
+    "message": "内蔵"
+  },
+  "optFromDownloaded": {
+    "message": "ダウンロード済み"
+  },
+  "optLastChecked": {
+    "message": "最終確認：$1。"
+  },
+  "optCouldNot": {
+    "message": "⚠ 更新できませんでした：$1"
+  }
+}

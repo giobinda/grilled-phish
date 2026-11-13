@@ -1,0 +1,323 @@
+{
+  "extName": {
+    "message": "Grilled Phish"
+  },
+  "extDescription": {
+    "message": "Coloca uma moldura vermelha nos links falsos que imitam sites conhecidos (paypa1.com, pаypal.com…) e os bloqueia."
+  },
+  "badgeDanger": {
+    "message": "Grilled Phish: site FALSO ou perigoso"
+  },
+  "badgeTrusted": {
+    "message": "Grilled Phish: o site verdadeiro"
+  },
+  "rIp": {
+    "message": "O link leva a um endereço feito só de números em vez de um nome de site. Empresas de verdade não fazem isso."
+  },
+  "scriptLatin": {
+    "message": "latino"
+  },
+  "scriptCyrillic": {
+    "message": "cirílico"
+  },
+  "scriptGreek": {
+    "message": "grego"
+  },
+  "scriptArmenian": {
+    "message": "armênio"
+  },
+  "rScript": {
+    "message": "O endereço mistura letras de alfabetos diferentes ($1). É um truque clássico para imitar um nome famoso."
+  },
+  "rHomoglyph": {
+    "message": "Usa letras de outro alfabeto que parecem iguais para imitar “$1”."
+  },
+  "rSameLabel": {
+    "message": "Usa o nome “$1”, mas NÃO é o site verdadeiro de $2."
+  },
+  "rSwap": {
+    "message": "Troca letras para parecer “$1” (truques como “rn” por “m”, “1” por “l”, “0” por “o”)."
+  },
+  "rTypo": {
+    "message": "O nome “$1” tem só uma letra diferente de “$2”."
+  },
+  "rBrandSub": {
+    "message": "“$1” aparece no início do endereço, mas o site pertence na verdade a “$2”."
+  },
+  "rBait": {
+    "message": "Acrescenta palavras ao nome “$1” para parecer oficial, mas não é o site de $2."
+  },
+  "rTextMismatch": {
+    "message": "O texto diz “$1”, mas o link leva escondido para “$2”."
+  },
+  "rAge": {
+    "message": "Este site foi criado $1. Sites de golpe costumam ser novíssimos e somem em poucos dias; bancos e lojas de verdade existem há anos."
+  },
+  "rDbSub": {
+    "message": "Começa com “$1”, um site muito conhecido, mas o site pertence na verdade a “$2”."
+  },
+  "rDbLook": {
+    "message": "É quase idêntico a “$1”, um site muito conhecido, mas algumas letras são diferentes."
+  },
+  "ageToday": {
+    "message": "hoje"
+  },
+  "ageYesterday": {
+    "message": "ontem"
+  },
+  "ageDaysAgo": {
+    "message": "há $1 dias"
+  },
+  "ageOnlyDaysAgo": {
+    "message": "há apenas $1 dias"
+  },
+  "ageMonthsAgo": {
+    "message": "há $1 meses"
+  },
+  "ageYearsAgo": {
+    "message": "há $1 anos"
+  },
+  "linkTitle": {
+    "message": "Bloqueado pelo Grilled Phish: este link provavelmente é um golpe"
+  },
+  "linkBadge": {
+    "message": "⛔ Site falso — bloqueado"
+  },
+  "charOdd": {
+    "message": "Não é uma letra normal: $1"
+  },
+  "charDiff": {
+    "message": "Esta letra é diferente do site verdadeiro"
+  },
+  "charZero": {
+    "message": "Este é o número zero, não a letra O"
+  },
+  "charOne": {
+    "message": "Este é o número um, não a letra L"
+  },
+  "dlgTitlePassword": {
+    "message": "⛔ PARE — não digite sua senha aqui"
+  },
+  "dlgTitleLink": {
+    "message": "⛔ PARE — este link provavelmente é um golpe"
+  },
+  "dlgPretending": {
+    "message": "Está fingindo ser $1, mas NÃO é $1."
+  },
+  "dlgBrandNew": {
+    "message": "Este site é novíssimo ($1). A maioria dos golpes usa sites assim."
+  },
+  "dlgTrick": {
+    "message": "Este site está tentando enganar você."
+  },
+  "dlgReallyOn": {
+    "message": "Na verdade você está em:"
+  },
+  "dlgReallyGoes": {
+    "message": "Este link na verdade leva para:"
+  },
+  "dlgRealSite": {
+    "message": "O site verdadeiro de $1 é:"
+  },
+  "dlgWhy": {
+    "message": "Por que achamos isso:"
+  },
+  "dlgLeave": {
+    "message": "← Sair deste site (seguro)"
+  },
+  "dlgGoBack": {
+    "message": "← Voltar, não abrir (seguro)"
+  },
+  "dlgLearn": {
+    "message": "📖 Como reconhecer um golpe? (guia de 5 minutos)"
+  },
+  "dlgKnow": {
+    "message": "Eu sei o que estou fazendo…"
+  },
+  "dlgPhone": {
+    "message": "☎️ Se alguém no telefone, num chat ou numa mensagem está mandando você fazer isso, é golpe. Pare e desligue."
+  },
+  "dlgConfirmPassword": {
+    "message": "Entendo que este site pode roubar minha senha ou meu dinheiro, e mesmo assim quero digitar aqui."
+  },
+  "dlgConfirmLink": {
+    "message": "Entendo que este site pode roubar minhas senhas ou meu dinheiro, e mesmo assim quero abri-lo."
+  },
+  "dlgUnlock": {
+    "message": "Desbloquear os campos mesmo assim"
+  },
+  "dlgOpen": {
+    "message": "Abrir o link mesmo assim"
+  },
+  "dlgWait": {
+    "message": "Espere $1 s e pense bem…"
+  },
+  "banNot": {
+    "message": "⛔ Atenção: este site NÃO é $1."
+  },
+  "banAge": {
+    "message": "⛔ Cuidado: este site foi criado $1."
+  },
+  "banScam": {
+    "message": "⛔ Atenção: este site parece um golpe."
+  },
+  "banNoType": {
+    "message": "Não digite aqui senhas, códigos ou números de cartão."
+  },
+  "banWhy": {
+    "message": "Por quê?"
+  },
+  "banLeave": {
+    "message": "Sair deste site"
+  },
+  "alertHidden": {
+    "message": "Grilled Phish: este site tentou esconder nosso aviso de golpe.\n\nÉ quase certamente falso. Não digite nenhuma senha, código ou número de cartão. Feche esta página."
+  },
+  "popChecking": {
+    "message": "Verificando…"
+  },
+  "popOn": {
+    "message": "Você está em:"
+  },
+  "popTrustWarn": {
+    "message": "Confie apenas em sites que você usa há muito tempo. Se alguém no telefone ou numa mensagem mandou você apertar aqui, não aperte: é golpe."
+  },
+  "popTrust": {
+    "message": "✓ Confio neste site"
+  },
+  "popTrustConfirm": {
+    "message": "Sim, uso este site há anos"
+  },
+  "popUntrust": {
+    "message": "Remover dos meus sites confiáveis"
+  },
+  "popSettings": {
+    "message": "Meus sites confiáveis…"
+  },
+  "popLearn": {
+    "message": "Como reconhecer um golpe (guia de 5 minutos)"
+  },
+  "popAge": {
+    "message": "Site criado $1 ($2)"
+  },
+  "popKnown": {
+    "message": "⭐ Site muito conhecido (nº $1 entre os mais visitados do mundo)"
+  },
+  "popNotSite": {
+    "message": "Não é um site"
+  },
+  "popOwnTrusted": {
+    "message": "Um dos seus sites confiáveis"
+  },
+  "popReal": {
+    "message": "Este é o site verdadeiro de $1"
+  },
+  "popFake": {
+    "message": "FALSO — este NÃO é $1"
+  },
+  "popScam": {
+    "message": "Este site parece um golpe"
+  },
+  "popUnknown": {
+    "message": "Um site que você não marcou como confiável"
+  },
+  "optTitle": {
+    "message": "Grilled Phish — sites confiáveis"
+  },
+  "optH1": {
+    "message": "Meus sites confiáveis"
+  },
+  "optIntro": {
+    "message": "Adicione os sites que você realmente usa: seu banco, seu e-mail, sua loja. O Grilled Phish vai <strong>bloquear qualquer cópia falsa</strong> deles, mesmo com uma só letra trocada."
+  },
+  "optHint": {
+    "message": "Grandes empresas (PayPal, Google, Amazon, bancos…) já estão protegidas."
+  },
+  "optLearn": {
+    "message": "📖 Como reconhecer um site falso: guia de 5 minutos"
+  },
+  "optSiteLabel": {
+    "message": "Endereço do site"
+  },
+  "optPlaceholder": {
+    "message": "por exemplo: meubanco.com.br"
+  },
+  "optAdd": {
+    "message": "Adicionar"
+  },
+  "optEmpty": {
+    "message": "Nenhum site confiável ainda."
+  },
+  "optRemove": {
+    "message": "Remover"
+  },
+  "optRemoved": {
+    "message": "$1 removido."
+  },
+  "optBadAddr": {
+    "message": "Isso não parece um endereço de site. Tente algo como “meubanco.com.br”."
+  },
+  "optCareful": {
+    "message": "Cuidado! “$1” parece falso: $2"
+  },
+  "optAdded": {
+    "message": "✓ $1 adicionado."
+  },
+  "optAgeH": {
+    "message": "🗓️ Sites novíssimos"
+  },
+  "optAgeP": {
+    "message": "A maioria dos sites de golpe é criada poucos dias antes do ataque e some logo depois. O Grilled Phish pode verificar quando um site foi criado e bloquear os muito novos."
+  },
+  "optAgeCheck": {
+    "message": "Bloquear sites criados há menos de"
+  },
+  "optWeek": {
+    "message": "1 semana"
+  },
+  "optMonth": {
+    "message": "1 mês (recomendado)"
+  },
+  "opt3Months": {
+    "message": "3 meses"
+  },
+  "optAgePrivacy": {
+    "message": "Privacidade: para isso, só o nome do site (por exemplo <code>best-deals.shop</code>, nunca o endereço completo nem o que você faz nele) é enviado ao registro oficial daquela terminação, como a Verisign para <code>.com</code>. Algumas terminações (.it, .de, .es, .eu) não publicam a data de criação, então esses sites não podem ser verificados."
+  },
+  "optDbH": {
+    "message": "⭐ Sites muito conhecidos"
+  },
+  "optDbP": {
+    "message": "O Grilled Phish conhece os sites mais visitados do mundo, por isso consegue bloquear cópias deles (por exemplo <code>wikipedla.org</code> fingindo ser <code>wikipedia.org</code>). A verificação acontece no seu computador."
+  },
+  "optAuto": {
+    "message": "Manter esta lista atualizada automaticamente (recomendado)"
+  },
+  "optCheckNow": {
+    "message": "Procurar atualizações agora"
+  },
+  "optSigned": {
+    "message": "As atualizações têm assinatura digital do Grilled Phish. Uma lista com assinatura incorreta, mais antiga que a sua ou que pareça danificada é recusada, e a lista atual continua em uso."
+  },
+  "optUnknownDate": {
+    "message": "data desconhecida"
+  },
+  "optListUnavailable": {
+    "message": "Lista indisponível."
+  },
+  "optListStatus": {
+    "message": "$1 sites, lista de $2 ($3)."
+  },
+  "optFromBuiltIn": {
+    "message": "incluída"
+  },
+  "optFromDownloaded": {
+    "message": "baixada"
+  },
+  "optLastChecked": {
+    "message": "Última verificação: $1."
+  },
+  "optCouldNot": {
+    "message": "⚠ Não foi possível atualizar: $1"
+  }
+}

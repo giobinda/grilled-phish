@@ -1,5 +1,6 @@
 (async () => {
   const D = globalThis.GrilledPhishDetector;
+  const T = globalThis.GP_T;
   const $ = (id) => document.getElementById(id);
 
   $('settings').addEventListener('click', () => chrome.runtime.openOptionsPage());
@@ -33,7 +34,7 @@
         const days = D.daysSince(created);
         const ageEl = $('age');
         ageEl.hidden = false;
-        ageEl.textContent = `Website created ${D.describeAge(days)} (${created.slice(0, 10)})`;
+        ageEl.textContent = T('popAge', D.describeAge(days), created.slice(0, 10));
         if (days < ageDays) ageEl.classList.add('young');
       }
     } catch { /* background unavailable: skip */ }
@@ -44,12 +45,12 @@
   }
   if (r.known) {
     $('known').hidden = false;
-    $('known').textContent = `⭐ Well-known website (#${r.known.toLocaleString()} most visited in the world)`;
+    $('known').textContent = T('popKnown', r.known.toLocaleString());
   }
 
   if (r.verdict === 'ignore') {
     $('icon').textContent = 'ℹ️';
-    $('headline').textContent = 'Not a website';
+    $('headline').textContent = T('popNotSite');
     $('domain').textContent = '—';
     return;
   }
@@ -61,13 +62,13 @@
     status.classList.add('trusted');
     $('icon').textContent = '✅';
     $('headline').textContent = trusted.includes(r.registrable)
-      ? 'One of your trusted sites'
-      : `This is the real ${r.owner}`;
+      ? T('popOwnTrusted')
+      : T('popReal', r.owner);
     if (trusted.includes(r.registrable)) $('untrust').hidden = false;
   } else if (r.verdict === 'danger') {
     status.classList.add('danger');
     $('icon').textContent = '⛔';
-    $('headline').textContent = r.impersonates ? `FAKE — this is NOT ${r.impersonates}` : 'This site looks like a scam';
+    $('headline').textContent = r.impersonates ? T('popFake', r.impersonates) : T('popScam');
     for (const reason of r.reasons) {
       const li = document.createElement('li');
       li.textContent = reason;
@@ -75,7 +76,7 @@
     }
   } else {
     $('icon').textContent = '❔';
-    $('headline').textContent = 'A site you have not marked as trusted';
+    $('headline').textContent = T('popUnknown');
     $('trust').hidden = false;
   }
 
@@ -85,7 +86,7 @@
     if (!armed) {
       armed = true;
       $('trustWarn').hidden = false;
-      $('trust').textContent = 'Yes, I have used this site for years';
+      $('trust').textContent = T('popTrustConfirm');
       return;
     }
     const list = new Set(trusted);

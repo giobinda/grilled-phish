@@ -1,0 +1,323 @@
+{
+  "extName": {
+    "message": "Grilled Phish"
+  },
+  "extDescription": {
+    "message": "Pone un recuadro rojo alrededor de los enlaces falsos que imitan webs conocidas (paypa1.com, pаypal.com…) y los bloquea."
+  },
+  "badgeDanger": {
+    "message": "Grilled Phish: web FALSA o peligrosa"
+  },
+  "badgeTrusted": {
+    "message": "Grilled Phish: la web real"
+  },
+  "rIp": {
+    "message": "El enlace lleva a una dirección hecha solo de números en lugar de un nombre de web. Las empresas reales no hacen esto."
+  },
+  "scriptLatin": {
+    "message": "latino"
+  },
+  "scriptCyrillic": {
+    "message": "cirílico"
+  },
+  "scriptGreek": {
+    "message": "griego"
+  },
+  "scriptArmenian": {
+    "message": "armenio"
+  },
+  "rScript": {
+    "message": "La dirección mezcla letras de alfabetos distintos ($1). Es un truco clásico para imitar un nombre famoso."
+  },
+  "rHomoglyph": {
+    "message": "Usa letras de otro alfabeto que parecen iguales para imitar «$1»."
+  },
+  "rSameLabel": {
+    "message": "Usa el nombre «$1», pero NO es la web real de $2."
+  },
+  "rSwap": {
+    "message": "Cambia letras para parecerse a «$1» (trucos como «rn» por «m», «1» por «l», «0» por «o»)."
+  },
+  "rTypo": {
+    "message": "El nombre «$1» se diferencia en una sola letra de «$2»."
+  },
+  "rBrandSub": {
+    "message": "«$1» aparece al principio de la dirección, pero la web pertenece en realidad a «$2»."
+  },
+  "rBait": {
+    "message": "Añade palabras al nombre «$1» para parecer oficial, pero no es la web de $2."
+  },
+  "rTextMismatch": {
+    "message": "El texto dice «$1», pero el enlace lleva en secreto a «$2»."
+  },
+  "rAge": {
+    "message": "Esta web se creó $1. Las webs fraudulentas suelen ser nuevas y desaparecen en pocos días; los bancos y tiendas reales existen desde hace años."
+  },
+  "rDbSub": {
+    "message": "Empieza por «$1», una web muy conocida, pero la web pertenece en realidad a «$2»."
+  },
+  "rDbLook": {
+    "message": "Es casi idéntica a «$1», una web muy conocida, pero algunas letras son distintas."
+  },
+  "ageToday": {
+    "message": "hoy"
+  },
+  "ageYesterday": {
+    "message": "ayer"
+  },
+  "ageDaysAgo": {
+    "message": "hace $1 días"
+  },
+  "ageOnlyDaysAgo": {
+    "message": "hace solo $1 días"
+  },
+  "ageMonthsAgo": {
+    "message": "hace $1 meses"
+  },
+  "ageYearsAgo": {
+    "message": "hace $1 años"
+  },
+  "linkTitle": {
+    "message": "Bloqueado por Grilled Phish: este enlace probablemente es una estafa"
+  },
+  "linkBadge": {
+    "message": "⛔ Web falsa — bloqueada"
+  },
+  "charOdd": {
+    "message": "No es una letra normal: $1"
+  },
+  "charDiff": {
+    "message": "Esta letra es distinta de la web real"
+  },
+  "charZero": {
+    "message": "Esto es el número cero, no la letra O"
+  },
+  "charOne": {
+    "message": "Esto es el número uno, no la letra L"
+  },
+  "dlgTitlePassword": {
+    "message": "⛔ ALTO — no escribas aquí tu contraseña"
+  },
+  "dlgTitleLink": {
+    "message": "⛔ ALTO — este enlace probablemente es una estafa"
+  },
+  "dlgPretending": {
+    "message": "Se hace pasar por $1, pero NO es $1."
+  },
+  "dlgBrandNew": {
+    "message": "Esta web es nueva ($1). La mayoría de las estafas usan webs como esta."
+  },
+  "dlgTrick": {
+    "message": "Esta web intenta engañarte."
+  },
+  "dlgReallyOn": {
+    "message": "En realidad estás en:"
+  },
+  "dlgReallyGoes": {
+    "message": "Este enlace en realidad lleva a:"
+  },
+  "dlgRealSite": {
+    "message": "La web real de $1 es:"
+  },
+  "dlgWhy": {
+    "message": "Por qué lo pensamos:"
+  },
+  "dlgLeave": {
+    "message": "← Salir de esta web (seguro)"
+  },
+  "dlgGoBack": {
+    "message": "← Volver, no abrirlo (seguro)"
+  },
+  "dlgLearn": {
+    "message": "📖 ¿Cómo reconozco una estafa? (guía de 5 minutos)"
+  },
+  "dlgKnow": {
+    "message": "Sé lo que estoy haciendo…"
+  },
+  "dlgPhone": {
+    "message": "☎️ Si alguien por teléfono, en un chat o en un mensaje te está diciendo que hagas esto, es una estafa. Para y cuelga."
+  },
+  "dlgConfirmPassword": {
+    "message": "Entiendo que esta web puede robar mi contraseña o mi dinero, y aun así quiero escribir aquí."
+  },
+  "dlgConfirmLink": {
+    "message": "Entiendo que esta web puede robar mis contraseñas o mi dinero, y aun así quiero abrirla."
+  },
+  "dlgUnlock": {
+    "message": "Desbloquear los campos de todos modos"
+  },
+  "dlgOpen": {
+    "message": "Abrir el enlace de todos modos"
+  },
+  "dlgWait": {
+    "message": "Espera $1 s y piénsalo…"
+  },
+  "banNot": {
+    "message": "⛔ Atención: esta web NO es $1."
+  },
+  "banAge": {
+    "message": "⛔ Cuidado: esta web se creó $1."
+  },
+  "banScam": {
+    "message": "⛔ Atención: esta web parece una estafa."
+  },
+  "banNoType": {
+    "message": "No escribas aquí contraseñas, códigos ni números de tarjeta."
+  },
+  "banWhy": {
+    "message": "¿Por qué?"
+  },
+  "banLeave": {
+    "message": "Salir de esta web"
+  },
+  "alertHidden": {
+    "message": "Grilled Phish: esta web ha intentado ocultar nuestro aviso de estafa.\n\nCasi seguro que es falsa. No escribas ninguna contraseña, código ni número de tarjeta. Cierra esta página."
+  },
+  "popChecking": {
+    "message": "Comprobando…"
+  },
+  "popOn": {
+    "message": "Estás en:"
+  },
+  "popTrustWarn": {
+    "message": "Confía solo en webs que usas desde hace mucho. Si alguien por teléfono o en un mensaje te ha dicho que pulses aquí, no lo hagas: es una estafa."
+  },
+  "popTrust": {
+    "message": "✓ Confío en esta web"
+  },
+  "popTrustConfirm": {
+    "message": "Sí, uso esta web desde hace años"
+  },
+  "popUntrust": {
+    "message": "Quitar de mis webs de confianza"
+  },
+  "popSettings": {
+    "message": "Mis webs de confianza…"
+  },
+  "popLearn": {
+    "message": "Cómo reconocer una estafa (guía de 5 minutos)"
+  },
+  "popAge": {
+    "message": "Web creada $1 ($2)"
+  },
+  "popKnown": {
+    "message": "⭐ Web muy conocida (n.º $1 entre las más visitadas del mundo)"
+  },
+  "popNotSite": {
+    "message": "No es una web"
+  },
+  "popOwnTrusted": {
+    "message": "Una de tus webs de confianza"
+  },
+  "popReal": {
+    "message": "Esta es la web real de $1"
+  },
+  "popFake": {
+    "message": "FALSA — esta NO es $1"
+  },
+  "popScam": {
+    "message": "Esta web parece una estafa"
+  },
+  "popUnknown": {
+    "message": "Una web que no has marcado como de confianza"
+  },
+  "optTitle": {
+    "message": "Grilled Phish — webs de confianza"
+  },
+  "optH1": {
+    "message": "Mis webs de confianza"
+  },
+  "optIntro": {
+    "message": "Añade las webs que usas de verdad: tu banco, tu correo, tu tienda. Grilled Phish <strong>bloqueará cualquier copia falsa</strong>, aunque solo cambie una letra."
+  },
+  "optHint": {
+    "message": "Las grandes empresas (PayPal, Google, Amazon, bancos…) ya están protegidas."
+  },
+  "optLearn": {
+    "message": "📖 Cómo reconocer una web fraudulenta: guía de 5 minutos"
+  },
+  "optSiteLabel": {
+    "message": "Dirección de la web"
+  },
+  "optPlaceholder": {
+    "message": "por ejemplo: mibanco.es"
+  },
+  "optAdd": {
+    "message": "Añadir"
+  },
+  "optEmpty": {
+    "message": "Todavía no hay webs de confianza."
+  },
+  "optRemove": {
+    "message": "Quitar"
+  },
+  "optRemoved": {
+    "message": "Se ha quitado $1."
+  },
+  "optBadAddr": {
+    "message": "Eso no parece la dirección de una web. Prueba algo como «mibanco.es»."
+  },
+  "optCareful": {
+    "message": "¡Cuidado! «$1» parece falsa: $2"
+  },
+  "optAdded": {
+    "message": "✓ Se ha añadido $1."
+  },
+  "optAgeH": {
+    "message": "🗓️ Webs recién creadas"
+  },
+  "optAgeP": {
+    "message": "Casi todas las webs fraudulentas se crean pocos días antes del ataque y desaparecen poco después. Grilled Phish puede comprobar cuándo se creó una web y bloquear las muy nuevas."
+  },
+  "optAgeCheck": {
+    "message": "Bloquear webs creadas hace menos de"
+  },
+  "optWeek": {
+    "message": "1 semana"
+  },
+  "optMonth": {
+    "message": "1 mes (recomendado)"
+  },
+  "opt3Months": {
+    "message": "3 meses"
+  },
+  "optAgePrivacy": {
+    "message": "Privacidad: para ello solo se envía el nombre de la web (por ejemplo <code>best-deals.shop</code>, nunca la dirección completa ni lo que haces) al registro oficial de esa terminación, como Verisign para <code>.com</code>. Algunas terminaciones (.it, .de, .es, .eu) no publican la fecha de creación, así que esas webs no se pueden comprobar."
+  },
+  "optDbH": {
+    "message": "⭐ Webs muy conocidas"
+  },
+  "optDbP": {
+    "message": "Grilled Phish conoce las webs más visitadas del mundo, así que puede bloquear sus copias (por ejemplo <code>wikipedla.org</code> haciéndose pasar por <code>wikipedia.org</code>). La comprobación se hace en tu ordenador."
+  },
+  "optAuto": {
+    "message": "Mantener esta lista actualizada automáticamente (recomendado)"
+  },
+  "optCheckNow": {
+    "message": "Buscar actualizaciones ahora"
+  },
+  "optSigned": {
+    "message": "Las actualizaciones llevan la firma digital de Grilled Phish. Una lista mal firmada, más antigua que la que tienes o que parece dañada se rechaza, y se sigue usando la lista actual."
+  },
+  "optUnknownDate": {
+    "message": "fecha desconocida"
+  },
+  "optListUnavailable": {
+    "message": "Lista no disponible."
+  },
+  "optListStatus": {
+    "message": "$1 webs, lista del $2 ($3)."
+  },
+  "optFromBuiltIn": {
+    "message": "incluida"
+  },
+  "optFromDownloaded": {
+    "message": "descargada"
+  },
+  "optLastChecked": {
+    "message": "Última comprobación: $1."
+  },
+  "optCouldNot": {
+    "message": "⚠ No se pudo actualizar: $1"
+  }
+}

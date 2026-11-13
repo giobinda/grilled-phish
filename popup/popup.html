@@ -8,19 +8,19 @@
 <body>
   <div id="status" class="status">
     <div id="icon" class="icon">…</div>
-    <div id="headline" class="headline">Checking…</div>
+    <div id="headline" class="headline" data-i18n="popChecking">Checking…</div>
   </div>
-  <div class="label">You are on:</div>
+  <div class="label" data-i18n="popOn">You are on:</div>
   <div id="domain" class="domain">—</div>
   <div id="known" class="age" hidden></div>
   <div id="age" class="age" hidden></div>
   <ul id="reasons"></ul>
-  <p id="trustWarn" class="warn" hidden>Only trust websites you have used for a long time.
-     If someone on the phone or in a message told you to press this, don't: it is a scam.</p>
-  <button id="trust" class="btn" hidden>✓ I trust this site</button>
-  <button id="untrust" class="btn secondary" hidden>Remove from my trusted sites</button>
-  <button id="settings" class="btn link">My trusted sites…</button>
-  <button id="learn" class="btn link">How to spot a scam (5-minute guide)</button>
+  <p id="trustWarn" class="warn" hidden data-i18n="popTrustWarn"></p>
+  <button id="trust" class="btn" hidden data-i18n="popTrust">✓ I trust this site</button>
+  <button id="untrust" class="btn secondary" hidden data-i18n="popUntrust"></button>
+  <button id="settings" class="btn link" data-i18n="popSettings">My trusted sites…</button>
+  <button id="learn" class="btn link" data-i18n="popLearn">How to spot a scam (5-minute guide)</button>
+  <script src="../lib/i18n-dom.js"></script>
   <script src="../lib/detector.js"></script>
   <script src="popup.js"></script>
 </body>

@@ -43,6 +43,10 @@
   let dialogKeepAlive = null;     // re-attaches the open dialog if the page removes it
   let lastReported = null;
   let activeClick = null;         // { event, link } while a click on a not-blocked link is being dispatched
+  // Text in the browser's language (_locales/<lang>/messages.json).
+  const DIR = (() => { try { return chrome.i18n.getMessage('@@bidi_dir') || 'ltr'; } catch { return 'ltr'; } })();
+  const LANG = (() => { try { return chrome.i18n.getUILanguage(); } catch { return 'en'; } })();
+  const T = (key, ...subs) => { try { return chrome.i18n.getMessage(key, subs.map(String)) || key; } catch { return key; } };
   let allowNavigationTo = null;   // set when the user chose "Open anyway"
   let navigationSeen = false;     // the Navigation API intercepted something (Chrome/Edge)
   const resultCache = new Map();
@@ -203,11 +207,11 @@
     if (a.getAttribute(ATTR) === 'blocked') return;
     a.setAttribute(ATTR, 'blocked');
     a.setAttribute('aria-disabled', 'true');
-    a.setAttribute('title', 'Blocked by Grilled Phish: this link is probably a scam');
+    a.setAttribute('title', T('linkTitle'));
     const badge = document.createElement('span');
     badge.setAttribute(BADGE_ATTR, '');
     badge.setAttribute('role', 'button');
-    badge.textContent = '⛔ Fake site — blocked';
+    badge.textContent = T('linkBadge');
     badge.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
@@ -334,6 +338,7 @@
     p, li, label { font-size: 20px; line-height: 1.5; }
     .label { margin: 18px 0 4px; font-weight: 600; color: #444; font-size: 18px; }
     .domain {
+      direction: ltr; unicode-bidi: isolate; text-align: left;
       font: bold 30px/1.4 ui-monospace, "DejaVu Sans Mono", Menlo, Consolas, monospace;
       letter-spacing: 0.08em; word-break: break-all;
       background: #fff1f1; border: 2px solid #d40000; border-radius: 8px; padding: 10px 14px;
@@ -381,13 +386,13 @@
       const classes = [];
       if (/[^\x00-\x7f]/.test(ch)) {
         classes.push('odd');
-        span.title = `Not a normal letter: U+${ch.codePointAt(0).toString(16).toUpperCase().padStart(4, '0')}`;
+        span.title = T('charOdd', `U+${ch.codePointAt(0).toString(16).toUpperCase().padStart(4, '0')}`);
       } else if (differs.has(i)) {
         classes.push('odd');
-        span.title = 'This letter is different from the real website';
+        span.title = T('charDiff');
       } else if (/[01]/.test(ch) && i >= ownerStart) {
         classes.push('odd');
-        span.title = ch === '0' ? 'This is the number zero, not the letter O' : 'This is the number one, not the letter L';
+        span.title = ch === '0' ? T('charZero') : T('charOne');
       }
       if (i >= ownerStart) classes.push('owner');
       span.className = classes.join(' ');
@@ -421,45 +426,45 @@
     // A modal <dialog> sits in the browser's top layer and makes the page inert,
     // so the page can't cover it with fake buttons or click behind it.
     const dlg = el('dialog', { 'aria-labelledby': 'lg-title' });
-    const box = el('div', { class: 'box' });
+    const box = el('div', { class: 'box', dir: DIR, lang: LANG });
     dlg.appendChild(box);
     shadow.appendChild(dlg);
 
     const isPassword = action.kind === 'password';
     box.appendChild(el('h1', { id: 'lg-title' }, isPassword
-      ? '⛔ STOP — do not type your password here'
-      : '⛔ STOP — this link is probably a scam'));
+      ? T('dlgTitlePassword')
+      : T('dlgTitleLink')));
 
     if (r.impersonates) {
-      box.appendChild(el('p', {}, `It is pretending to be ${r.impersonates}, but it is NOT ${r.impersonates}.`));
+      box.appendChild(el('p', {}, T('dlgPretending', r.impersonates)));
     } else if (r.ageDays != null && r.reasons.length === 1) {
-      box.appendChild(el('p', {}, `This website is brand new (${D.describeAge(r.ageDays)}). Most scams use websites like this.`));
+      box.appendChild(el('p', {}, T('dlgBrandNew', D.describeAge(r.ageDays))));
     } else {
-      box.appendChild(el('p', {}, 'This website is trying to trick you.'));
+      box.appendChild(el('p', {}, T('dlgTrick')));
     }
 
-    box.appendChild(el('div', { class: 'label' }, isPassword ? 'You are really on:' : 'This link really goes to:'));
+    box.appendChild(el('div', { class: 'label' }, isPassword ? T('dlgReallyOn') : T('dlgReallyGoes')));
     const fake = el('div', { class: 'domain' });
     renderDomain(fake, r.displayHost, r.registrable, r.realDomains?.[0]);
     box.appendChild(fake);
 
     if (r.realDomains?.length) {
-      box.appendChild(el('div', { class: 'label' }, `The real ${r.impersonates} website is:`));
+      box.appendChild(el('div', { class: 'label' }, T('dlgRealSite', r.impersonates)));
       box.appendChild(el('div', { class: 'domain real' }, r.realDomains[0]));
     }
 
-    box.appendChild(el('div', { class: 'label' }, 'Why we think so:'));
+    box.appendChild(el('div', { class: 'label' }, T('dlgWhy')));
     const ul = el('ul');
     r.reasons.forEach((reason) => ul.appendChild(el('li', {}, reason)));
     box.appendChild(ul);
 
     const safeBtn = el('button', { class: 'safe', type: 'button' },
-      isPassword ? '← Leave this site (safe)' : '← Go back, do not open it (safe)');
+      isPassword ? T('dlgLeave') : T('dlgGoBack'));
     box.appendChild(safeBtn);
 
     // Opens the extension's own guide in a new tab (via the background worker:
     // the guide is not web-accessible, so pages can't detect or frame it).
-    const learn = el('button', { class: 'learn', type: 'button' }, '📖 How do I recognize a scam? (5-minute guide)');
+    const learn = el('button', { class: 'learn', type: 'button' }, T('dlgLearn'));
     learn.addEventListener('click', (e) => {
       if (!e.isTrusted) return;
       try { chrome.runtime.sendMessage({ type: 'openLearn' }); } catch { /* extension reloaded */ }
@@ -468,19 +473,19 @@
 
     // The "I really, really want to" path, hidden behind a disclosure.
     const details = el('details');
-    details.appendChild(el('summary', {}, 'I know what I am doing…'));
+    details.appendChild(el('summary', {}, T('dlgKnow')));
     const risky = el('div', { class: 'risky' });
     risky.appendChild(el('p', { class: 'phone' },
-      '☎️ If someone on the phone, in a chat or in a message is telling you to do this, it is a scam. Stop and hang up.'));
+      T('dlgPhone')));
     const label = el('label');
     const check = el('input', { type: 'checkbox' });
     label.appendChild(check);
     label.appendChild(el('span', {}, isPassword
-      ? 'I understand this site may steal my password or my money, and I still want to type here.'
-      : 'I understand this site may steal my passwords or my money, and I still want to open it.'));
+      ? T('dlgConfirmPassword')
+      : T('dlgConfirmLink')));
     risky.appendChild(label);
-    const anyway = el('button', { class: 'anyway', type: 'button', disabled: '' },
-      isPassword ? 'Unlock the fields anyway' : 'Open the link anyway');
+    const anywayText = isPassword ? T('dlgUnlock') : T('dlgOpen');
+    const anyway = el('button', { class: 'anyway', type: 'button', disabled: '' }, anywayText);
     risky.appendChild(anyway);
     details.appendChild(risky);
     box.appendChild(details);
@@ -490,19 +495,19 @@
       clearInterval(timer);
       anyway.disabled = true;
       if (!check.checked) {
-        anyway.textContent = isPassword ? 'Unlock the fields anyway' : 'Open the link anyway';
+        anyway.textContent = anywayText;
         return;
       }
       let left = UNLOCK_SECONDS;
-      anyway.textContent = `Please wait ${left}s and think about it…`;
+      anyway.textContent = T('dlgWait', left);
       timer = setInterval(() => {
         left -= 1;
         if (left > 0) {
-          anyway.textContent = `Please wait ${left}s and think about it…`;
+          anyway.textContent = T('dlgWait', left);
         } else {
           clearInterval(timer);
           anyway.disabled = false;
-          anyway.textContent = isPassword ? 'Unlock the fields anyway' : 'Open the link anyway';
+          anyway.textContent = anywayText;
         }
       }, 1000);
     });
@@ -586,16 +591,16 @@
       .why { background: transparent; color: #fff; border: 2px solid #fff; }
     `;
     shadow.appendChild(style);
-    const bar = el('div', { class: 'bar', role: 'alert' });
+    const bar = el('div', { class: 'bar', role: 'alert', dir: DIR, lang: LANG });
     const msg = el('div', { class: 'msg' });
     msg.appendChild(el('b', {}, r.impersonates
-      ? `⛔ Warning: this website is NOT ${r.impersonates}. `
+      ? T('banNot', r.impersonates)
       : r.ageDays != null && r.reasons.length === 1
-        ? `⛔ Careful: this website was created ${D.describeAge(r.ageDays)}. `
-        : '⛔ Warning: this website looks like a scam. '));
-    msg.appendChild(document.createTextNode('Do not type passwords, codes or card numbers here.'));
-    const why = el('button', { class: 'why', type: 'button' }, 'Why?');
-    const leave = el('button', { class: 'leave', type: 'button' }, 'Leave this site');
+        ? T('banAge', D.describeAge(r.ageDays))
+        : T('banScam')));
+    msg.appendChild(document.createTextNode(' ' + T('banNoType')));
+    const why = el('button', { class: 'why', type: 'button' }, T('banWhy'));
+    const leave = el('button', { class: 'leave', type: 'button' }, T('banLeave'));
     why.addEventListener('click', () => openWarning(r, { kind: 'password' }));
     leave.addEventListener('click', () => {
       if (history.length > 1) history.back();
@@ -616,9 +621,7 @@
       bannerRemovals++;
       if (bannerRemovals >= 2 && !alerted) {
         alerted = true;
-        setTimeout(() => alert(
-          'Grilled Phish: this website tried to hide our scam warning.\n\n' +
-          'It is almost certainly a fake. Do not type any password, code or card number. Close this page.'), 0);
+        setTimeout(() => alert(T('alertHidden')), 0);
       }
     }
     dialogKeepAlive?.();

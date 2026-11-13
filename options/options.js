@@ -1,5 +1,6 @@
 (() => {
   const D = globalThis.GrilledPhishDetector;
+  const T = globalThis.GP_T;
   const list = document.getElementById('list');
   const msg = document.getElementById('msg');
   const input = document.getElementById('site');
@@ -21,10 +22,10 @@
       const name = document.createElement('span');
       name.textContent = D.toUnicodeHost(domain);
       const remove = document.createElement('button');
-      remove.textContent = 'Remove';
+      remove.textContent = T('optRemove');
       remove.addEventListener('click', async () => {
         await save((await get()).filter((d) => d !== domain));
-        say(`Removed ${domain}.`);
+        say(T('optRemoved', D.toUnicodeHost(domain)));
       });
       li.append(name, remove);
       list.appendChild(li);
@@ -36,18 +37,18 @@
     const raw = input.value.trim();
     const domain = D.registrableDomain(raw);
     if (!domain || !domain.includes('.')) {
-      say('That does not look like a website address. Try something like "mybank.com".', true);
+      say(T('optBadAddr'), true);
       return;
     }
     // Refuse to trust something that itself looks like a fake.
     const check = D.analyzeUrl('https://' + domain + '/', { trusted: [] });
     if (check.verdict === 'danger') {
-      say(`Careful! "${check.displayHost}" looks like a fake: ${check.reasons[0]}`, true);
+      say(T('optCareful', check.displayHost, check.reasons[0]), true);
       return;
     }
     await save([...(await get()), domain]);
     input.value = '';
-    say(`✓ Added ${D.toUnicodeHost(domain)}.`);
+    say(T('optAdded', D.toUnicodeHost(domain)));
   });
 
   const ageCheck = document.getElementById('ageCheck');
@@ -67,13 +68,14 @@
   const autoUpdate = document.getElementById('autoUpdate');
   const serialDate = (n) => {
     const t = String(n || '');
-    return t.length >= 8 ? `${t.slice(0, 4)}-${t.slice(4, 6)}-${t.slice(6, 8)}` : 'unknown date';
+    return t.length >= 8 ? `${t.slice(0, 4)}-${t.slice(4, 6)}-${t.slice(6, 8)}` : T('optUnknownDate');
   };
   function showListStatus(st) {
-    if (!st) { listStatus.textContent = 'List unavailable.'; return; }
-    let text = `${(st.count || 0).toLocaleString()} websites, list of ${serialDate(st.serial)} (${st.from}).`;
-    if (st.checkedAt) text += ` Last checked ${new Date(st.checkedAt).toLocaleString()}.`;
-    if (st.error) text += ` ⚠ Could not update: ${st.error}`;
+    if (!st) { listStatus.textContent = T('optListUnavailable'); return; }
+    const from = st.from === 'downloaded' ? T('optFromDownloaded') : T('optFromBuiltIn');
+    let text = T('optListStatus', (st.count || 0).toLocaleString(), serialDate(st.serial), from);
+    if (st.checkedAt) text += ' ' + T('optLastChecked', new Date(st.checkedAt).toLocaleString());
+    if (st.error) text += ' ' + T('optCouldNot', st.error);
     listStatus.textContent = text;
     listStatus.className = st.error ? 'hint err' : 'hint';
     autoUpdate.checked = st.autoUpdate !== false;
@@ -81,7 +83,7 @@
   chrome.runtime.sendMessage({ type: 'knownSitesStatus' }).then(showListStatus).catch(() => showListStatus(null));
   autoUpdate.addEventListener('change', () => chrome.storage.sync.set({ autoUpdateList: autoUpdate.checked }));
   document.getElementById('checkNow').addEventListener('click', async () => {
-    listStatus.textContent = 'Checking…';
+    listStatus.textContent = T('popChecking');
     showListStatus(await chrome.runtime.sendMessage({ type: 'knownSitesUpdate' }));
   });
 

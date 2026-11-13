@@ -125,6 +125,28 @@ the toolbar popup, the settings page and every warning dialog. The page is not w
 so websites can't load it or use it to detect the extension; the dialog asks the background
 worker to open it, and only for a real click.
 
+## Languages
+
+The extension speaks 12 languages: English, Spanish, Chinese, Hindi, Arabic (right to left),
+French, Portuguese, Ukrainian, Japanese, German, Italian and Indonesian.
+
+- **Warnings, popup and settings** use the browser's standard translation system
+  (`_locales/<lang>/messages.json`) and follow the browser's language. `lib/detector.js`
+  keeps the English text built in so it also runs in Node; `test/i18n.test.js` checks that it
+  matches `_locales/en`, that every language has every message with the same `$1`/`$2`
+  placeholders, and that the store name and description fit the store limits.
+- **The guide** (`learn/i18n/<lang>.js`) picks the browser's language too, can be switched
+  from a menu, and adds local official sources where they exist: INCIBE (Spain),
+  Cybermalveillance and PHAROS (France), BSI and Verbraucherzentrale (Germany), CERT.br
+  (Brazil), CNCS (Portugal), Polizia Postale (Italy), the Council of Anti-Phishing Japan,
+  CERT-UA, the National Bank and the Cyber Police (Ukraine), and India's cybercrime portal and
+  1930 helpline. `test/learn-i18n.test.js` checks that nothing is missing.
+
+To add a language: copy `_locales/en/messages.json` and `learn/i18n/en.js`, translate the
+values, and add the code to `LANGS` in `learn/learn.js`.
+
+**The translations were written by an AI and have not yet been reviewed by native speakers.**
+
 ## Privacy (age check)
 
 To find a site's age, `background.js` sends **only the domain name** (`best-deals.shop`, never the full address)

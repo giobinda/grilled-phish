@@ -1,0 +1,323 @@
+{
+  "extName": {
+    "message": "Grilled Phish"
+  },
+  "extDescription": {
+    "message": "给仿冒知名网站的假链接（如 paypa1.com、pаypal.com）加上红框并拦截，除非你真正确认。"
+  },
+  "badgeDanger": {
+    "message": "Grilled Phish：假冒或危险网站"
+  },
+  "badgeTrusted": {
+    "message": "Grilled Phish：真正的网站"
+  },
+  "rIp": {
+    "message": "这个链接指向一串纯数字地址，而不是网站名称。正规公司不会这样做。"
+  },
+  "scriptLatin": {
+    "message": "拉丁"
+  },
+  "scriptCyrillic": {
+    "message": "西里尔"
+  },
+  "scriptGreek": {
+    "message": "希腊"
+  },
+  "scriptArmenian": {
+    "message": "亚美尼亚"
+  },
+  "rScript": {
+    "message": "这个地址混用了不同字母表的字母（$1）。这是冒充知名网站的典型花招。"
+  },
+  "rHomoglyph": {
+    "message": "它用另一种字母表里长得很像的字母来冒充“$1”。"
+  },
+  "rSameLabel": {
+    "message": "它使用了“$1”这个名字，但它不是 $2 的真正网站。"
+  },
+  "rSwap": {
+    "message": "它替换字母来冒充“$1”（例如用“rn”冒充“m”，“1”冒充“l”，“0”冒充“o”）。"
+  },
+  "rTypo": {
+    "message": "名字“$1”和“$2”只差一个字母。"
+  },
+  "rBrandSub": {
+    "message": "地址开头出现了“$1”，但这个网站实际属于“$2”。"
+  },
+  "rBait": {
+    "message": "它在“$1”这个名字上添加词语，让自己看起来像官方网站，但它不是 $2 的网站。"
+  },
+  "rTextMismatch": {
+    "message": "文字显示的是“$1”，但链接实际指向“$2”。"
+  },
+  "rAge": {
+    "message": "这个网站创建于$1。诈骗网站通常是新建的，几天后就会消失；真正的银行和商店已经存在多年。"
+  },
+  "rDbSub": {
+    "message": "它以知名网站“$1”开头，但这个网站实际属于“$2”。"
+  },
+  "rDbLook": {
+    "message": "它看起来和知名网站“$1”几乎一样，但有些字母不同。"
+  },
+  "ageToday": {
+    "message": "今天"
+  },
+  "ageYesterday": {
+    "message": "昨天"
+  },
+  "ageDaysAgo": {
+    "message": "$1 天前"
+  },
+  "ageOnlyDaysAgo": {
+    "message": "仅仅 $1 天前"
+  },
+  "ageMonthsAgo": {
+    "message": "$1 个月前"
+  },
+  "ageYearsAgo": {
+    "message": "$1 年前"
+  },
+  "linkTitle": {
+    "message": "已被 Grilled Phish 拦截：这个链接很可能是诈骗"
+  },
+  "linkBadge": {
+    "message": "⛔ 假网站 — 已拦截"
+  },
+  "charOdd": {
+    "message": "这不是普通字母：$1"
+  },
+  "charDiff": {
+    "message": "这个字母和真网站不一样"
+  },
+  "charZero": {
+    "message": "这是数字 0，不是字母 O"
+  },
+  "charOne": {
+    "message": "这是数字 1，不是字母 L"
+  },
+  "dlgTitlePassword": {
+    "message": "⛔ 停 — 不要在这里输入密码"
+  },
+  "dlgTitleLink": {
+    "message": "⛔ 停 — 这个链接很可能是诈骗"
+  },
+  "dlgPretending": {
+    "message": "它在冒充 $1，但它不是 $1。"
+  },
+  "dlgBrandNew": {
+    "message": "这个网站是新建的（$1）。大多数骗局都使用这样的网站。"
+  },
+  "dlgTrick": {
+    "message": "这个网站正试图欺骗你。"
+  },
+  "dlgReallyOn": {
+    "message": "你实际所在的网站是："
+  },
+  "dlgReallyGoes": {
+    "message": "这个链接实际指向："
+  },
+  "dlgRealSite": {
+    "message": "$1 的真正网站是："
+  },
+  "dlgWhy": {
+    "message": "我们这样判断的原因："
+  },
+  "dlgLeave": {
+    "message": "← 离开这个网站（安全）"
+  },
+  "dlgGoBack": {
+    "message": "← 返回，不要打开（安全）"
+  },
+  "dlgLearn": {
+    "message": "📖 如何识别骗局？（5 分钟指南）"
+  },
+  "dlgKnow": {
+    "message": "我知道自己在做什么…"
+  },
+  "dlgPhone": {
+    "message": "☎️ 如果有人在电话、聊天或消息里让你这样做，那就是诈骗。请停下并挂断。"
+  },
+  "dlgConfirmPassword": {
+    "message": "我明白这个网站可能会盗取我的密码或钱财，但我仍然要在这里输入。"
+  },
+  "dlgConfirmLink": {
+    "message": "我明白这个网站可能会盗取我的密码或钱财，但我仍然要打开它。"
+  },
+  "dlgUnlock": {
+    "message": "仍然解锁输入框"
+  },
+  "dlgOpen": {
+    "message": "仍然打开链接"
+  },
+  "dlgWait": {
+    "message": "请等待 $1 秒，好好想一想…"
+  },
+  "banNot": {
+    "message": "⛔ 警告：这个网站不是 $1。"
+  },
+  "banAge": {
+    "message": "⛔ 小心：这个网站创建于$1。"
+  },
+  "banScam": {
+    "message": "⛔ 警告：这个网站看起来像诈骗网站。"
+  },
+  "banNoType": {
+    "message": "不要在这里输入密码、验证码或银行卡号。"
+  },
+  "banWhy": {
+    "message": "为什么？"
+  },
+  "banLeave": {
+    "message": "离开这个网站"
+  },
+  "alertHidden": {
+    "message": "Grilled Phish：这个网站试图隐藏我们的诈骗警告。\n\n它几乎可以肯定是假的。不要输入任何密码、验证码或银行卡号。请关闭这个页面。"
+  },
+  "popChecking": {
+    "message": "正在检查…"
+  },
+  "popOn": {
+    "message": "你当前所在："
+  },
+  "popTrustWarn": {
+    "message": "只信任你长期使用的网站。如果有人在电话或消息里让你点这里，不要点：这是诈骗。"
+  },
+  "popTrust": {
+    "message": "✓ 我信任这个网站"
+  },
+  "popTrustConfirm": {
+    "message": "是的，我已经用这个网站好几年了"
+  },
+  "popUntrust": {
+    "message": "从我信任的网站中移除"
+  },
+  "popSettings": {
+    "message": "我信任的网站…"
+  },
+  "popLearn": {
+    "message": "如何识别骗局（5 分钟指南）"
+  },
+  "popAge": {
+    "message": "网站创建于$1（$2）"
+  },
+  "popKnown": {
+    "message": "⭐ 知名网站（全球访问量第 $1 名）"
+  },
+  "popNotSite": {
+    "message": "不是网站"
+  },
+  "popOwnTrusted": {
+    "message": "你信任的网站之一"
+  },
+  "popReal": {
+    "message": "这是 $1 的真正网站"
+  },
+  "popFake": {
+    "message": "假冒 — 这不是 $1"
+  },
+  "popScam": {
+    "message": "这个网站看起来像诈骗网站"
+  },
+  "popUnknown": {
+    "message": "你还没有标记为信任的网站"
+  },
+  "optTitle": {
+    "message": "Grilled Phish — 信任的网站"
+  },
+  "optH1": {
+    "message": "我信任的网站"
+  },
+  "optIntro": {
+    "message": "添加你真正使用的网站：你的银行、电子邮箱、购物网站。之后 Grilled Phish 会<strong>拦截它们的任何仿冒版本</strong>，哪怕只改了一个字母。"
+  },
+  "optHint": {
+    "message": "大公司（PayPal、Google、Amazon、各大银行……）已经受到保护。"
+  },
+  "optLearn": {
+    "message": "📖 如何识别诈骗网站：5 分钟指南"
+  },
+  "optSiteLabel": {
+    "message": "网站地址"
+  },
+  "optPlaceholder": {
+    "message": "例如：mybank.com"
+  },
+  "optAdd": {
+    "message": "添加"
+  },
+  "optEmpty": {
+    "message": "还没有信任的网站。"
+  },
+  "optRemove": {
+    "message": "移除"
+  },
+  "optRemoved": {
+    "message": "已移除 $1。"
+  },
+  "optBadAddr": {
+    "message": "这看起来不像网站地址。请输入类似“mybank.com”的地址。"
+  },
+  "optCareful": {
+    "message": "小心！“$1”看起来是假的：$2"
+  },
+  "optAdded": {
+    "message": "✓ 已添加 $1。"
+  },
+  "optAgeH": {
+    "message": "🗓️ 新建网站"
+  },
+  "optAgeP": {
+    "message": "大多数诈骗网站在行骗前几天才创建，之后很快消失。Grilled Phish 可以查看网站的创建时间，并拦截非常新的网站。"
+  },
+  "optAgeCheck": {
+    "message": "拦截创建时间短于以下期限的网站"
+  },
+  "optWeek": {
+    "message": "1 周"
+  },
+  "optMonth": {
+    "message": "1 个月（推荐）"
+  },
+  "opt3Months": {
+    "message": "3 个月"
+  },
+  "optAgePrivacy": {
+    "message": "隐私：为此，只有网站名称（例如 <code>best-deals.shop</code>，绝不包括完整地址或你在网站上的操作）会被发送到该后缀的官方注册机构，例如 <code>.com</code> 对应 Verisign。部分后缀（.it、.de、.es、.eu）不公开创建日期，因此这些网站无法检查。"
+  },
+  "optDbH": {
+    "message": "⭐ 知名网站"
+  },
+  "optDbP": {
+    "message": "Grilled Phish 了解全球访问量最大的网站，因此能拦截它们的仿冒品（例如冒充 <code>wikipedia.org</code> 的 <code>wikipedla.org</code>）。检查在你的电脑上完成。"
+  },
+  "optAuto": {
+    "message": "自动保持此列表为最新（推荐）"
+  },
+  "optCheckNow": {
+    "message": "立即检查更新"
+  },
+  "optSigned": {
+    "message": "更新带有 Grilled Phish 的数字签名。签名不正确、比你现有的更旧或看起来已损坏的列表会被拒绝，并继续使用当前列表。"
+  },
+  "optUnknownDate": {
+    "message": "日期未知"
+  },
+  "optListUnavailable": {
+    "message": "列表不可用。"
+  },
+  "optListStatus": {
+    "message": "$1 个网站，列表日期 $2（$3）。"
+  },
+  "optFromBuiltIn": {
+    "message": "内置"
+  },
+  "optFromDownloaded": {
+    "message": "已下载"
+  },
+  "optLastChecked": {
+    "message": "上次检查：$1。"
+  },
+  "optCouldNot": {
+    "message": "⚠ 无法更新：$1"
+  }
+}
