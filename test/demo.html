@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Link Guardian demo</title>
+<style>body{font:18px/1.8 system-ui,sans-serif;max-width:760px;margin:30px auto;padding:0 16px} h2{margin-top:28px}</style>
+</head>
+<body>
+<h1>Link Guardian demo page</h1>
+<p>Open this page with the extension installed. Fake links should get a red box and be disabled.
+   None of these links go anywhere real.</p>
+
+<h2>Should be BLOCKED</h2>
+<ul>
+  <li><a href="https://xn--pypal-4ve.com/signin">PayPal with a Cyrillic "а"</a></li>
+  <li><a href="https://paypa1.com/">Log in to PayPal</a> (number 1 instead of l)</li>
+  <li><a href="https://arnazon.com/orders">Your Amazon order</a> ("rn" instead of "m")</li>
+  <li><a href="https://www.paypal.com.secure-verify.xyz/">www.paypal.com.secure-verify.xyz</a></li>
+  <li><a href="https://evil.example/login">https://www.paypal.com/signin</a> (text lies about the destination)</li>
+  <li><a href="https://poste-italiane-verifica.com/" target="_blank">Verifica il tuo conto Poste</a></li>
+  <li><a href="https://dhl-parcel-tracking.top/">Track your DHL parcel</a></li>
+  <li><a href="https://amazom.com/">amazom.com</a> (one letter wrong)</li>
+</ul>
+
+<h2>Should be ALLOWED</h2>
+<ul>
+  <li><a href="https://www.paypal.com/">The real PayPal</a></li>
+  <li><a href="https://www.amazon.it/">The real Amazon Italy</a></li>
+  <li><a href="https://wikipedia.org/">Wikipedia</a></li>
+  <li><a href="https://apply.com/">apply.com</a> (a normal word, not Apple)</li>
+</ul>
+
+<h2>Copies of well-known websites (database)</h2>
+<ul>
+  <li><a href="https://g1thub.com/login">GitHub sign in</a> (digit 1 hidden in "github": blocked immediately)</li>
+  <li><a href="https://stackoverfIow.com/questions">stackoverfIow.com</a> (capital I instead of l: blocked because the site is brand new)</li>
+  <li><a href="https://www.stackoverflow.com.answers-hub.xyz/">stackoverflow.com.answers-hub.xyz</a> (real address used as a prefix)</li>
+</ul>
+<h2>Brands' own sites in other countries (should be ALLOWED)</h2>
+<ul>
+  <li><a href="https://www.google.ru/">google.ru</a></li>
+  <li><a href="https://www.amazon.co.za/">amazon.co.za</a></li>
+  <li><a href="https://stackoverflow.com/">stackoverflow.com</a></li>
+</ul>
+
+<h2>Brand-new website (blocked by the age check)</h2>
+<ul>
+  <li><a href="https://best-deals-4u.shop/">Huge discounts, today only!</a> (blocked only if the site is less than a month old)</li>
+  <li><a href="https://wikipedia.org/wiki/Phishing">Wikipedia: Phishing</a> (created 2001, allowed)</li>
+</ul>
+
+<h2>Added later by JavaScript (should also be blocked)</h2>
+<div id="late"></div>
+<script>
+  setTimeout(() => {
+    document.getElementById('late').innerHTML =
+      '<a href="https://g00gle.com/">Google security alert</a>';
+  }, 500);
+</script>
+
+<h2>Password field (locked only when the page itself is a fake)</h2>
+<input type="password" placeholder="password">
+</body>
+</html>

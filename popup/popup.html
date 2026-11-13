@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Link Guardian</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div id="status" class="status">
+    <div id="icon" class="icon">…</div>
+    <div id="headline" class="headline">Checking…</div>
+  </div>
+  <div class="label">You are on:</div>
+  <div id="domain" class="domain">—</div>
+  <div id="known" class="age" hidden></div>
+  <div id="age" class="age" hidden></div>
+  <ul id="reasons"></ul>
+  <button id="trust" class="btn" hidden>✓ I trust this site</button>
+  <button id="untrust" class="btn secondary" hidden>Remove from my trusted sites</button>
+  <button id="settings" class="btn link">My trusted sites…</button>
+  <script src="../lib/detector.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

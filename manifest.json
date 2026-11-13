@@ -1,0 +1,44 @@
+{
+  "manifest_version": 3,
+  "name": "Link Guardian",
+  "version": "0.3.0",
+  "description": "Puts a red box around fake look-alike links (paypa1.com, pаypal.com...) and blocks them until you really confirm.",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "scripts": [
+      "lib/detector.js",
+      "background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "lib/detector.js",
+        "content/content.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "action": {
+    "default_title": "Link Guardian",
+    "default_popup": "popup/popup.html"
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "link-guardian@local",
+      "strict_min_version": "115.0"
+    }
+  }
+}

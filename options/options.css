@@ -1,0 +1,30 @@
+:root { --ok: #1a7f37; --bad: #b00000; --bg: #fafafa; --card: #fff; --fg: #111; --muted: #555; --line: #ccc; }
+@media (prefers-color-scheme: dark) {
+  :root { --ok: #3fb950; --bad: #ff6b6b; --bg: #121212; --card: #1e1e1e; --fg: #f2f2f2; --muted: #aaa; --line: #444; }
+}
+body { margin: 0; background: var(--bg); color: var(--fg); font: 20px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 680px; margin: 0 auto; padding: 32px 16px; }
+h1 { font-size: 36px; margin: 0 0 12px; }
+.hint { color: var(--muted); font-size: 18px; }
+label { display: block; font-weight: 600; margin: 24px 0 6px; }
+.row { display: flex; gap: 10px; }
+input { flex: 1; min-width: 0; font: 22px ui-monospace, Menlo, Consolas, monospace; padding: 12px;
+  border: 2px solid var(--line); border-radius: 10px; background: var(--card); color: var(--fg); }
+button { font: bold 20px system-ui, sans-serif; padding: 12px 20px; border-radius: 10px; border: none;
+  background: var(--ok); color: #fff; cursor: pointer; }
+#msg { min-height: 1.5em; margin-top: 6px; font-size: 18px; }
+#msg.err { color: var(--bad); }
+ul { list-style: none; padding: 0; margin: 24px 0; }
+li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px;
+  background: var(--card); border: 2px solid var(--line); border-radius: 12px; margin-bottom: 10px; }
+li span { font: bold 24px ui-monospace, Menlo, Consolas, monospace; word-break: break-all; }
+li button { background: transparent; color: var(--bad); border: 2px solid var(--bad); font-size: 16px; padding: 8px 14px; }
+h2 { font-size: 28px; margin: 40px 0 8px; }
+label.check { display: flex; gap: 12px; align-items: center; font-weight: 600; margin: 16px 0 8px; }
+label.check input { width: 26px; height: 26px; }
+select { font: 20px system-ui, sans-serif; padding: 10px; border-radius: 10px; border: 2px solid var(--line);
+  background: var(--card); color: var(--fg); }
+code { font-size: 0.9em; }
+details { margin-top: 12px; }
+summary { cursor: pointer; color: var(--muted); font-size: 18px; }
+.hint.err { color: var(--bad); }

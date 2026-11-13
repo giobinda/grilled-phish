@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Link Guardian — trusted sites</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <main>
+    <h1>🛡️ My trusted sites</h1>
+    <p>Add the websites you really use: your bank, your email, your shop.
+       Link Guardian will then <strong>block any fake copy</strong> of them, even with one changed letter.</p>
+    <p class="hint">Big companies (PayPal, Google, Amazon, Poste Italiane, banks…) are already protected.</p>
+
+    <form id="add">
+      <label for="site">Website address</label>
+      <div class="row">
+        <input id="site" type="text" placeholder="for example: mybank.com" autocomplete="off" spellcheck="false">
+        <button type="submit">Add</button>
+      </div>
+      <div id="msg" role="status"></div>
+    </form>
+
+    <ul id="list"></ul>
+    <p id="empty" class="hint" hidden>No trusted sites yet.</p>
+
+    <h2>🗓️ Brand-new websites</h2>
+    <p>Most scam websites are created a few days before the attack and disappear soon after.
+       Link Guardian can check when a website was created and block very new ones.</p>
+    <label class="check"><input id="ageCheck" type="checkbox"> Block websites that are newer than</label>
+    <select id="ageDays">
+      <option value="7">1 week</option>
+      <option value="30">1 month (recommended)</option>
+      <option value="90">3 months</option>
+    </select>
+    <p class="hint">Privacy: to do this, only the website's name (for example <code>best-deals.shop</code>,
+       never the full address or what you do there) is sent to the official registry for that ending, such as Verisign for
+       <code>.com</code>. Some endings (.it, .de, .es, .eu) don't publish creation dates, so those sites can't be checked.</p>
+
+    <h2>⭐ Well-known websites</h2>
+    <p>Link Guardian knows the most visited websites in the world, so it can block copies of them
+       (for example <code>wikipedla.org</code> pretending to be <code>wikipedia.org</code>).
+       The check happens on your computer.</p>
+    <p id="listStatus" class="hint">Loading…</p>
+    <details>
+      <summary>Advanced: keep the list up to date</summary>
+      <label for="listUrl">Download a newer list weekly from (https only):</label>
+      <div class="row">
+        <input id="listUrl" type="url" placeholder="https://raw.githubusercontent.com/you/link-guardian/main/data/known-sites.txt" spellcheck="false">
+        <button id="listSave" type="button">Save &amp; update</button>
+      </div>
+      <p class="hint">Leave empty to use the list built into the extension.
+         Only use an address you control: a bad list could make fake sites look well-known.</p>
+    </details>
+  </main>
+  <script src="../lib/detector.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>
