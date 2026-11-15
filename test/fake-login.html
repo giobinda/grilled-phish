@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Log in to your account</title>
+<style>
+  body{font:18px/1.6 system-ui,sans-serif;background:#f3f5f8;margin:0;padding:40px 16px}
+  .box{max-width:380px;margin:0 auto;background:#fff;border-radius:12px;padding:28px;box-shadow:0 2px 12px #0002}
+  h1{font-size:24px;margin:0 0 6px} p.note{font-size:14px;color:#555;margin:0 0 20px}
+  label{display:block;font-size:15px;margin:14px 0 4px}
+  input{width:100%;box-sizing:border-box;font:inherit;padding:10px;border:1px solid #bbb;border-radius:8px}
+  button{margin-top:20px;width:100%;font:inherit;padding:12px;border:0;border-radius:8px;background:#1a56db;color:#fff}
+  .test{max-width:380px;margin:20px auto 0;font-size:14px;color:#444;background:#fff8d6;border:1px solid #e6cf6b;border-radius:8px;padding:12px}
+</style>
+</head>
+<body>
+<!-- Grilled Phish test page. Nothing typed here is saved or sent anywhere:
+     the form has no destination and submitting it is cancelled below. -->
+<div class="box">
+  <h1>PayPal</h1>
+  <p class="note">Your account has been limited. Log in within 24 hours to restore access.</p>
+  <form id="f" autocomplete="off">
+    <label for="email">Email</label>
+    <input id="email" type="email" placeholder="you@example.com">
+    <label for="pw">Password</label>
+    <input id="pw" type="password" placeholder="Password">
+    <label for="otp">Code from SMS</label>
+    <input id="otp" autocomplete="one-time-code" inputmode="numeric" placeholder="123456">
+    <button type="submit">Log in</button>
+  </form>
+</div>
+<p class="test"><strong>Test page.</strong> This fake login runs only on your computer. Open it at
+  <code>paypa1.localhost</code> and Grilled Phish should show a red bar at the top and lock the password and
+  code fields. Nothing you type here is sent anywhere.</p>
+<script>
+  document.getElementById('f').addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Test page: nothing was sent.');
+  });
+</script>
+</body>
+</html>

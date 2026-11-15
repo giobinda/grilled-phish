@@ -183,6 +183,8 @@ node --test test/*.test.js
 
 `test/demo.html` is a page full of fake links for trying the extension by hand. Serve it with
 `python3 -m http.server` and open `http://localhost:8000/test/demo.html`.
+At the bottom, links to `test/fake-login.html` at scam-looking addresses such as `paypa1.localhost`
+show the password lock (Chromium browsers send every `.localhost` address to your own computer).
 
 ## Security
 

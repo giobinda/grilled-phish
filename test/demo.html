@@ -31,7 +31,7 @@
 <h2>Copies of well-known websites (database)</h2>
 <ul>
   <li><a href="https://g1thub.com/login">GitHub sign in</a> (digit 1 hidden in "github": blocked immediately)</li>
-  <li><a href="https://stackoverfIow.com/questions">stackoverfIow.com</a> (capital I instead of l: blocked because the site is brand new)</li>
+  <li><a href="https://stackoverfIow.com/questions">stackoverfIow.com</a> (capital I instead of l: blocked when the address is brand new or not registered at all)</li>
   <li><a href="https://www.stackoverflow.com.answers-hub.xyz/">stackoverflow.com.answers-hub.xyz</a> (real address used as a prefix)</li>
 </ul>
 <h2>Brands' own sites in other countries (should be ALLOWED)</h2>
@@ -56,7 +56,29 @@
   }, 500);
 </script>
 
-<h2>Password field (locked only when the page itself is a fake)</h2>
+<h2>Password field on this page (should NOT be locked)</h2>
+<p>This page's own address is fine, so this field works normally.</p>
 <input type="password" placeholder="password">
+
+<h2>A fake login page (password should be LOCKED)</h2>
+<p>Open the same fake login at a scam-looking address. Addresses ending in <code>.localhost</code>
+   never leave your computer (Chrome, Brave, Vivaldi and Edge). The link itself is blocked too: tick the box
+   and wait to continue, then try typing in the password field.</p>
+<ul id="fakes"></ul>
+<script>
+  const port = location.port ? ':' + location.port : '';
+  for (const [host, why] of [
+    ['paypa1.localhost', 'number 1 instead of l'],
+    ['paypal-secure-login.localhost', 'extra words added to the name'],
+    ['paypal.com.localhost', 'real address used as a prefix'],
+  ]) {
+    const a = document.createElement('a');
+    a.href = 'http://' + host + port + '/test/fake-login.html';
+    a.textContent = host;
+    const li = document.createElement('li');
+    li.append(a, ' (' + why + ')');
+    document.getElementById('fakes').append(li);
+  }
+</script>
 </body>
 </html>

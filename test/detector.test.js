@@ -148,6 +148,15 @@ test('db: letter swap on an old established site is NOT blocked', () => {
   assert.notStrictEqual(db('https://mywebslte.com/', small, {}).verdict, 'danger'); // age unknown
 });
 
+test('db: letter swap of a well-known name that is not registered is blocked', () => {
+  const real = D.buildKnownIndex(['stackoverflow.com']);
+  const r = db('https://stackoverfIow.com/questions', real, { unregistered: true });
+  assert.strictEqual(r.verdict, 'danger');
+  assert.strictEqual(r.realDomains[0], 'stackoverflow.com');
+  // Not registered alone is not a reason: only for look-alikes of well-known names.
+  assert.notStrictEqual(db('https://some-new-bakery.com/', real, { unregistered: true }).verdict, 'danger');
+});
+
 test('db: hidden digits / foreign letters are blocked immediately', () => {
   assert.strictEqual(db('https://myweb5ite.com/', small).verdict, 'unknown'); // 5 is not a look-alike digit
   assert.strictEqual(db('https://mywebs1te.com/', small).verdict, 'danger');

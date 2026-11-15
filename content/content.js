@@ -30,6 +30,7 @@
   let ageDays = 30;
   const MAX_AGE_LOOKUPS_PER_PAGE = 50;
   const ageInfo = new Map();      // registrable domain -> ISO date | null
+  const unregistered = new Set();  // registrable domains the registry has no record of
   const ageRequested = new Set();
   let agePending = new Set();
   let ageTimer = null;
@@ -121,7 +122,7 @@
 
     const ageDomain = D.ageLookupDomain(href);
     const created = ageDomain ? ageInfo.get(ageDomain) : undefined;
-    r = D.applyKnownSites(r, { ...info, created });
+    r = D.applyKnownSites(r, { ...info, created, unregistered: !!ageDomain && unregistered.has(ageDomain) });
     if (!info.known && ageCheck && ageDomain) {
       if (ageInfo.has(ageDomain)) r = D.applyDomainAge(r, created, { maxDays: ageDays });
       else queueAgeLookup(ageDomain, info.lookalike && !info.lookalike.strong);
@@ -177,6 +178,7 @@
       const created = answers[d]?.created || null;
       ageInfo.set(d, created);
       if (created && D.daysSince(created) < 365) changed = true;
+      if (answers[d]?.status === 'notfound') { unregistered.add(d); changed = true; }
     }
     if (changed) refresh();
   }
