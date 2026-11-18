@@ -88,7 +88,12 @@ of these hold:
 - the signature matches a public key built into the extension (`lib/list-public-key.js`, ECDSA P-256);
 - its serial number is newer than the list in use, so old lists can't be replayed;
 - the essential sites (google.com, paypal.com, wikipedia.org…) are present;
-- no more than 40% of sites were removed at once.
+- no more than 40% of sites were removed at once;
+- its serial (the build date) is a real date and not in the future, so a bad list can't block all later updates.
+
+Even a correctly signed download can only **add names to compare against**. Only sites in the list shipped
+inside the extension count as "known" and skip the look-alike and age checks, so a stolen signing key can't
+make a fake address pass.
 
 Otherwise the current list stays in use and Settings shows why. The saved copy is re-verified every time it's loaded.
 Updates can be turned off in Settings.

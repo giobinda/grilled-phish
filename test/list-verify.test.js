@@ -54,14 +54,26 @@ test('sanity: older or same serial is refused (no replay of old lists)', () => {
 });
 
 test('sanity: essential sites must be present', () => {
-  const text = makeList(2).replace('\npaypal.com\n', '\n');
+  const text = makeList(202611140000).replace('\npaypal.com\n', '\n');
   assert.match(L.checkListSanity(L.parseList(text), null).reason, /paypal\.com/);
 });
 
 test('sanity: too many removals at once are refused', () => {
-  const cur = L.parseList(makeList(1, [], 4000));
-  const next = L.parseList(makeList(2, [], 2000)); // drops half
+  const cur = L.parseList(makeList(202611130000, [], 4000));
+  const next = L.parseList(makeList(202611140000, [], 2000)); // drops half
   assert.match(L.checkListSanity(next, cur).reason, /removed at once/);
+});
+
+test('sanity: a list dated in the future is refused (it would block all later updates)', () => {
+  const now = Date.parse('2026-11-18T12:00:00Z');
+  const cur = L.parseList(makeList(202611130000));
+  const check = (serial) => L.checkListSanity(L.parseList(makeList(serial)), cur, { now });
+  assert.match(check(999999999999999).reason, /future|valid date/);
+  assert.match(check(202612010000).reason, /future/);          // two weeks ahead
+  assert.strictEqual(check(202611191000).ok, true);             // small clock difference is fine
+  assert.match(check(202613010000).reason, /valid date/);      // month 13
+  assert.match(check(202602300000).reason, /valid date/);      // 30 February
+  assert.match(L.checkListSanity(L.parseList(makeList(2)), null, { now }).reason, /valid date/);
 });
 
 test('parseList rejects malformed lists', () => {

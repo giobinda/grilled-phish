@@ -184,7 +184,8 @@ const unsigned = (text) => L.splitSigned(text)?.body ?? text;
 
 async function loadIndex() {
   const bundledText = await (await fetch(chrome.runtime.getURL('data/known-sites.txt'))).text();
-  let use = L.parseList(unsigned(bundledText));
+  const bundled = L.parseList(unsigned(bundledText));
+  let use = bundled;
   let from = 'built in';
   let updatedAt = null;
   const stored = await getLocal('knownSitesDownload', null);
@@ -192,12 +193,13 @@ async function loadIndex() {
   if (stored?.text && await L.verifySignedList(stored.text, LIST_KEYS)) {
     try {
       const dl = L.parseList(unsigned(stored.text));
-      if (dl.serial > use.serial) { use = dl; from = 'downloaded'; updatedAt = stored.fetchedAt; }
+      if (dl.serial > use.serial && L.serialPlausible(dl.serial)) { use = dl; from = 'downloaded'; updatedAt = stored.fetchedAt; }
     } catch { /* ignore a broken download */ }
   }
   currentList = use;
   listMeta = { count: use.domains.length, source: use.source, serial: use.serial, from, updatedAt };
-  return D.buildKnownIndex(use.domains);
+  // Only the shipped list can mark a site as "known"; see buildKnownIndex().
+  return D.buildKnownIndex(use.domains, { base: new Set(bundled.domains) });
 }
 
 function getIndex() {

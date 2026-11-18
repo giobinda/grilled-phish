@@ -157,6 +157,21 @@ test('db: letter swap of a well-known name that is not registered is blocked', (
   assert.notStrictEqual(db('https://some-new-bakery.com/', real, { unregistered: true }).verdict, 'danger');
 });
 
+test('db: only the shipped list can mark a site as known (a stolen signing key cannot exempt addresses)', () => {
+  const base = new Set(['stackoverflow.com', 'mywebsite.com']);
+  // A downloaded list that sneaks a fake in, even ranked above the real site.
+  const idx = D.buildKnownIndex(['stackoverfiow.com', 'stackoverflow.com', 'mywebsite.com', 'newshop.com'], { base });
+  const fake = D.knownSiteInfo('stackoverfiow.com', idx);
+  assert.strictEqual(fake.known, null);
+  assert.strictEqual(fake.lookalike.domain, 'stackoverflow.com');
+  assert.strictEqual(db('https://stackoverfIow.com/', idx, { unregistered: true }).verdict, 'danger');
+  // The real site stays known; a genuinely new downloaded site is simply checked like any other.
+  assert.ok(D.knownSiteInfo('stackoverflow.com', idx).known);
+  assert.strictEqual(D.knownSiteInfo('newshop.com', idx).known, null);
+  // Without a base (tests, tools) every listed domain counts, as before.
+  assert.ok(D.knownSiteInfo('newshop.com', D.buildKnownIndex(['newshop.com'])).known);
+});
+
 test('db: hidden digits / foreign letters are blocked immediately', () => {
   assert.strictEqual(db('https://myweb5ite.com/', small).verdict, 'unknown'); // 5 is not a look-alike digit
   assert.strictEqual(db('https://mywebs1te.com/', small).verdict, 'danger');
