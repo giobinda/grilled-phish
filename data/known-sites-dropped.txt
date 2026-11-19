@@ -1,127 +1,128 @@
 # rank	domain	reason
-546	ipv4only.arpa	reverse-DNS entry
-710	resolver.arpa	reverse-DNS entry
-2566	oneidrive.org	looks like a fake of Microsoft: The name "oneidrive" is one letter different from "onedrive".
-2652	_wildcard_.ph	invalid or duplicate
-4105	23.in-addr.arpa	reverse-DNS entry
-4477	3.in-addr.arpa	reverse-DNS entry
-5459	52.in-addr.arpa	reverse-DNS entry
-5461	54.in-addr.arpa	reverse-DNS entry
-5822	18.in-addr.arpa	reverse-DNS entry
-6214	googll.store	looks like a fake of Google: The name "googll" is one letter different from "google".
-6589	142.in-addr.arpa	reverse-DNS entry
-6647	34.in-addr.arpa	reverse-DNS entry
-7138	44.in-addr.arpa	reverse-DNS entry
-7599	35.in-addr.arpa	reverse-DNS entry
-7978	13.in-addr.arpa	reverse-DNS entry
-9551	184.in-addr.arpa	reverse-DNS entry
-10790	192.in-addr.arpa	reverse-DNS entry
-11310	googl.com	looks like a fake of Google: The name "googl" is one letter different from "google".
-12201	173.in-addr.arpa	reverse-DNS entry
-13603	100.in-addr.arpa	reverse-DNS entry
-14323	32.in-addr.arpa	reverse-DNS entry
-14480	tawitter.com	looks like a fake of X / Twitter: The name "tawitter" is one letter different from "twitter".
-14541	108.in-addr.arpa	reverse-DNS entry
-15207	64.in-addr.arpa	reverse-DNS entry
-15490	2.ip6.arpa	reverse-DNS entry
-16027	216.in-addr.arpa	reverse-DNS entry
-16256	74.in-addr.arpa	reverse-DNS entry
-16449	2.in-addr.arpa	reverse-DNS entry
-16542	8.in-addr.arpa	reverse-DNS entry
-16768	99.in-addr.arpa	reverse-DNS entry
-16989	51.in-addr.arpa	reverse-DNS entry
-17819	15.in-addr.arpa	reverse-DNS entry
-18172	98.in-addr.arpa	reverse-DNS entry
-18987	_wildcard_.com.ph	invalid or duplicate
-19825	50.in-addr.arpa	reverse-DNS entry
-20932	146.in-addr.arpa	reverse-DNS entry
-21640	204.in-addr.arpa	reverse-DNS entry
-23833	in-addr-servers.arpa	reverse-DNS entry
-24131	65.in-addr.arpa	reverse-DNS entry
-25970	microsof.net	looks like a fake of Microsoft: The name "microsof" is one letter different from "microsoft".
-26384	66.in-addr.arpa	reverse-DNS entry
-26871	107.in-addr.arpa	reverse-DNS entry
-27135	63.in-addr.arpa	reverse-DNS entry
-27569	69.in-addr.arpa	reverse-DNS entry
-27754	170.in-addr.arpa	reverse-DNS entry
-29150	16.in-addr.arpa	reverse-DNS entry
-29385	209.in-addr.arpa	reverse-DNS entry
-30926	go0gles.cc	looks like a fake of Google: The name "go0gles" is one letter different from "google".
-31041	72.in-addr.arpa	reverse-DNS entry
-31150	47.in-addr.arpa	reverse-DNS entry
-32177	185.in-addr.arpa	reverse-DNS entry
-32379	68.in-addr.arpa	reverse-DNS entry
-32424	96.in-addr.arpa	reverse-DNS entry
-33628	255.in-addr.arpa	reverse-DNS entry
-33736	57.in-addr.arpa	reverse-DNS entry
-33878	143.in-addr.arpa	reverse-DNS entry
-34885	208.in-addr.arpa	reverse-DNS entry
-39360	76.in-addr.arpa	reverse-DNS entry
-39386	224.in-addr.arpa	reverse-DNS entry
-39761	136.in-addr.arpa	reverse-DNS entry
-39974	40.in-addr.arpa	reverse-DNS entry
-40210	amazon-value-service.com	looks like a fake of Amazon: It adds words to the name "amazon" to look official, but it is not Amazon's website.
-40508	95.in-addr.arpa	reverse-DNS entry
-41756	75.in-addr.arpa	reverse-DNS entry
-43228	instragram.com	looks like a fake of Instagram: The name "instragram" is one letter different from "instagram".
-43518	77.in-addr.arpa	reverse-DNS entry
-44113	144.in-addr.arpa	reverse-DNS entry
-44633	17.in-addr.arpa	reverse-DNS entry
-45080	169.in-addr.arpa	reverse-DNS entry
-45155	162.in-addr.arpa	reverse-DNS entry
-45526	24.in-addr.arpa	reverse-DNS entry
-46558	62.in-addr.arpa	reverse-DNS entry
-48674	128.in-addr.arpa	reverse-DNS entry
-48769	131.in-addr.arpa	reverse-DNS entry
-49987	1.in-addr.arpa	reverse-DNS entry
-50037	206.in-addr.arpa	reverse-DNS entry
-50800	45.in-addr.arpa	reverse-DNS entry
-51080	188.in-addr.arpa	reverse-DNS entry
-51844	157.in-addr.arpa	reverse-DNS entry
-52189	148.in-addr.arpa	reverse-DNS entry
-53868	135.in-addr.arpa	reverse-DNS entry
-54500	198.in-addr.arpa	reverse-DNS entry
-54977	130.in-addr.arpa	reverse-DNS entry
-55928	whatwapp.io	looks like a fake of WhatsApp: The name "whatwapp" is one letter different from "whatsapp".
-56021	20.in-addr.arpa	reverse-DNS entry
-56111	159.in-addr.arpa	reverse-DNS entry
-58350	67.in-addr.arpa	reverse-DNS entry
-59115	91.in-addr.arpa	reverse-DNS entry
-59718	195.in-addr.arpa	reverse-DNS entry
-60479	37.in-addr.arpa	reverse-DNS entry
-62016	79.in-addr.arpa	reverse-DNS entry
-64480	4.in-addr.arpa	reverse-DNS entry
-64586	213.in-addr.arpa	reverse-DNS entry
-66765	5.in-addr.arpa	reverse-DNS entry
-69928	89.in-addr.arpa	reverse-DNS entry
-70440	instgram.com	looks like a fake of Instagram: The name "instgram" is one letter different from "instagram".
-71911	46.in-addr.arpa	reverse-DNS entry
-73032	174.in-addr.arpa	reverse-DNS entry
-73167	205.in-addr.arpa	reverse-DNS entry
-74294	140.in-addr.arpa	reverse-DNS entry
-74433	31.in-addr.arpa	reverse-DNS entry
-74979	92.in-addr.arpa	reverse-DNS entry
-75179	82.in-addr.arpa	reverse-DNS entry
-75341	178.in-addr.arpa	reverse-DNS entry
-75397	149.in-addr.arpa	reverse-DNS entry
-75522	129.in-addr.arpa	reverse-DNS entry
-75594	109.in-addr.arpa	reverse-DNS entry
-76477	152.in-addr.arpa	reverse-DNS entry
-76629	71.in-addr.arpa	reverse-DNS entry
-78140	70.in-addr.arpa	reverse-DNS entry
-80423	199.in-addr.arpa	reverse-DNS entry
-84970	103.in-addr.arpa	reverse-DNS entry
-85378	171.in-addr.arpa	reverse-DNS entry
-86321	amazonwebservices.com.cn	looks like a fake of Amazon: It adds words to the name "amazon" to look official, but it is not Amazon's website.
-87190	ip6-servers.arpa	reverse-DNS entry
-88044	212.in-addr.arpa	reverse-DNS entry
-88071	twiter.com	looks like a fake of X / Twitter: The name "twiter" is one letter different from "twitter".
-89021	88.in-addr.arpa	reverse-DNS entry
-90723	80.in-addr.arpa	reverse-DNS entry
-95576	114.in-addr.arpa	reverse-DNS entry
-96856	163.in-addr.arpa	reverse-DNS entry
-97932	hotmaal.gg	looks like a fake of Microsoft: The name "hotmaal" is one letter different from "hotmail".
-98331	94.in-addr.arpa	reverse-DNS entry
-98363	85.in-addr.arpa	reverse-DNS entry
-98562	207.in-addr.arpa	reverse-DNS entry
-99680	166.in-addr.arpa	reverse-DNS entry
+532	ipv4only.arpa	reverse-DNS entry
+667	resolver.arpa	reverse-DNS entry
+2878	oneidrive.org	looks like a fake of Microsoft: The name "oneidrive" is one letter different from "onedrive".
+3170	_wildcard_.ph	invalid or duplicate
+3752	googll.store	looks like a fake of Google: The name "googll" is one letter different from "google".
+4224	23.in-addr.arpa	reverse-DNS entry
+4542	3.in-addr.arpa	reverse-DNS entry
+5439	52.in-addr.arpa	reverse-DNS entry
+5560	54.in-addr.arpa	reverse-DNS entry
+5953	18.in-addr.arpa	reverse-DNS entry
+6535	142.in-addr.arpa	reverse-DNS entry
+6677	34.in-addr.arpa	reverse-DNS entry
+7372	44.in-addr.arpa	reverse-DNS entry
+7582	35.in-addr.arpa	reverse-DNS entry
+7761	13.in-addr.arpa	reverse-DNS entry
+9257	184.in-addr.arpa	reverse-DNS entry
+10578	192.in-addr.arpa	reverse-DNS entry
+10894	googl.com	looks like a fake of Google: The name "googl" is one letter different from "google".
+12092	173.in-addr.arpa	reverse-DNS entry
+13618	100.in-addr.arpa	reverse-DNS entry
+14574	108.in-addr.arpa	reverse-DNS entry
+14680	32.in-addr.arpa	reverse-DNS entry
+15243	64.in-addr.arpa	reverse-DNS entry
+15532	2.ip6.arpa	reverse-DNS entry
+16077	216.in-addr.arpa	reverse-DNS entry
+16392	74.in-addr.arpa	reverse-DNS entry
+16413	2.in-addr.arpa	reverse-DNS entry
+16560	8.in-addr.arpa	reverse-DNS entry
+16700	tawitter.com	looks like a fake of X / Twitter: The name "tawitter" is one letter different from "twitter".
+16852	99.in-addr.arpa	reverse-DNS entry
+17142	51.in-addr.arpa	reverse-DNS entry
+17598	15.in-addr.arpa	reverse-DNS entry
+18185	98.in-addr.arpa	reverse-DNS entry
+20081	50.in-addr.arpa	reverse-DNS entry
+20899	146.in-addr.arpa	reverse-DNS entry
+21324	204.in-addr.arpa	reverse-DNS entry
+23312	in-addr-servers.arpa	reverse-DNS entry
+23713	65.in-addr.arpa	reverse-DNS entry
+24756	_wildcard_.com.ph	invalid or duplicate
+25952	63.in-addr.arpa	reverse-DNS entry
+26189	107.in-addr.arpa	reverse-DNS entry
+26282	66.in-addr.arpa	reverse-DNS entry
+27095	microsof.net	looks like a fake of Microsoft: The name "microsof" is one letter different from "microsoft".
+27335	170.in-addr.arpa	reverse-DNS entry
+28048	16.in-addr.arpa	reverse-DNS entry
+28151	69.in-addr.arpa	reverse-DNS entry
+29191	209.in-addr.arpa	reverse-DNS entry
+31030	go0gles.cc	looks like a fake of Google: The name "go0gles" is one letter different from "google".
+31158	72.in-addr.arpa	reverse-DNS entry
+32119	185.in-addr.arpa	reverse-DNS entry
+32340	68.in-addr.arpa	reverse-DNS entry
+32617	96.in-addr.arpa	reverse-DNS entry
+33518	57.in-addr.arpa	reverse-DNS entry
+33994	143.in-addr.arpa	reverse-DNS entry
+34047	255.in-addr.arpa	reverse-DNS entry
+35065	208.in-addr.arpa	reverse-DNS entry
+36841	47.in-addr.arpa	reverse-DNS entry
+39190	224.in-addr.arpa	reverse-DNS entry
+39353	136.in-addr.arpa	reverse-DNS entry
+39375	76.in-addr.arpa	reverse-DNS entry
+39756	amazon-value-service.com	looks like a fake of Amazon: It adds words to the name "amazon" to look official, but it is not Amazon's website.
+39797	95.in-addr.arpa	reverse-DNS entry
+39985	40.in-addr.arpa	reverse-DNS entry
+40626	75.in-addr.arpa	reverse-DNS entry
+43431	instragram.com	looks like a fake of Instagram: The name "instragram" is one letter different from "instagram".
+44059	17.in-addr.arpa	reverse-DNS entry
+44439	144.in-addr.arpa	reverse-DNS entry
+44981	77.in-addr.arpa	reverse-DNS entry
+45306	162.in-addr.arpa	reverse-DNS entry
+45766	169.in-addr.arpa	reverse-DNS entry
+47010	62.in-addr.arpa	reverse-DNS entry
+47405	24.in-addr.arpa	reverse-DNS entry
+48696	128.in-addr.arpa	reverse-DNS entry
+49126	131.in-addr.arpa	reverse-DNS entry
+50047	1.in-addr.arpa	reverse-DNS entry
+51212	188.in-addr.arpa	reverse-DNS entry
+51390	45.in-addr.arpa	reverse-DNS entry
+52139	157.in-addr.arpa	reverse-DNS entry
+53917	206.in-addr.arpa	reverse-DNS entry
+53971	148.in-addr.arpa	reverse-DNS entry
+54094	135.in-addr.arpa	reverse-DNS entry
+54371	198.in-addr.arpa	reverse-DNS entry
+54675	130.in-addr.arpa	reverse-DNS entry
+55596	159.in-addr.arpa	reverse-DNS entry
+56472	20.in-addr.arpa	reverse-DNS entry
+58518	91.in-addr.arpa	reverse-DNS entry
+58867	67.in-addr.arpa	reverse-DNS entry
+59921	195.in-addr.arpa	reverse-DNS entry
+60404	whatwapp.io	looks like a fake of WhatsApp: The name "whatwapp" is one letter different from "whatsapp".
+60633	37.in-addr.arpa	reverse-DNS entry
+62028	79.in-addr.arpa	reverse-DNS entry
+63073	4.in-addr.arpa	reverse-DNS entry
+64496	213.in-addr.arpa	reverse-DNS entry
+66740	5.in-addr.arpa	reverse-DNS entry
+68905	instgram.com	looks like a fake of Instagram: The name "instgram" is one letter different from "instagram".
+69746	89.in-addr.arpa	reverse-DNS entry
+70410	46.in-addr.arpa	reverse-DNS entry
+71809	174.in-addr.arpa	reverse-DNS entry
+72205	205.in-addr.arpa	reverse-DNS entry
+73005	82.in-addr.arpa	reverse-DNS entry
+73509	140.in-addr.arpa	reverse-DNS entry
+74305	109.in-addr.arpa	reverse-DNS entry
+74408	149.in-addr.arpa	reverse-DNS entry
+74464	129.in-addr.arpa	reverse-DNS entry
+74958	92.in-addr.arpa	reverse-DNS entry
+74972	152.in-addr.arpa	reverse-DNS entry
+75368	31.in-addr.arpa	reverse-DNS entry
+75516	178.in-addr.arpa	reverse-DNS entry
+77431	71.in-addr.arpa	reverse-DNS entry
+77470	70.in-addr.arpa	reverse-DNS entry
+78633	199.in-addr.arpa	reverse-DNS entry
+84797	103.in-addr.arpa	reverse-DNS entry
+85674	171.in-addr.arpa	reverse-DNS entry
+85685	ip6-servers.arpa	reverse-DNS entry
+86511	80.in-addr.arpa	reverse-DNS entry
+86788	twiter.com	looks like a fake of X / Twitter: The name "twiter" is one letter different from "twitter".
+86830	88.in-addr.arpa	reverse-DNS entry
+86842	212.in-addr.arpa	reverse-DNS entry
+88432	amazonwebservices.com.cn	looks like a fake of Amazon: It adds words to the name "amazon" to look official, but it is not Amazon's website.
+90956	114.in-addr.arpa	reverse-DNS entry
+96146	163.in-addr.arpa	reverse-DNS entry
+96531	94.in-addr.arpa	reverse-DNS entry
+96849	85.in-addr.arpa	reverse-DNS entry
+97224	150.in-addr.arpa	reverse-DNS entry
+97428	43.in-addr.arpa	reverse-DNS entry
+97591	166.in-addr.arpa	reverse-DNS entry
+99059	207.in-addr.arpa	reverse-DNS entry
