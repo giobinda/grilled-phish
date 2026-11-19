@@ -340,5 +340,51 @@
   },
   "aboutSite": {
     "message": "Satu-satunya situs kami:"
+  },
+  "navPageTitle": {
+    "message": "Grilled Phish — periksa alamat ini"
+  },
+  "navTitle": {
+    "message": "⛔ BERHENTI — situs ini kemungkinan besar penipuan"
+  },
+  "navAddress": {
+    "message": "Alamat yang Anda buka:"
+  },
+  "navOpen": {
+    "message": "Tetap buka situsnya"
+  },
+  "typoTitle": {
+    "message": "Maksud Anda $1?"
+  },
+  "typoText": {
+    "message": "Anda mengetik $1. Alamat itu berbeda satu huruf dari $2, situs yang sangat populer. Penipu membeli alamat seperti ini untuk memanfaatkan salah ketik."
+  },
+  "typoGo": {
+    "message": "Buka $1"
+  },
+  "typoMeant": {
+    "message": "Tidak, saya memang maksud $1"
+  },
+  "typoNote": {
+    "message": "Jika Anda memilih alamat Anda sendiri, kami tidak akan bertanya lagi untuk alamat itu."
+  },
+  "textDir": {
+    "message": "ltr",
+    "description": "Text direction of this language: rtl or ltr. Not shown to users."
+  },
+  "navBrandDanger": {
+    "message": "Peringatan ini dari Grilled Phish, ekstensi keamanan yang terpasang di browser Anda. Ekstensi ini menghentikan situs ini sebelum terbuka: tidak terjadi apa-apa dan Anda aman."
+  },
+  "navBrandTypo": {
+    "message": "Pertanyaan ini dari Grilled Phish, ekstensi keamanan yang terpasang di browser Anda. Situsnya belum dibuka."
+  },
+  "dlgBrandLink": {
+    "message": "Peringatan ini dari Grilled Phish, ekstensi keamanan yang terpasang di browser Anda, bukan dari situs ini. Tautan belum dibuka: Anda aman."
+  },
+  "dlgBrandPassword": {
+    "message": "Peringatan ini dari Grilled Phish, ekstensi keamanan yang terpasang di browser Anda, bukan dari situs ini. Belum ada yang diketik atau dikirim: Anda aman."
+  },
+  "banBrand": {
+    "message": "Peringatan dari Grilled Phish, ekstensi keamanan di browser Anda:"
   }
 }

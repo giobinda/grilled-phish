@@ -340,5 +340,51 @@
   },
   "aboutSite": {
     "message": "Unsere einzige Website:"
+  },
+  "navPageTitle": {
+    "message": "Grilled Phish — Adresse prüfen"
+  },
+  "navTitle": {
+    "message": "⛔ STOPP — diese Website ist wahrscheinlich Betrug"
+  },
+  "navAddress": {
+    "message": "Die Adresse, die Sie öffnen:"
+  },
+  "navOpen": {
+    "message": "Website trotzdem öffnen"
+  },
+  "typoTitle": {
+    "message": "Meinten Sie $1?"
+  },
+  "typoText": {
+    "message": "Sie haben $1 eingegeben. Das unterscheidet sich nur durch einen Buchstaben von $2, einer sehr bekannten Website. Betrüger kaufen solche Adressen, um Tippfehler auszunutzen."
+  },
+  "typoGo": {
+    "message": "Zu $1 gehen"
+  },
+  "typoMeant": {
+    "message": "Nein, ich meinte wirklich $1"
+  },
+  "typoNote": {
+    "message": "Wenn Sie Ihre Adresse wählen, fragen wir bei dieser Adresse nicht mehr nach."
+  },
+  "textDir": {
+    "message": "ltr",
+    "description": "Text direction of this language: rtl or ltr. Not shown to users."
+  },
+  "navBrandDanger": {
+    "message": "Diese Warnung kommt von Grilled Phish, der Sicherheits-Erweiterung in Ihrem Browser. Sie hat diese Website gestoppt, bevor sie sich öffnen konnte: Es ist nichts passiert, Sie sind sicher."
+  },
+  "navBrandTypo": {
+    "message": "Diese Frage kommt von Grilled Phish, der Sicherheits-Erweiterung in Ihrem Browser. Die Website wurde noch nicht geöffnet."
+  },
+  "dlgBrandLink": {
+    "message": "Diese Warnung kommt von Grilled Phish, der Sicherheits-Erweiterung in Ihrem Browser, nicht von dieser Website. Der Link wurde nicht geöffnet: Sie sind sicher."
+  },
+  "dlgBrandPassword": {
+    "message": "Diese Warnung kommt von Grilled Phish, der Sicherheits-Erweiterung in Ihrem Browser, nicht von dieser Website. Es wurde nichts eingegeben oder gesendet: Sie sind sicher."
+  },
+  "banBrand": {
+    "message": "Warnung von Grilled Phish, der Sicherheits-Erweiterung in Ihrem Browser:"
   }
 }

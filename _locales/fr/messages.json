@@ -340,5 +340,51 @@
   },
   "aboutSite": {
     "message": "Notre seul site :"
+  },
+  "navPageTitle": {
+    "message": "Grilled Phish — vérifiez cette adresse"
+  },
+  "navTitle": {
+    "message": "⛔ STOP — ce site est probablement une arnaque"
+  },
+  "navAddress": {
+    "message": "L'adresse que vous ouvrez :"
+  },
+  "navOpen": {
+    "message": "Ouvrir le site quand même"
+  },
+  "typoTitle": {
+    "message": "Vouliez-vous dire $1 ?"
+  },
+  "typoText": {
+    "message": "Vous avez tapé $1. Elle diffère d'une seule lettre de $2, un site très connu. Les escrocs achètent ce genre d'adresses pour profiter des fautes de frappe."
+  },
+  "typoGo": {
+    "message": "Aller sur $1"
+  },
+  "typoMeant": {
+    "message": "Non, je voulais vraiment $1"
+  },
+  "typoNote": {
+    "message": "Si vous choisissez votre adresse, nous ne vous le redemanderons pas pour celle-ci."
+  },
+  "textDir": {
+    "message": "ltr",
+    "description": "Text direction of this language: rtl or ltr. Not shown to users."
+  },
+  "navBrandDanger": {
+    "message": "Cet avertissement vient de Grilled Phish, l'extension de sécurité installée dans votre navigateur. Elle a arrêté ce site avant son ouverture : rien ne s'est passé, vous êtes en sécurité."
+  },
+  "navBrandTypo": {
+    "message": "Cette question vient de Grilled Phish, l'extension de sécurité installée dans votre navigateur. Le site ne s'est pas encore ouvert."
+  },
+  "dlgBrandLink": {
+    "message": "Cet avertissement vient de Grilled Phish, l'extension de sécurité installée dans votre navigateur, et non de ce site. Le lien n'a pas été ouvert : vous êtes en sécurité."
+  },
+  "dlgBrandPassword": {
+    "message": "Cet avertissement vient de Grilled Phish, l'extension de sécurité installée dans votre navigateur, et non de ce site. Rien n'a été saisi ni envoyé : vous êtes en sécurité."
+  },
+  "banBrand": {
+    "message": "Avertissement de Grilled Phish, l'extension de sécurité de votre navigateur :"
   }
 }

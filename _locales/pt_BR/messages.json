@@ -340,5 +340,51 @@
   },
   "aboutSite": {
     "message": "Nosso único site:"
+  },
+  "navPageTitle": {
+    "message": "Grilled Phish — confira este endereço"
+  },
+  "navTitle": {
+    "message": "⛔ PARE — este site provavelmente é um golpe"
+  },
+  "navAddress": {
+    "message": "O endereço que você está abrindo:"
+  },
+  "navOpen": {
+    "message": "Abrir o site mesmo assim"
+  },
+  "typoTitle": {
+    "message": "Você quis dizer $1?"
+  },
+  "typoText": {
+    "message": "Você digitou $1. Ele tem uma letra diferente de $2, um site muito conhecido. Golpistas compram endereços assim para aproveitar erros de digitação."
+  },
+  "typoGo": {
+    "message": "Ir para $1"
+  },
+  "typoMeant": {
+    "message": "Não, eu quis mesmo $1"
+  },
+  "typoNote": {
+    "message": "Se você escolher o seu endereço, não perguntaremos de novo sobre ele."
+  },
+  "textDir": {
+    "message": "ltr",
+    "description": "Text direction of this language: rtl or ltr. Not shown to users."
+  },
+  "navBrandDanger": {
+    "message": "Este aviso vem do Grilled Phish, a extensão de segurança instalada no seu navegador. Ela parou este site antes que ele abrisse: nada aconteceu e você está seguro."
+  },
+  "navBrandTypo": {
+    "message": "Esta pergunta vem do Grilled Phish, a extensão de segurança instalada no seu navegador. O site ainda não foi aberto."
+  },
+  "dlgBrandLink": {
+    "message": "Este aviso vem do Grilled Phish, a extensão de segurança instalada no seu navegador, e não deste site. O link não foi aberto: você está seguro."
+  },
+  "dlgBrandPassword": {
+    "message": "Este aviso vem do Grilled Phish, a extensão de segurança instalada no seu navegador, e não deste site. Nada foi digitado nem enviado: você está seguro."
+  },
+  "banBrand": {
+    "message": "Aviso do Grilled Phish, a extensão de segurança do seu navegador:"
   }
 }

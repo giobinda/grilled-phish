@@ -340,5 +340,51 @@
   },
   "aboutSite": {
     "message": "Il nostro unico sito:"
+  },
+  "navPageTitle": {
+    "message": "Grilled Phish — controlla questo indirizzo"
+  },
+  "navTitle": {
+    "message": "⛔ ALT — questo sito è probabilmente una truffa"
+  },
+  "navAddress": {
+    "message": "L'indirizzo che stai aprendo:"
+  },
+  "navOpen": {
+    "message": "Apri comunque il sito"
+  },
+  "typoTitle": {
+    "message": "Intendevi $1?"
+  },
+  "typoText": {
+    "message": "Hai scritto $1. Differisce di una sola lettera da $2, un sito molto conosciuto. I truffatori comprano indirizzi così per sfruttare gli errori di battitura."
+  },
+  "typoGo": {
+    "message": "Vai su $1"
+  },
+  "typoMeant": {
+    "message": "No, intendevo proprio $1"
+  },
+  "typoNote": {
+    "message": "Se scegli il tuo indirizzo, non te lo chiederemo più per questo."
+  },
+  "textDir": {
+    "message": "ltr",
+    "description": "Text direction of this language: rtl or ltr. Not shown to users."
+  },
+  "navBrandDanger": {
+    "message": "Questo avviso viene da Grilled Phish, l'estensione di sicurezza installata nel tuo browser. Ha fermato questo sito prima che si aprisse: non è successo nulla e sei al sicuro."
+  },
+  "navBrandTypo": {
+    "message": "Questa domanda viene da Grilled Phish, l'estensione di sicurezza installata nel tuo browser. Il sito non si è ancora aperto."
+  },
+  "dlgBrandLink": {
+    "message": "Questo avviso viene da Grilled Phish, l'estensione di sicurezza installata nel tuo browser, non da questo sito. Il link non è stato aperto: sei al sicuro."
+  },
+  "dlgBrandPassword": {
+    "message": "Questo avviso viene da Grilled Phish, l'estensione di sicurezza installata nel tuo browser, non da questo sito. Non è stato scritto né inviato nulla: sei al sicuro."
+  },
+  "banBrand": {
+    "message": "Avviso di Grilled Phish, l'estensione di sicurezza del tuo browser:"
   }
 }

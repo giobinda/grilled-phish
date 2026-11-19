@@ -7,7 +7,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const ROOT = path.join(__dirname, '..');
-const SHIPPED = ['manifest.json', 'background.js', 'lib', 'content', 'popup', 'options', 'learn', '_locales'];
+const SHIPPED = ['manifest.json', 'background.js', 'lib', 'content', 'popup', 'options', 'learn', 'warn', '_locales'];
 const ALLOWED = {
   // Our only website.
   'github.com': /^https:\/\/github\.com\/giobinda\/grilled-phish$/,

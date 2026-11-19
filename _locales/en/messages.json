@@ -340,5 +340,51 @@
   },
   "aboutSite": {
     "message": "Our only website:"
+  },
+  "navPageTitle": {
+    "message": "Grilled Phish — check this address"
+  },
+  "navTitle": {
+    "message": "⛔ STOP — this website is probably a scam"
+  },
+  "navAddress": {
+    "message": "The address you are opening:"
+  },
+  "navOpen": {
+    "message": "Open the website anyway"
+  },
+  "typoTitle": {
+    "message": "Did you mean $1?"
+  },
+  "typoText": {
+    "message": "You typed $1. That is one letter different from $2, a very popular website. Scammers buy addresses like this to catch typing mistakes."
+  },
+  "typoGo": {
+    "message": "Go to $1"
+  },
+  "typoMeant": {
+    "message": "No, I really meant $1"
+  },
+  "typoNote": {
+    "message": "If you choose your address, we won't ask again for it."
+  },
+  "textDir": {
+    "message": "ltr",
+    "description": "Text direction of this language: rtl or ltr. Not shown to users."
+  },
+  "navBrandDanger": {
+    "message": "This warning comes from Grilled Phish, the safety extension installed in your browser. It stopped this website before it could open: nothing has happened and you are safe."
+  },
+  "navBrandTypo": {
+    "message": "This question comes from Grilled Phish, the safety extension installed in your browser. The website has not opened yet."
+  },
+  "dlgBrandLink": {
+    "message": "This warning comes from Grilled Phish, the safety extension installed in your browser, not from this website. The link has not been opened: you are safe."
+  },
+  "dlgBrandPassword": {
+    "message": "This warning comes from Grilled Phish, the safety extension installed in your browser, not from this website. Nothing has been typed or sent: you are safe."
+  },
+  "banBrand": {
+    "message": "Warning from Grilled Phish, the safety extension in your browser:"
   }
 }

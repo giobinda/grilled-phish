@@ -16,10 +16,10 @@ const holes = (s) => [...new Set(s.match(/\$\d/g) || [])].sort().join(',');
 
 test('every key used in the code exists in English', () => {
   const used = new Set();
-  const code = ['lib/detector.js', 'content/content.js', 'background.js', 'popup/popup.js', 'options/options.js']
+  const code = ['lib/detector.js', 'content/content.js', 'background.js', 'popup/popup.js', 'options/options.js', 'warn/warn.js']
     .map(read).join('\n');
   for (const m of code.matchAll(/\b(?:T|L|GP_T|getMessage)\('([A-Za-z0-9_]+)'/g)) used.add(m[1]);
-  const html = ['popup/popup.html', 'options/options.html'].map(read).join('\n');
+  const html = ['popup/popup.html', 'options/options.html', 'warn/warn.html'].map(read).join('\n');
   for (const m of html.matchAll(/data-i18n(?:-html|-placeholder)?="([A-Za-z0-9_]+)"/g)) used.add(m[1]);
   for (const m of read('manifest.json').matchAll(/__MSG_([A-Za-z0-9_]+)__/g)) used.add(m[1]);
   assert.ok(used.size > 80, `found only ${used.size} keys`);

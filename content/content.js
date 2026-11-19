@@ -45,7 +45,7 @@
   let lastReported = null;
   let activeClick = null;         // { event, link } while a click on a not-blocked link is being dispatched
   // Text in the browser's language (_locales/<lang>/messages.json).
-  const DIR = (() => { try { return chrome.i18n.getMessage('@@bidi_dir') || 'ltr'; } catch { return 'ltr'; } })();
+  const DIR = (() => { try { return chrome.i18n.getMessage('textDir') === 'rtl' ? 'rtl' : 'ltr'; } catch { return 'ltr'; } })();
   const LANG = (() => { try { return chrome.i18n.getUILanguage(); } catch { return 'en'; } })();
   const T = (key, ...subs) => { try { return chrome.i18n.getMessage(key, subs.map(String)) || key; } catch { return key; } };
   let allowNavigationTo = null;   // set when the user chose "Open anyway"
@@ -336,6 +336,11 @@
       border: 8px solid #d40000; border-radius: 16px; padding: 28px;
       box-sizing: border-box; box-shadow: 0 20px 60px rgba(0,0,0,.5);
     }
+    .brand {
+      margin: -8px 0 18px; padding: 10px 14px; background: #f1f6ff; border: 2px solid #b8cdf0;
+      border-radius: 10px; font-size: 16px; line-height: 1.45; color: #1d2b44;
+    }
+    .brand strong { display: block; font-size: 18px; }
     h1 { margin: 0 0 12px; font-size: 30px; line-height: 1.2; color: #b00000; }
     p, li, label { font-size: 20px; line-height: 1.5; }
     .label { margin: 18px 0 4px; font-weight: 600; color: #444; font-size: 18px; }
@@ -433,6 +438,11 @@
     shadow.appendChild(dlg);
 
     const isPassword = action.kind === 'password';
+    // Say who is speaking, so the warning isn't mistaken for the website's own popup or a virus.
+    const brand = el('div', { class: 'brand' });
+    brand.append(el('strong', {}, 'Grilled Phish'),
+      el('span', {}, isPassword ? T('dlgBrandPassword') : T('dlgBrandLink')));
+    box.appendChild(brand);
     box.appendChild(el('h1', { id: 'lg-title' }, isPassword
       ? T('dlgTitlePassword')
       : T('dlgTitleLink')));
@@ -558,11 +568,20 @@
       if (isPassword) {
         passwordsUnlocked = true;
         action.field?.focus();
-      } else if (action.target === '_blank') {
-        window.open(action.href, '_blank', 'noopener,noreferrer');
       } else {
-        allowNavigationTo = action.href;
-        window.location.assign(action.href);
+        // The person confirmed: tell the background not to stop this site again
+        // before it loads, then open it.
+        const go = () => {
+          if (action.target === '_blank') {
+            window.open(action.href, '_blank', 'noopener,noreferrer');
+          } else {
+            allowNavigationTo = action.href;
+            window.location.assign(action.href);
+          }
+        };
+        try {
+          chrome.runtime.sendMessage({ type: 'allowNav', url: action.href }).then(go, go);
+        } catch { go(); }
       }
     });
 
@@ -587,6 +606,7 @@
         gap: 12px; align-items: center; box-shadow: 0 4px 16px rgba(0,0,0,.4);
       }
       .msg { flex: 1 1 320px; }
+      .from { font-size: 15px; opacity: .92; margin-bottom: 2px; }
       b { font-size: 22px; }
       button { font: bold 18px system-ui, sans-serif; padding: 10px 16px; border-radius: 8px; cursor: pointer; border: none; }
       .leave { background: #fff; color: #b00000; }
@@ -595,6 +615,7 @@
     shadow.appendChild(style);
     const bar = el('div', { class: 'bar', role: 'alert', dir: DIR, lang: LANG });
     const msg = el('div', { class: 'msg' });
+    msg.appendChild(el('div', { class: 'from' }, T('banBrand')));
     msg.appendChild(el('b', {}, r.impersonates
       ? T('banNot', r.impersonates)
       : r.ageDays != null && r.reasons.length === 1

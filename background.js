@@ -16,6 +16,13 @@
  *     -> { 'www.a.com': { known: rank | null, lookalike: { domain, rank, code, strong } | null } }
  *   { type: 'knownSitesStatus' } -> { count, source, serial, from, updatedAt, checkedAt, error, autoUpdate }
  *   { type: 'knownSitesUpdate' } -> same, after checking for a newer list now
+ *   { type: 'navInfo', url }   (warning page) -> { danger: result | null, typo: { domain } | null }
+ *   { type: 'allowNav', url }  (warning page, or our dialog after the person confirmed)
+ *   { type: 'typoOk', url }    (warning page: "I really meant this address", remembered)
+ *
+ * Before a page loads (webNavigation), addresses that are certainly fake open
+ * our warning page instead, and addresses the person TYPED that are one letter
+ * off a very popular site ask "did you mean...?".
  */
 'use strict';
 
@@ -315,6 +322,35 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     openLearn(sender.tab);
     return false;
   }
+  if (msg?.type === 'navInfo' && typeof msg.url === 'string') {
+    if (!fromExtensionPage) return false;
+    (async () => {
+      const danger = await dangerFor(msg.url);
+      const typo = danger ? null : await typoFor(msg.url);
+      sendResponse({ danger, typo });
+    })().catch(() => sendResponse({ danger: null, typo: null }));
+    return true;
+  }
+  if (msg?.type === 'goBack' && typeof msg.url === 'string') {
+    // "Go back" on our warning page. The fake address may already be the previous
+    // history entry (the browser records it before we can step in): skip it.
+    if (!fromExtensionPage || sender.tab?.id == null) return false;
+    skipBack.set(sender.tab.id, { host: hostOf(msg.url), until: Date.now() + 5000 });
+    sendResponse(true);
+    return false;
+  }
+  if ((msg?.type === 'allowNav' || msg?.type === 'typoOk') && typeof msg.url === 'string') {
+    // From our warning page, or from our dialog inside a page (content script,
+    // only after the person ticked the box and waited). Web pages can't send these.
+    if (sender.id !== chrome.runtime.id) return false;
+    if (msg.type === 'typoOk' && !fromExtensionPage) return false;
+    (async () => {
+      await allowNav(msg.url);
+      if (msg.type === 'typoOk') await rememberTypoOk(msg.url);
+      sendResponse(true);
+    })().catch(() => sendResponse(false));
+    return true;
+  }
   if (msg?.type === 'domainInfo' && Array.isArray(msg.hosts)) {
     getIndex().then((index) => {
       const out = {};
@@ -344,3 +380,94 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     .catch(() => sendResponse({}));
   return true; // async response
 });
+
+// ---------------------------------------------------------------- before a page loads
+const WARN_PAGE = chrome.runtime.getURL('warn/warn.html');
+const ALLOW_MS = 2 * 60000; // after "open anyway", that site loads without asking again for 2 minutes
+const MAX_TYPO_OK = 500;
+
+const hostOf = (url) => { try { return new URL(url).hostname.toLowerCase(); } catch { return ''; } };
+const isWeb = (url) => /^https?:\/\//i.test(url);
+
+async function getTrusted() {
+  const { trusted = [] } = await chrome.storage.sync.get({ trusted: [] });
+  return Array.isArray(trusted) ? trusted : [];
+}
+
+// Same verdict as the page check, minus the age lookup (too slow here; the
+// page itself still checks age once it loads).
+async function dangerFor(url) {
+  if (!isWeb(url)) return null;
+  let r = D.analyzeUrl(url, { trusted: await getTrusted() });
+  if (r.verdict === 'trusted' || r.verdict === 'ignore') return null;
+  const index = await getIndex();
+  if (index) r = D.applyKnownSites(r, D.knownSiteInfo(hostOf(url), index));
+  return r.verdict === 'danger' ? r : null;
+}
+
+async function typoFor(url) {
+  if (!isWeb(url)) return null;
+  const r = D.analyzeUrl(url, { trusted: await getTrusted() });
+  if (r.verdict === 'trusted' || r.verdict === 'ignore') return null;
+  const { typoOk = [] } = await chrome.storage.local.get({ typoOk: [] });
+  if (typoOk.includes(D.registrableDomain(hostOf(url)))) return null;
+  const s = D.typoSuggestion(hostOf(url), await getIndex());
+  return s ? { domain: s.domain } : null;
+}
+
+// Session storage: survives the worker being restarted, cleared when the browser closes.
+const session = chrome.storage.session || chrome.storage.local;
+async function allowNav(url) {
+  const host = hostOf(url);
+  if (!host) return;
+  const { navAllow = {} } = await session.get({ navAllow: {} });
+  const now = Date.now();
+  for (const [h, until] of Object.entries(navAllow)) if (until < now) delete navAllow[h];
+  navAllow[host] = now + ALLOW_MS;
+  await session.set({ navAllow });
+}
+async function isAllowed(url) {
+  const { navAllow = {} } = await session.get({ navAllow: {} });
+  return (navAllow[hostOf(url)] || 0) > Date.now();
+}
+async function rememberTypoOk(url) {
+  const d = D.registrableDomain(hostOf(url));
+  if (!d) return;
+  const { typoOk = [] } = await chrome.storage.local.get({ typoOk: [] });
+  if (!typoOk.includes(d)) await chrome.storage.local.set({ typoOk: [d, ...typoOk].slice(0, MAX_TYPO_OK) });
+}
+
+const skipBack = new Map(); // tabId -> { host, until }: going back past a fake address
+
+function showWarning(tabId, url) {
+  chrome.tabs.update(tabId, { url: `${WARN_PAGE}?u=${encodeURIComponent(url)}` }).catch(() => {});
+}
+
+if (chrome.webNavigation) {
+  // Certain fakes, however the address was opened (typed, bookmark, another app).
+  chrome.webNavigation.onBeforeNavigate.addListener(async ({ tabId, frameId, url, documentLifecycle }) => {
+    if (frameId !== 0 || tabId < 0 || !isWeb(url) || documentLifecycle === 'prerender') return;
+    const skip = skipBack.get(tabId);
+    skipBack.delete(tabId);
+    if (skip && skip.until > Date.now() && skip.host === hostOf(url)) {
+      // Back from our warning landed on the fake itself: one more step back,
+      // or close the tab if there is nothing before it.
+      chrome.tabs.goBack(tabId).catch(() => chrome.tabs.remove(tabId).catch(() => {}));
+      return;
+    }
+    try {
+      if (await isAllowed(url)) return;
+      if (await dangerFor(url)) showWarning(tabId, url);
+    } catch { /* never break browsing */ }
+  });
+
+  // Typing mistakes: only for addresses typed in the address bar.
+  chrome.webNavigation.onCommitted.addListener(async ({ tabId, frameId, url, transitionType, transitionQualifiers = [] }) => {
+    if (frameId !== 0 || tabId < 0 || transitionType !== 'typed' || !isWeb(url)) return;
+    if (transitionQualifiers.includes('forward_back')) return;
+    try {
+      if (await isAllowed(url)) return;
+      if (await typoFor(url)) showWarning(tabId, url);
+    } catch { /* never break browsing */ }
+  });
+}

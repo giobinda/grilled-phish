@@ -172,6 +172,27 @@ test('db: only the shipped list can mark a site as known (a stolen signing key c
   assert.ok(D.knownSiteInfo('newshop.com', D.buildKnownIndex(['newshop.com'])).known);
 });
 
+test('typo: addresses one keystroke away from a very popular site get a suggestion', () => {
+  const idx = D.buildKnownIndex(['google.com', 'github.com', 'wikipedia.org', 'amazon.co.uk', 'hulu.com', 'site2.com', 'my-shop.com']);
+  const s = (h) => D.typoSuggestion(h, idx)?.domain ?? null;
+  assert.strictEqual(s('githhub.com'), 'github.com');      // extra letter
+  assert.strictEqual(s('gihub.com'), 'github.com');        // missing letter
+  assert.strictEqual(s('gihtub.com'), 'github.com');       // swapped letters
+  assert.strictEqual(s('www.githib.com'), 'github.com');   // wrong letter, with www
+  assert.strictEqual(s('wikipedai.org'), 'wikipedia.org');
+  assert.strictEqual(s('amazn.co.uk'), 'amazon.co.uk');
+  // Not typos: the site itself, another ending, short names, numbers, hyphens, two mistakes.
+  for (const h of ['github.com', 'github.io', 'hula.com', 'site3.com', 'myshop.com', 'gthhub.com', 'gooogle.org']) {
+    assert.strictEqual(s(h), null, h);
+  }
+});
+
+test('typo: added downloaded names are never suggested (only the shipped list)', () => {
+  const idx = D.buildKnownIndex(['github.com', 'evilsite.com'], { base: new Set(['github.com']) });
+  assert.strictEqual(D.typoSuggestion('evilsitee.com', idx), null);
+  assert.strictEqual(D.typoSuggestion('githhub.com', idx).domain, 'github.com');
+});
+
 test('db: hidden digits / foreign letters are blocked immediately', () => {
   assert.strictEqual(db('https://myweb5ite.com/', small).verdict, 'unknown'); // 5 is not a look-alike digit
   assert.strictEqual(db('https://mywebs1te.com/', small).verdict, 'danger');

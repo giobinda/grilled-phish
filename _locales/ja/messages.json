@@ -340,5 +340,51 @@
   },
   "aboutSite": {
     "message": "私たちの唯一のサイト："
+  },
+  "navPageTitle": {
+    "message": "Grilled Phish — このアドレスを確認してください"
+  },
+  "navTitle": {
+    "message": "⛔ 待って — このサイトは詐欺の可能性が高いです"
+  },
+  "navAddress": {
+    "message": "開こうとしているアドレス："
+  },
+  "navOpen": {
+    "message": "それでもサイトを開く"
+  },
+  "typoTitle": {
+    "message": "もしかして $1 ですか？"
+  },
+  "typoText": {
+    "message": "入力されたのは $1 です。人気サイト $2 と1文字だけ違います。詐欺師は入力ミスを狙って、このようなアドレスを取得します。"
+  },
+  "typoGo": {
+    "message": "$1 へ移動"
+  },
+  "typoMeant": {
+    "message": "いいえ、本当に $1 を開きたい"
+  },
+  "typoNote": {
+    "message": "入力したアドレスを選んだ場合、次からはこのアドレスについて確認しません。"
+  },
+  "textDir": {
+    "message": "ltr",
+    "description": "Text direction of this language: rtl or ltr. Not shown to users."
+  },
+  "navBrandDanger": {
+    "message": "この警告は、ブラウザーにインストールされている安全のための拡張機能 Grilled Phish が表示しています。サイトが開く前に止めたので、何も起きていません。ご安心ください。"
+  },
+  "navBrandTypo": {
+    "message": "この確認は、ブラウザーにインストールされている安全のための拡張機能 Grilled Phish が表示しています。サイトはまだ開いていません。"
+  },
+  "dlgBrandLink": {
+    "message": "この警告は、このサイトではなく、ブラウザーにインストールされている安全のための拡張機能 Grilled Phish が表示しています。リンクはまだ開いていません。ご安心ください。"
+  },
+  "dlgBrandPassword": {
+    "message": "この警告は、このサイトではなく、ブラウザーにインストールされている安全のための拡張機能 Grilled Phish が表示しています。何も入力・送信されていません。ご安心ください。"
+  },
+  "banBrand": {
+    "message": "ブラウザーの安全拡張機能 Grilled Phish からの警告："
   }
 }

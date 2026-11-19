@@ -340,5 +340,51 @@
   },
   "aboutSite": {
     "message": "موقعنا الوحيد:"
+  },
+  "navPageTitle": {
+    "message": "Grilled Phish — تحقّق من هذا العنوان"
+  },
+  "navTitle": {
+    "message": "⛔ توقّف — هذا الموقع احتيالي على الأرجح"
+  },
+  "navAddress": {
+    "message": "العنوان الذي تفتحه:"
+  },
+  "navOpen": {
+    "message": "افتح الموقع على أي حال"
+  },
+  "typoTitle": {
+    "message": "هل تقصد $1؟"
+  },
+  "typoText": {
+    "message": "كتبت $1. يختلف بحرف واحد عن $2، وهو موقع مشهور جداً. يشتري المحتالون عناوين كهذه لاستغلال أخطاء الكتابة."
+  },
+  "typoGo": {
+    "message": "اذهب إلى $1"
+  },
+  "typoMeant": {
+    "message": "لا، أقصد فعلاً $1"
+  },
+  "typoNote": {
+    "message": "إذا اخترت العنوان الذي كتبته، فلن نسألك عنه مرة أخرى."
+  },
+  "textDir": {
+    "message": "rtl",
+    "description": "Text direction of this language: rtl or ltr. Not shown to users."
+  },
+  "navBrandDanger": {
+    "message": "هذا التحذير من Grilled Phish، إضافة الأمان المثبّتة في متصفحك. لقد أوقفت هذا الموقع قبل أن يُفتح: لم يحدث شيء وأنت في أمان."
+  },
+  "navBrandTypo": {
+    "message": "هذا السؤال من Grilled Phish، إضافة الأمان المثبّتة في متصفحك. لم يُفتح الموقع بعد."
+  },
+  "dlgBrandLink": {
+    "message": "هذا التحذير من Grilled Phish، إضافة الأمان المثبّتة في متصفحك، وليس من هذا الموقع. لم يُفتح الرابط: أنت في أمان."
+  },
+  "dlgBrandPassword": {
+    "message": "هذا التحذير من Grilled Phish، إضافة الأمان المثبّتة في متصفحك، وليس من هذا الموقع. لم تُكتب أو تُرسل أي معلومات: أنت في أمان."
+  },
+  "banBrand": {
+    "message": "تحذير من Grilled Phish، إضافة الأمان في متصفحك:"
   }
 }

@@ -52,6 +52,19 @@ so that copies of those sites get blocked too.
 Protected out of the box: about 40 brands that phishers copy most (PayPal, Google, Apple, Microsoft, Amazon, banks, Poste Italiane,
 DHL…), plus whatever you add as trusted.
 
+## Before a page loads: typed addresses (`warn/`)
+
+- **Certain fakes are stopped before they load.** Opening `paypa1.com` from the address bar, a bookmark or
+  another app (an email program) shows a full-page warning instead of the site: go back, go to the real
+  site, or open it anyway after ticking the box and waiting 5 seconds.
+- **"Did you mean github.com?"** An address *typed* in the address bar that is one keystroke away
+  (extra, missing, wrong or swapped letter) from one of the 10,000 most visited sites gets a gentle question.
+  Only for typed addresses, only for names of 5+ letters, never for numbers or hyphens alone
+  (`site2`/`site3`, `my-shop`/`myshop`). Answering "I really meant this" is remembered.
+  On the current list, under 1% of real sites ranked 10,001–100,000 would be one keystroke from a top site.
+- Browsers don't let extensions read the address bar while you type, so this happens right after Enter.
+  The fake site may receive the request, but never gets to show its page.
+
 ## The well-known websites database
 
 `data/known-sites.txt` lists the ~100,000 most visited websites, most popular first. It's built from the
@@ -210,7 +223,7 @@ A phishing page is hostile code running in the same page as the extension, so th
 Other measures:
 - No `innerHTML`, `eval` or remote code. All text, including attacker-controlled domain names, is inserted as plain text.
 - Web pages can't message the extension. Settings messages are accepted only from the extension's own pages.
-- Minimal permissions: `storage` and `activeTab`. Content scripts run on all sites, but the extension has no extra host permissions.
+- Minimal permissions: `storage`, `activeTab` and `webNavigation` (to step in before a fake page loads; browsers describe it as "read your browsing history", but nothing is stored or sent anywhere). Content scripts run on all sites, but the extension has no extra host permissions.
 - List downloads must stay on HTTPS (redirects included), be signed with the project key, be newer than the list in
   use, and pass sanity checks before use.
 - The GitHub workflow pins third-party actions to exact commits and only the update job can write to the repo.

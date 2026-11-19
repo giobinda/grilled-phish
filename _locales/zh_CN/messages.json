@@ -340,5 +340,51 @@
   },
   "aboutSite": {
     "message": "我们唯一的网站："
+  },
+  "navPageTitle": {
+    "message": "Grilled Phish — 请核对这个地址"
+  },
+  "navTitle": {
+    "message": "⛔ 停下 — 这个网站很可能是诈骗"
+  },
+  "navAddress": {
+    "message": "你要打开的地址："
+  },
+  "navOpen": {
+    "message": "仍然打开这个网站"
+  },
+  "typoTitle": {
+    "message": "你是不是想输入 $1？"
+  },
+  "typoText": {
+    "message": "你输入的是 $1。它和非常热门的网站 $2 只差一个字母。骗子会专门注册这样的地址，等人打错字上钩。"
+  },
+  "typoGo": {
+    "message": "前往 $1"
+  },
+  "typoMeant": {
+    "message": "不，我要打开的就是 $1"
+  },
+  "typoNote": {
+    "message": "如果你选择自己输入的地址，我们以后不会再为它提醒。"
+  },
+  "textDir": {
+    "message": "ltr",
+    "description": "Text direction of this language: rtl or ltr. Not shown to users."
+  },
+  "navBrandDanger": {
+    "message": "这条警告来自 Grilled Phish，即安装在你浏览器中的安全扩展程序。它在这个网站打开之前就拦住了它：什么都没有发生，你是安全的。"
+  },
+  "navBrandTypo": {
+    "message": "这个问题来自 Grilled Phish，即安装在你浏览器中的安全扩展程序。网站还没有打开。"
+  },
+  "dlgBrandLink": {
+    "message": "这条警告来自 Grilled Phish（安装在你浏览器中的安全扩展程序），而不是这个网站。链接还没有打开：你是安全的。"
+  },
+  "dlgBrandPassword": {
+    "message": "这条警告来自 Grilled Phish（安装在你浏览器中的安全扩展程序），而不是这个网站。还没有输入或发送任何内容：你是安全的。"
+  },
+  "banBrand": {
+    "message": "来自 Grilled Phish（你浏览器中的安全扩展程序）的警告："
   }
 }
