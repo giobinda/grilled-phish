@@ -265,6 +265,17 @@ Grilled Phish is provided **"as is", without warranty of any kind**, express or 
 fitness for a particular purpose and the accuracy of its warnings (see sections 15 and 16 of the
 [GNU GPL v3](LICENSE)).
 
+- **Grilled Phish only checks web addresses.** It looks at *where* a link or page really goes, to spot
+  addresses that imitate a well-known website, use hidden look-alike letters, or were registered only days ago.
+  It does **not** look at what a website contains or does. In particular, it is **not**:
+  - an age-verification, parental-control or content filter (adult, violent or otherwise unsuitable content);
+  - an antivirus or malware scanner, and it doesn't check downloads or attachments;
+  - an ad, tracker or pop-up blocker;
+  - a judge of whether a shop, seller, offer or piece of news is honest. A website at its own genuine
+    address can still be a scam.
+
+  The "age check" in the settings is about **how old a website's address is** (its registration date),
+  never about the age of the person using the computer.
 - **No tool catches every scam.** A website that Grilled Phish doesn't flag is **not** proven safe, and a
   warning may sometimes be wrong.
 - **You stay responsible for what you do online**, including choosing to open a site or type information
