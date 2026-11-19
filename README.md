@@ -4,6 +4,12 @@
 
 *Blocks fake look-alike websites before you click.*
 
+> [!WARNING]
+> **Beta software.** Grilled Phish is still being developed and tested. It will miss some scams and may
+> occasionally warn about a safe website. Use it as an **extra** layer of protection, never as the only one:
+> keep your browser's own protection (Safe Browsing) turned on, and stay careful with links and messages.
+> See the [disclaimer](#disclaimer).
+
 A browser extension that catches **look-alike scam links**, like `paypa1.com`, `pаypal.com` (Cyrillic а),
 `arnazon.com`, `paypal.com.secure-verify.xyz` and `poste-italiane-verifica.com`, so you don't have to read domains yourself.
 
@@ -252,6 +258,24 @@ Copyright (C) 2026 giobinda.
 Grilled Phish is free software: you can redistribute it and/or modify it under the terms of the
 [GNU General Public License version 3](LICENSE), as published by the Free Software Foundation.
 Anyone who publishes a modified version must also publish its source code under the same license.
+
+## Disclaimer
+
+Grilled Phish is provided **"as is", without warranty of any kind**, express or implied, including
+fitness for a particular purpose and the accuracy of its warnings (see sections 15 and 16 of the
+[GNU GPL v3](LICENSE)).
+
+- **No tool catches every scam.** A website that Grilled Phish doesn't flag is **not** proven safe, and a
+  warning may sometimes be wrong.
+- **You stay responsible for what you do online**, including choosing to open a site or type information
+  after a warning.
+- To the maximum extent permitted by law, the authors and contributors are **not liable** for any loss or
+  damage (including money, data or account losses) arising from using, or being unable to use, Grilled Phish,
+  or from relying on its warnings or on their absence.
+- Grilled Phish is an independent project. It is not affiliated with, or endorsed by, any company or
+  organization named in it, its warnings or its guide (such as PayPal, Amazon, Google or the agencies linked
+  in the guide). Brand names are used only to identify the sites being imitated.
+- If you have lost money or data to a scam, contact your bank and your local police straight away.
 
 ## Credits
 
