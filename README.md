@@ -239,6 +239,20 @@ Other measures:
 - On pages where something is blocked, the page can tell the extension is installed.
 - Privacy: with the age check on, registries see the domain names being checked (see above).
 
+## Contact, issues and security reports
+
+Grilled Phish never contacts anyone (see above), so this repository has **no public issue tracker**:
+a fake "support" comment there could fool people. Security problems can be reported privately through
+GitHub; see [SECURITY.md](SECURITY.md).
+
+## License
+
+Copyright (C) 2026 giobinda.
+
+Grilled Phish is free software: you can redistribute it and/or modify it under the terms of the
+[GNU General Public License version 3](LICENSE), as published by the Free Software Foundation.
+Anyone who publishes a modified version must also publish its source code under the same license.
+
 ## Credits
 
 The well-known sites ranking is the [Tranco list](https://tranco-list.eu) (Le Pochat et al., *Tranco: A Research-Oriented
