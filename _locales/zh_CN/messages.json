@@ -386,5 +386,8 @@
   },
   "banBrand": {
     "message": "来自 Grilled Phish（你浏览器中的安全扩展程序）的警告："
+  },
+  "betaNotice": {
+    "message": "<strong>测试版。</strong>Grilled Phish 仍在测试中：它可能漏掉诈骗，也可能偶尔对安全的网站发出警告。它只检查网址，不检查网站的内容（不是内容过滤器，也不是杀毒软件）。请继续保持警惕。"
   }
 }

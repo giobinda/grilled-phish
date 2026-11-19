@@ -386,5 +386,8 @@
   },
   "banBrand": {
     "message": "Aviso de Grilled Phish, la extensión de seguridad de tu navegador:"
+  },
+  "betaNotice": {
+    "message": "<strong>Versión beta.</strong> Grilled Phish todavía está en pruebas: puede pasar por alto estafas o avisar a veces de un sitio seguro. Solo comprueba direcciones web, no lo que contiene un sitio (no es un filtro de contenido ni un antivirus). Sigue con cuidado."
   }
 }

@@ -386,5 +386,8 @@
   },
   "banBrand": {
     "message": "Avertissement de Grilled Phish, l'extension de sécurité de votre navigateur :"
+  },
+  "betaNotice": {
+    "message": "<strong>Version bêta.</strong> Grilled Phish est encore en test : il peut laisser passer des arnaques ou parfois alerter sur un site sûr. Il vérifie uniquement les adresses web, pas le contenu des sites (ce n'est ni un filtre de contenu ni un antivirus). Restez vigilant."
   }
 }

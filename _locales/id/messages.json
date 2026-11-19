@@ -386,5 +386,8 @@
   },
   "banBrand": {
     "message": "Peringatan dari Grilled Phish, ekstensi keamanan di browser Anda:"
+  },
+  "betaNotice": {
+    "message": "<strong>Versi beta.</strong> Grilled Phish masih dalam pengujian: bisa melewatkan penipuan atau kadang memperingatkan situs yang aman. Ekstensi ini hanya memeriksa alamat web, bukan isi situs (bukan filter konten dan bukan antivirus). Tetap waspada."
   }
 }

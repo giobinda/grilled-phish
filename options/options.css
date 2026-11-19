@@ -37,3 +37,7 @@ button.secondary { background: transparent; color: var(--fg); border: 2px solid 
 .never li { display: block; border: none; padding: 6px 0; margin: 0; background: none; }
 .never li::before { content: '🚫 '; }
 .never .scam { font-weight: 700; color: var(--bad); }
+
+.beta { padding: 12px 16px; line-height: 1.5; color: #5c4400; background: #fff6d6;
+  border: 2px solid #e6cf6b; border-radius: 12px; }
+@media (prefers-color-scheme: dark) { .beta { color: #f3dd94; background: #3a3214; border-color: #6b5a1e; } }

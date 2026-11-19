@@ -23,3 +23,7 @@ ul { padding-left: 20px; margin: 6px 0 12px; font-size: 15px; }
 .btn.secondary { background: transparent; color: var(--fg); border: 2px solid var(--line); }
 .btn.link { background: transparent; color: var(--muted); text-decoration: underline; font-weight: 400; }
 .never { margin: 12px 0 0; font-size: 13px; color: var(--muted); text-align: center; }
+
+.beta { margin: 14px 0 0; padding: 8px 10px; font-size: 12.5px; line-height: 1.4; color: #5c4400;
+  background: #fff6d6; border: 1px solid #e6cf6b; border-radius: 8px; }
+@media (prefers-color-scheme: dark) { .beta { color: #f3dd94; background: #3a3214; border-color: #6b5a1e; } }
