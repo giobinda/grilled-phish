@@ -156,7 +156,7 @@
     "message": "⛔ Peringatan: situs ini BUKAN $1."
   },
   "banAge": {
-    "message": "⛔ Hati-hati: situs ini dibuat $1."
+    "message": "⚠️ Hati-hati: situs ini dibuat $1."
   },
   "banScam": {
     "message": "⛔ Peringatan: situs ini tampak seperti penipuan."
@@ -267,10 +267,10 @@
     "message": "🗓️ Situs yang baru dibuat"
   },
   "optAgeP": {
-    "message": "Kebanyakan situs penipuan dibuat beberapa hari sebelum serangan dan segera hilang. Grilled Phish dapat memeriksa kapan sebuah situs dibuat dan memblokir yang sangat baru."
+    "message": "Sebagian besar situs penipuan dibuat beberapa hari sebelum serangan dan segera hilang. Grilled Phish dapat memeriksa kapan situs dibuat dan memperingatkan Anda tentang situs yang sangat baru (Anda tetap bisa membukanya setelah konfirmasi singkat)."
   },
   "optAgeCheck": {
-    "message": "Blokir situs yang lebih baru dari"
+    "message": "Peringatkan saya tentang situs yang lebih baru dari"
   },
   "optWeek": {
     "message": "1 minggu"
@@ -389,5 +389,35 @@
   },
   "betaNotice": {
     "message": "<strong>Versi beta.</strong> Grilled Phish masih dalam pengujian: bisa melewatkan penipuan atau kadang memperingatkan situs yang aman. Ekstensi ini hanya memeriksa alamat web, bukan isi situs (bukan filter konten dan bukan antivirus). Tetap waspada."
+  },
+  "linkTitleNew": {
+    "message": "Grilled Phish: situs ini baru saja dibuat. Klik untuk melihat detail sebelum membukanya."
+  },
+  "linkBadgeNew": {
+    "message": "⚠️ Situs sangat baru"
+  },
+  "dlgTitleNew": {
+    "message": "⚠️ Hati-hati: situs ini sangat baru"
+  },
+  "dlgNewAdvice": {
+    "message": "Bank, toko, dan kantor pemerintah yang asli sudah punya situs sejak bertahun-tahun. Jika pesan atau telepon membawa Anda ke sini, berhati-hatilah."
+  },
+  "banNoTypeNew": {
+    "message": "Pikirkan baik-baik sebelum mengetik kata sandi, kode, atau nomor kartu di sini."
+  },
+  "badgeCaution": {
+    "message": "Grilled Phish: situs sangat baru — hati-hati"
+  },
+  "popNew": {
+    "message": "Situs sangat baru: hati-hati"
+  },
+  "optStrictH": {
+    "message": "🔒 Mode ketat"
+  },
+  "optStrictP": {
+    "message": "Berguna saat menyiapkan Grilled Phish untuk seseorang yang sebaiknya tidak membuka situs mencurigakan sendirian. Semua yang mencurigakan diblokir sepenuhnya seperti situs palsu: termasuk situs yang sangat baru dan kemungkinan salah ketik. Untuk membukanya selalu perlu mencentang kotak dan menunggu 5 detik, dan jawaban \"saya memang maksud ini\" tidak diingat."
+  },
+  "optStrictCheck": {
+    "message": "Mode ketat: blokir semua yang mencurigakan"
   }
 }

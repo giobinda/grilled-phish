@@ -87,7 +87,12 @@ function renderDanger(r) {
     box.appendChild(real);
   }
   box.appendChild(learnButton());
+  box.appendChild(hardConfirm(() => proceed(target)));
+  safe.focus();
+}
 
+// "I know what I am doing": tick the box, wait 5 seconds, then the button works.
+function hardConfirm(onGo) {
   const details = el('details');
   details.appendChild(el('summary', {}, T('dlgKnow')));
   details.appendChild(el('p', { class: 'phone' }, T('dlgPhone')));
@@ -98,7 +103,6 @@ function renderDanger(r) {
   const anyway = el('button', { class: 'anyway', type: 'button', disabled: '' }, T('dlgWait', WAIT_SECONDS));
   risky.append(label, anyway);
   details.appendChild(risky);
-  box.appendChild(details);
 
   // Same rule as the in-page dialog: tick the box, then wait 5 seconds.
   let left = WAIT_SECONDS, timer = null;
@@ -113,12 +117,12 @@ function renderDanger(r) {
   check.addEventListener('change', update);
   anyway.addEventListener('click', (e) => {
     if (!e.isTrusted || anyway.disabled) return;
-    proceed(target);
+    onGo();
   });
-  safe.focus();
+  return details;
 }
 
-function renderTypo(typo) {
+function renderTypo(typo, strict) {
   document.body.classList.add('typo');
   const typed = hostOf(target);
   const u = new URL(target);
@@ -136,10 +140,15 @@ function renderTypo(typo) {
   const go = el('button', { class: 'safe', type: 'button' }, T('typoGo', typo.domain));
   go.addEventListener('click', () => location.replace(fixed));
   box.appendChild(go);
-  const meant = el('button', { class: 'second', type: 'button' }, T('typoMeant', typed));
-  meant.addEventListener('click', (e) => { if (e.isTrusted) proceed(target, 'typoOk'); });
-  box.appendChild(meant);
-  box.appendChild(el('p', { class: 'note' }, T('typoNote')));
+  if (strict) {
+    // Strict mode (settings): same rule as a fake site, and nothing is remembered.
+    box.appendChild(hardConfirm(() => proceed(target)));
+  } else {
+    const meant = el('button', { class: 'second', type: 'button' }, T('typoMeant', typed));
+    meant.addEventListener('click', (e) => { if (e.isTrusted) proceed(target, 'typoOk'); });
+    box.appendChild(meant);
+    box.appendChild(el('p', { class: 'note' }, T('typoNote')));
+  }
   go.focus();
 }
 
@@ -149,7 +158,7 @@ function renderTypo(typo) {
   let info = await send({ type: 'navInfo', url: target });
   if (!info) { await new Promise((r) => setTimeout(r, 700)); info = await send({ type: 'navInfo', url: target }); }
   if (info?.danger) renderDanger(info.danger);
-  else if (info?.typo) renderTypo(info.typo);
+  else if (info?.typo) renderTypo(info.typo, info.strict === true);
   else { location.replace(target); return; } // nothing wrong (any more): just go
   box.hidden = false;
 })();

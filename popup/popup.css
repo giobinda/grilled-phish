@@ -12,6 +12,9 @@ body { width: 360px; margin: 0; padding: 18px; background: var(--bg); color: var
 .headline { font-size: 20px; font-weight: 700; }
 .trusted .headline { color: var(--ok); }
 .danger .headline { color: var(--bad); }
+.status.caution { border-color: #e0a100; }
+.caution .headline { color: #8a5d00; }
+@media (prefers-color-scheme: dark) { .caution .headline { color: #f3c246; } }
 .label { color: var(--muted); font-size: 15px; }
 .age { font-size: 16px; margin: -4px 0 10px; color: var(--muted); }
 .age.young { color: var(--bad); font-weight: 700; }

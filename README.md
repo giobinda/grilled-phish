@@ -17,8 +17,12 @@ A browser extension that catches **look-alike scam links**, like `paypa1.com`, `
 - Clicking one shows a big warning. It shows the real destination with the fake letters highlighted, next to the real website.
 - To open it anyway: click "I know what I am doing…", tick the checkbox, wait 5 seconds, then click the button.
 - If the **page you're on** is a fake, a red banner appears and password/card fields are locked behind the same warning.
-- **Brand-new websites** (created less than a month ago, adjustable) are blocked too. Scam sites usually
-  live only a few days. The creation date comes from the official registry for that ending (see Privacy below).
+- **Brand-new websites** (created less than a month ago, adjustable) get a **milder, orange warning**:
+  being new is suspicious but not proof, so one click on "Open" is enough (no checkbox, no waiting). A new
+  site that is *also* a fake of some kind is fully blocked. Scam sites usually live only a few days.
+- **Strict mode** (Settings, off by default) treats everything suspicious as a fake: very new websites and
+  likely typing mistakes get the full block (checkbox + 5-second wait), and "I really meant this" answers
+  are not remembered. Handy when setting up Grilled Phish for someone else. The creation date comes from the official registry for that ending (see Privacy below).
 - **Copies of 100,000 well-known websites** are caught too, not just big brands: `wikipedla.org`, `g1thub.com`,
   `stackoverfIow.com`. The list of the most visited sites comes from [Tranco](https://tranco-list.eu) and is
   checked on your computer. The warning highlights the exact letter that is different.

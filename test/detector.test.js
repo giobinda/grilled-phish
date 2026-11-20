@@ -85,9 +85,9 @@ test('age: lookup domain', () => {
   assert.strictEqual(D.ageLookupDomain('mailto:a@b.com'), null);
 });
 
-test('age: 3-day-old unknown site becomes danger', () => {
+test('age: 3-day-old unknown site gets a mild caution, not a block', () => {
   const r = D.applyDomainAge(D.analyzeUrl('https://best-deals-4u.shop/'), daysAgo(3), { now: NOW });
-  assert.strictEqual(r.verdict, 'danger');
+  assert.strictEqual(r.verdict, 'caution');
   assert.strictEqual(r.ageDays, 3);
   assert.match(r.reasons.at(-1), /only 3 days ago/);
 });
@@ -100,7 +100,7 @@ test('age: created today / yesterday wording', () => {
 test('age: old site stays unknown, threshold respected', () => {
   assert.strictEqual(D.applyDomainAge(D.analyzeUrl('https://wikipedia.org/'), '2001-01-13T00:12:14Z', { now: NOW }).verdict, 'unknown');
   assert.strictEqual(D.applyDomainAge(D.analyzeUrl('https://x-shop.com/'), daysAgo(45), { now: NOW, maxDays: 30 }).verdict, 'unknown');
-  assert.strictEqual(D.applyDomainAge(D.analyzeUrl('https://x-shop.com/'), daysAgo(45), { now: NOW, maxDays: 90 }).verdict, 'danger');
+  assert.strictEqual(D.applyDomainAge(D.analyzeUrl('https://x-shop.com/'), daysAgo(45), { now: NOW, maxDays: 90 }).verdict, 'caution');
 });
 
 test('age: never overrides trusted, adds reason to existing danger', () => {
@@ -109,6 +109,24 @@ test('age: never overrides trusted, adds reason to existing danger', () => {
   assert.strictEqual(r.verdict, 'danger');
   assert.strictEqual(r.reasons.length, 2);
   assert.strictEqual(r.impersonates, 'PayPal');
+});
+
+test('age: a new look-alike of a well-known site is still blocked, not just cautioned', () => {
+  const idx = D.buildKnownIndex(['mywebsite.com']);
+  const created = daysAgo(3);
+  let r = D.applyKnownSites(D.analyzeUrl('https://mywebslte.com/'), { ...D.knownSiteInfo('mywebslte.com', idx), created }, { now: NOW });
+  r = D.applyDomainAge(r, created, { now: NOW });
+  assert.strictEqual(r.verdict, 'danger');
+});
+
+test('strict mode turns a mild caution into a full block, and changes nothing else', () => {
+  const young = D.applyDomainAge(D.analyzeUrl('https://best-deals-4u.shop/'), daysAgo(3), { now: NOW });
+  assert.strictEqual(D.applyStrict(young, false).verdict, 'caution');
+  assert.strictEqual(D.applyStrict(young, true).verdict, 'danger');
+  for (const u of ['https://paypal.com/', 'https://wikipedia.org/', 'https://paypa1.com/']) {
+    const r = D.analyzeUrl(u);
+    assert.strictEqual(D.applyStrict(r, true).verdict, r.verdict, u);
+  }
 });
 
 test('age: missing or bad date changes nothing', () => {

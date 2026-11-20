@@ -156,7 +156,7 @@
     "message": "⛔ Attenzione: questo sito NON è $1."
   },
   "banAge": {
-    "message": "⛔ Attenzione: questo sito è stato creato $1."
+    "message": "⚠️ Attenzione: questo sito è stato creato $1."
   },
   "banScam": {
     "message": "⛔ Attenzione: questo sito sembra una truffa."
@@ -267,10 +267,10 @@
     "message": "🗓️ Siti nuovissimi"
   },
   "optAgeP": {
-    "message": "Quasi tutti i siti truffa vengono creati pochi giorni prima dell’attacco e spariscono poco dopo. Grilled Phish può controllare quando un sito è stato creato e bloccare quelli molto nuovi."
+    "message": "Quasi tutti i siti truffa vengono creati pochi giorni prima dell’attacco e spariscono poco dopo. Grilled Phish può controllare quando un sito è stato creato e avvisarti di quelli molto nuovi (potrai comunque aprirli dopo una rapida conferma)."
   },
   "optAgeCheck": {
-    "message": "Blocca i siti più nuovi di"
+    "message": "Avvisami per i siti più nuovi di"
   },
   "optWeek": {
     "message": "1 settimana"
@@ -389,5 +389,35 @@
   },
   "betaNotice": {
     "message": "<strong>Versione beta.</strong> Grilled Phish è ancora in fase di test: può non accorgersi di una truffa o a volte segnalare un sito sicuro. Controlla solo gli indirizzi web, non il contenuto dei siti (non è un filtro dei contenuti né un antivirus). Resta prudente."
+  },
+  "linkTitleNew": {
+    "message": "Grilled Phish: questo sito è stato creato da pochissimo. Clicca per saperne di più prima di aprirlo."
+  },
+  "linkBadgeNew": {
+    "message": "⚠️ Sito molto nuovo"
+  },
+  "dlgTitleNew": {
+    "message": "⚠️ Attenzione: questo sito è molto nuovo"
+  },
+  "dlgNewAdvice": {
+    "message": "Le vere banche, i negozi e gli uffici pubblici hanno il loro sito da anni. Se ti ha portato qui un messaggio o una telefonata, fai molta attenzione."
+  },
+  "banNoTypeNew": {
+    "message": "Pensaci bene prima di scrivere qui password, codici o numeri di carta."
+  },
+  "badgeCaution": {
+    "message": "Grilled Phish: sito molto nuovo — attenzione"
+  },
+  "popNew": {
+    "message": "Sito molto nuovo: fai attenzione"
+  },
+  "optStrictH": {
+    "message": "🔒 Modalità rigorosa"
+  },
+  "optStrictP": {
+    "message": "Utile quando configuri Grilled Phish per qualcuno che non dovrebbe aprire da solo siti sospetti. Tutto ciò che è sospetto viene bloccato del tutto, come un sito falso: anche i siti molto nuovi e i probabili errori di battitura. Per aprirne uno servono sempre la spunta e i 5 secondi di attesa, e le risposte «intendevo proprio questo» non vengono ricordate."
+  },
+  "optStrictCheck": {
+    "message": "Modalità rigorosa: blocca tutto ciò che è sospetto"
   }
 }

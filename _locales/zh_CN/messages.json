@@ -156,7 +156,7 @@
     "message": "⛔ 警告：这个网站不是 $1。"
   },
   "banAge": {
-    "message": "⛔ 小心：这个网站创建于$1。"
+    "message": "⚠️ 小心：这个网站创建于$1。"
   },
   "banScam": {
     "message": "⛔ 警告：这个网站看起来像诈骗网站。"
@@ -267,10 +267,10 @@
     "message": "🗓️ 新建网站"
   },
   "optAgeP": {
-    "message": "大多数诈骗网站在行骗前几天才创建，之后很快消失。Grilled Phish 可以查看网站的创建时间，并拦截非常新的网站。"
+    "message": "大多数诈骗网站都是在行骗前几天才创建的，之后很快就会消失。Grilled Phish 可以查询网站的创建时间，并提醒你注意非常新的网站（简单确认后仍可打开）。"
   },
   "optAgeCheck": {
-    "message": "拦截创建时间短于以下期限的网站"
+    "message": "提醒我注意创建时间短于以下期限的网站："
   },
   "optWeek": {
     "message": "1 周"
@@ -389,5 +389,35 @@
   },
   "betaNotice": {
     "message": "<strong>测试版。</strong>Grilled Phish 仍在测试中：它可能漏掉诈骗，也可能偶尔对安全的网站发出警告。它只检查网址，不检查网站的内容（不是内容过滤器，也不是杀毒软件）。请继续保持警惕。"
+  },
+  "linkTitleNew": {
+    "message": "Grilled Phish：这个网站是最近才创建的。打开之前请点击查看详情。"
+  },
+  "linkBadgeNew": {
+    "message": "⚠️ 非常新的网站"
+  },
+  "dlgTitleNew": {
+    "message": "⚠️ 小心：这个网站非常新"
+  },
+  "dlgNewAdvice": {
+    "message": "真正的银行、商店和政府机构的网站都已经存在多年。如果是一条消息或一个电话把你引到这里，请格外小心。"
+  },
+  "banNoTypeNew": {
+    "message": "在这里输入密码、验证码或银行卡号之前，请三思。"
+  },
+  "badgeCaution": {
+    "message": "Grilled Phish：非常新的网站——请小心"
+  },
+  "popNew": {
+    "message": "非常新的网站：请小心"
+  },
+  "optStrictH": {
+    "message": "🔒 严格模式"
+  },
+  "optStrictP": {
+    "message": "适合为不应自行打开可疑网站的人设置 Grilled Phish。所有可疑网站都会像假网站一样被完全拦截：包括非常新的网站和可能的输入错误。要打开它们，必须勾选确认框并等待 5 秒，而且“我要打开的就是这个”的选择不会被记住。"
+  },
+  "optStrictCheck": {
+    "message": "严格模式：拦截一切可疑网站"
   }
 }

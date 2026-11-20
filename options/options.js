@@ -64,6 +64,10 @@
   });
   ageDays.addEventListener('change', () => chrome.storage.sync.set({ ageDays: Number(ageDays.value) }));
 
+  const strictMode = document.getElementById('strictMode');
+  chrome.storage.sync.get({ strictMode: false }).then((v) => { strictMode.checked = v.strictMode === true; });
+  strictMode.addEventListener('change', () => chrome.storage.sync.set({ strictMode: strictMode.checked }));
+
   const listStatus = document.getElementById('listStatus');
   const autoUpdate = document.getElementById('autoUpdate');
   const serialDate = (n) => {

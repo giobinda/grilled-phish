@@ -156,7 +156,7 @@
     "message": "⛔ Achtung: Diese Website ist NICHT $1."
   },
   "banAge": {
-    "message": "⛔ Vorsicht: Diese Website wurde $1 erstellt."
+    "message": "⚠️ Vorsicht: Diese Website wurde $1 erstellt."
   },
   "banScam": {
     "message": "⛔ Achtung: Diese Website sieht nach Betrug aus."
@@ -267,10 +267,10 @@
     "message": "🗓️ Brandneue Websites"
   },
   "optAgeP": {
-    "message": "Die meisten Betrugsseiten werden wenige Tage vor dem Angriff erstellt und verschwinden kurz danach. Grilled Phish kann prüfen, wann eine Website erstellt wurde, und sehr neue blockieren."
+    "message": "Die meisten Betrugsseiten werden wenige Tage vor dem Angriff erstellt und verschwinden bald danach. Grilled Phish kann prüfen, wann eine Website erstellt wurde, und Sie vor sehr neuen warnen (nach einer kurzen Bestätigung können Sie sie trotzdem öffnen)."
   },
   "optAgeCheck": {
-    "message": "Websites blockieren, die jünger sind als"
+    "message": "Warnen bei Websites, die neuer sind als"
   },
   "optWeek": {
     "message": "1 Woche"
@@ -389,5 +389,35 @@
   },
   "betaNotice": {
     "message": "<strong>Beta-Version.</strong> Grilled Phish wird noch getestet: Es kann Betrug übersehen oder manchmal vor einer sicheren Website warnen. Es prüft nur Webadressen, nicht die Inhalte einer Website (kein Inhaltsfilter, kein Virenschutz). Bleiben Sie vorsichtig."
+  },
+  "linkTitleNew": {
+    "message": "Grilled Phish: Diese Website wurde erst vor Kurzem erstellt. Klicken Sie für mehr Informationen, bevor Sie sie öffnen."
+  },
+  "linkBadgeNew": {
+    "message": "⚠️ Sehr neue Website"
+  },
+  "dlgTitleNew": {
+    "message": "⚠️ Vorsicht: Diese Website ist sehr neu"
+  },
+  "dlgNewAdvice": {
+    "message": "Echte Banken, Geschäfte und Behörden haben ihre Websites seit Jahren. Wenn Sie eine Nachricht oder ein Anruf hierher geführt hat, seien Sie besonders vorsichtig."
+  },
+  "banNoTypeNew": {
+    "message": "Überlegen Sie zweimal, bevor Sie hier Passwörter, Codes oder Kartennummern eingeben."
+  },
+  "badgeCaution": {
+    "message": "Grilled Phish: sehr neue Website — Vorsicht"
+  },
+  "popNew": {
+    "message": "Sehr neue Website: Vorsicht"
+  },
+  "optStrictH": {
+    "message": "🔒 Strenger Modus"
+  },
+  "optStrictP": {
+    "message": "Nützlich, wenn Sie Grilled Phish für jemanden einrichten, der verdächtige Websites nicht allein öffnen sollte. Alles Verdächtige wird vollständig blockiert wie eine Fälschung: auch sehr neue Websites und wahrscheinliche Tippfehler. Zum Öffnen sind immer das Häkchen und 5 Sekunden Wartezeit nötig, und Antworten wie „Ich meinte wirklich diese Adresse“ werden nicht gespeichert."
+  },
+  "optStrictCheck": {
+    "message": "Strenger Modus: alles Verdächtige blockieren"
   }
 }

@@ -10,8 +10,8 @@
   });
 
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  const { trusted = [], ageCheck = true, ageDays = 30 } =
-    await chrome.storage.sync.get({ trusted: [], ageCheck: true, ageDays: 30 });
+  const { trusted = [], ageCheck = true, ageDays = 30, strictMode = false } =
+    await chrome.storage.sync.get({ trusted: [], ageCheck: true, ageDays: 30, strictMode: false });
   let r = tab?.url ? D.analyzeUrl(tab.url, { trusted }) : { verdict: 'ignore' };
 
   // Is it a well-known website, or a copy of one? (local database, no network)
@@ -41,7 +41,7 @@
   }
   if (r.verdict === 'unknown' || r.verdict === 'danger') {
     r = D.applyKnownSites(r, { ...info, created });
-    if (!info.known) r = D.applyDomainAge(r, created, { maxDays: ageDays });
+    if (!info.known) r = D.applyStrict(D.applyDomainAge(r, created, { maxDays: ageDays }), strictMode === true);
   }
   if (r.known) {
     $('known').hidden = false;
@@ -74,6 +74,11 @@
       li.textContent = reason;
       $('reasons').appendChild(li);
     }
+  } else if (r.verdict === 'caution') {
+    status.classList.add('caution');
+    $('icon').textContent = '⚠️';
+    $('headline').textContent = T('popNew');
+    $('trust').hidden = false;
   } else {
     $('icon').textContent = '❔';
     $('headline').textContent = T('popUnknown');

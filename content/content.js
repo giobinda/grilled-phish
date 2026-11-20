@@ -28,6 +28,7 @@
   let trusted = [];
   let ageCheck = true;
   let ageDays = 30;
+  let strict = false;              // strict mode: every warning is a full block
   const MAX_AGE_LOOKUPS_PER_PAGE = 50;
   const ageInfo = new Map();      // registrable domain -> ISO date | null
   const unregistered = new Set();  // registrable domains the registry has no record of
@@ -67,6 +68,12 @@
       text-decoration: line-through #d40000 2px !important;
     }
     [${ATTR}="blocked"] * { cursor: not-allowed !important; }
+    [${ATTR}="caution"] {
+      outline: 3px dashed #d98a00 !important;
+      outline-offset: 2px !important;
+      background: rgba(255, 170, 0, 0.14) !important;
+      border-radius: 3px !important;
+    }
     span[${BADGE_ATTR}] {
       all: initial !important;
       display: inline-block !important;
@@ -80,6 +87,7 @@
       vertical-align: middle !important;
       white-space: nowrap !important;
     }
+    span[${BADGE_ATTR}="caution"] { background: #a85f00 !important; }
   `;
 
   // Added only when something is blocked, so ordinary pages can't detect us.
@@ -124,7 +132,7 @@
     const created = ageDomain ? ageInfo.get(ageDomain) : undefined;
     r = D.applyKnownSites(r, { ...info, created, unregistered: !!ageDomain && unregistered.has(ageDomain) });
     if (!info.known && ageCheck && ageDomain) {
-      if (ageInfo.has(ageDomain)) r = D.applyDomainAge(r, created, { maxDays: ageDays });
+      if (ageInfo.has(ageDomain)) r = D.applyStrict(D.applyDomainAge(r, created, { maxDays: ageDays }), strict);
       else queueAgeLookup(ageDomain, info.lookalike && !info.lookalike.strong);
     }
     resultCache.set(key, r);
@@ -199,21 +207,24 @@
     if (!href) return;
     const text = (a.textContent || '').trim().slice(0, 200);
     const r = analyze(href, text);
-    if (r.verdict === 'danger') block(a, r);
-    else if (a.getAttribute(ATTR) === 'blocked') unblock(a);
+    if (r.verdict === 'danger' || r.verdict === 'caution') block(a, r);
+    else if (a.hasAttribute(ATTR)) unblock(a);
   }
 
   function block(a, r) {
     blocked.set(a, r);
     injectPageStyle();
-    if (a.getAttribute(ATTR) === 'blocked') return;
-    a.setAttribute(ATTR, 'blocked');
+    // 'caution' (only very new): orange, a mild question on click. 'blocked': red.
+    const mode = r.verdict === 'caution' ? 'caution' : 'blocked';
+    if (a.getAttribute(ATTR) === mode) return;
+    a.__grilledPhishBadge?.remove();
+    a.setAttribute(ATTR, mode);
     a.setAttribute('aria-disabled', 'true');
-    a.setAttribute('title', T('linkTitle'));
+    a.setAttribute('title', mode === 'caution' ? T('linkTitleNew') : T('linkTitle'));
     const badge = document.createElement('span');
-    badge.setAttribute(BADGE_ATTR, '');
+    badge.setAttribute(BADGE_ATTR, mode === 'caution' ? 'caution' : '');
     badge.setAttribute('role', 'button');
-    badge.textContent = T('linkBadge');
+    badge.textContent = mode === 'caution' ? T('linkBadgeNew') : T('linkBadge');
     badge.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
@@ -342,6 +353,11 @@
     }
     .brand strong { display: block; font-size: 18px; }
     h1 { margin: 0 0 12px; font-size: 30px; line-height: 1.2; color: #b00000; }
+    .box.mild { border-color: #e0a100; }
+    .box.mild h1 { color: #7a5200; }
+    .box.mild .domain { background: #fff8e6; border-color: #e0a100; }
+    .anyway.mild-go { display: block; width: 100%; margin: 4px 0 8px; padding: 12px; font-size: 18px;
+      color: #333; border-color: #888; }
     p, li, label { font-size: 20px; line-height: 1.5; }
     .label { margin: 18px 0 4px; font-weight: 600; color: #444; font-size: 18px; }
     .domain {
@@ -433,7 +449,9 @@
     // A modal <dialog> sits in the browser's top layer and makes the page inert,
     // so the page can't cover it with fake buttons or click behind it.
     const dlg = el('dialog', { 'aria-labelledby': 'lg-title' });
-    const box = el('div', { class: 'box', dir: DIR, lang: LANG });
+    // Only very new, nothing else suspicious: a mild question instead of a block.
+    const mild = r.verdict === 'caution';
+    const box = el('div', { class: mild ? 'box mild' : 'box', dir: DIR, lang: LANG });
     dlg.appendChild(box);
     shadow.appendChild(dlg);
 
@@ -443,11 +461,14 @@
     brand.append(el('strong', {}, 'Grilled Phish'),
       el('span', {}, isPassword ? T('dlgBrandPassword') : T('dlgBrandLink')));
     box.appendChild(brand);
-    box.appendChild(el('h1', { id: 'lg-title' }, isPassword
-      ? T('dlgTitlePassword')
-      : T('dlgTitleLink')));
+    box.appendChild(el('h1', { id: 'lg-title' }, mild
+      ? T('dlgTitleNew')
+      : isPassword ? T('dlgTitlePassword') : T('dlgTitleLink')));
 
-    if (r.impersonates) {
+    if (mild) {
+      box.appendChild(el('p', {}, T('dlgBrandNew', D.describeAge(r.ageDays))));
+      box.appendChild(el('p', {}, T('dlgNewAdvice')));
+    } else if (r.impersonates) {
       box.appendChild(el('p', {}, T('dlgPretending', r.impersonates)));
     } else if (r.ageDays != null && r.reasons.length === 1) {
       box.appendChild(el('p', {}, T('dlgBrandNew', D.describeAge(r.ageDays))));
@@ -465,10 +486,12 @@
       box.appendChild(el('div', { class: 'domain real' }, r.realDomains[0]));
     }
 
-    box.appendChild(el('div', { class: 'label' }, T('dlgWhy')));
-    const ul = el('ul');
-    r.reasons.forEach((reason) => ul.appendChild(el('li', {}, reason)));
-    box.appendChild(ul);
+    if (!mild) {
+      box.appendChild(el('div', { class: 'label' }, T('dlgWhy')));
+      const ul = el('ul');
+      r.reasons.forEach((reason) => ul.appendChild(el('li', {}, reason)));
+      box.appendChild(ul);
+    }
 
     const safeBtn = el('button', { class: 'safe', type: 'button' },
       isPassword ? T('dlgLeave') : T('dlgGoBack'));
@@ -483,6 +506,13 @@
     });
     box.appendChild(learn);
 
+    const anywayText = isPassword ? T('dlgUnlock') : T('dlgOpen');
+    let anyway, check = null, timer = null;
+    if (mild) {
+      // One plain click: no checkbox, no waiting.
+      anyway = el('button', { class: 'anyway mild-go', type: 'button' }, anywayText);
+      box.appendChild(anyway);
+    } else {
     // The "I really, really want to" path, hidden behind a disclosure.
     const details = el('details');
     details.appendChild(el('summary', {}, T('dlgKnow')));
@@ -490,19 +520,17 @@
     risky.appendChild(el('p', { class: 'phone' },
       T('dlgPhone')));
     const label = el('label');
-    const check = el('input', { type: 'checkbox' });
+    check = el('input', { type: 'checkbox' });
     label.appendChild(check);
     label.appendChild(el('span', {}, isPassword
       ? T('dlgConfirmPassword')
       : T('dlgConfirmLink')));
     risky.appendChild(label);
-    const anywayText = isPassword ? T('dlgUnlock') : T('dlgOpen');
-    const anyway = el('button', { class: 'anyway', type: 'button', disabled: '' }, anywayText);
+    anyway = el('button', { class: 'anyway', type: 'button', disabled: '' }, anywayText);
     risky.appendChild(anyway);
     details.appendChild(risky);
     box.appendChild(details);
 
-    let timer = null;
     check.addEventListener('change', () => {
       clearInterval(timer);
       anyway.disabled = true;
@@ -523,6 +551,7 @@
         }
       }, 1000);
     });
+    }
 
     const close = () => {
       clearInterval(timer);
@@ -563,7 +592,7 @@
     }, 250);
 
     anyway.addEventListener('click', (e) => {
-      if (!e.isTrusted || anyway.disabled || !check.checked) return;
+      if (!e.isTrusted || anyway.disabled || (check && !check.checked)) return;
       close();
       if (isPassword) {
         passwordsUnlocked = true;
@@ -592,8 +621,10 @@
 
   // ---------------------------------------------------------------- dangerous page
   function showPageBanner(r) {
-    if (pageBannerShown) return;
-    pageBannerShown = true;
+    const mild = r.verdict === 'caution';
+    if (pageBannerShown === r.verdict) return;
+    if (pageBannerShown) bannerHost?.remove(); // a mild bar becoming a red one
+    pageBannerShown = r.verdict;
     const host = el('div');
     host.style.cssText = 'all: initial !important;';
     const shadow = host.attachShadow({ mode: 'closed' });
@@ -611,9 +642,12 @@
       button { font: bold 18px system-ui, sans-serif; padding: 10px 16px; border-radius: 8px; cursor: pointer; border: none; }
       .leave { background: #fff; color: #b00000; }
       .why { background: transparent; color: #fff; border: 2px solid #fff; }
+      .bar.mild { background: #ffcc33; color: #2e2100; }
+      .bar.mild .leave { background: #2e2100; color: #ffcc33; }
+      .bar.mild .why { color: #2e2100; border-color: #2e2100; }
     `;
     shadow.appendChild(style);
-    const bar = el('div', { class: 'bar', role: 'alert', dir: DIR, lang: LANG });
+    const bar = el('div', { class: mild ? 'bar mild' : 'bar', role: 'alert', dir: DIR, lang: LANG });
     const msg = el('div', { class: 'msg' });
     msg.appendChild(el('div', { class: 'from' }, T('banBrand')));
     msg.appendChild(el('b', {}, r.impersonates
@@ -621,7 +655,7 @@
       : r.ageDays != null && r.reasons.length === 1
         ? T('banAge', D.describeAge(r.ageDays))
         : T('banScam')));
-    msg.appendChild(document.createTextNode(' ' + T('banNoType')));
+    msg.appendChild(document.createTextNode(' ' + (mild ? T('banNoTypeNew') : T('banNoType'))));
     const why = el('button', { class: 'why', type: 'button' }, T('banWhy'));
     const leave = el('button', { class: 'leave', type: 'button' }, T('banLeave'));
     why.addEventListener('click', () => openWarning(r, { kind: 'password' }));
@@ -653,7 +687,8 @@
   // ---------------------------------------------------------------- start
   async function loadSettings() {
     try {
-      const data = await chrome.storage.sync.get({ trusted: [], ageCheck: true, ageDays: 30 });
+      const data = await chrome.storage.sync.get({ trusted: [], ageCheck: true, ageDays: 30, strictMode: false });
+      strict = data.strictMode === true;
       trusted = Array.isArray(data.trusted) ? data.trusted : [];
       ageCheck = data.ageCheck !== false;
       ageDays = Number(data.ageDays) > 0 ? Number(data.ageDays) : 30;
@@ -666,11 +701,11 @@
   function checkPage() {
     if (window.top !== window) return;
     pageResult = analyze(location.href, '');
-    if (pageResult.verdict === 'danger') {
-      pageDanger = pageResult;
-      showPageBanner(pageResult);
+    if (pageResult.verdict === 'danger' || pageResult.verdict === 'caution') {
+      if (pageDanger?.verdict !== 'danger') pageDanger = pageResult; // never downgrade
+      showPageBanner(pageDanger);
     }
-    reportVerdict(pageDanger ? 'danger' : pageResult.verdict);
+    reportVerdict(pageDanger ? pageDanger.verdict : pageResult.verdict);
   }
 
   // Toolbar badge (red "!" / green check): drawn by the browser, so a page can't fake or hide it.
@@ -735,7 +770,8 @@
       if (changes.trusted) trusted = changes.trusted.newValue || [];
       if (changes.ageCheck) ageCheck = changes.ageCheck.newValue !== false;
       if (changes.ageDays) ageDays = Number(changes.ageDays.newValue) || 30;
-      if (changes.trusted || changes.ageCheck || changes.ageDays) rescanAll();
+      if (changes.strictMode) strict = changes.strictMode.newValue === true;
+      if (changes.trusted || changes.ageCheck || changes.ageDays || changes.strictMode) { rescanAll(); checkPage(); }
     });
   }
 

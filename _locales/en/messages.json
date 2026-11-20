@@ -156,7 +156,7 @@
     "message": "⛔ Warning: this website is NOT $1."
   },
   "banAge": {
-    "message": "⛔ Careful: this website was created $1."
+    "message": "⚠️ Careful: this website was created $1."
   },
   "banScam": {
     "message": "⛔ Warning: this website looks like a scam."
@@ -267,10 +267,10 @@
     "message": "🗓️ Brand-new websites"
   },
   "optAgeP": {
-    "message": "Most scam websites are created a few days before the attack and disappear soon after. Grilled Phish can check when a website was created and block very new ones."
+    "message": "Most scam websites are created a few days before the attack and disappear soon after. Grilled Phish can check when a website was created and warn you about very new ones (you can still open them after a quick confirmation)."
   },
   "optAgeCheck": {
-    "message": "Block websites that are newer than"
+    "message": "Warn me about websites newer than"
   },
   "optWeek": {
     "message": "1 week"
@@ -389,5 +389,35 @@
   },
   "betaNotice": {
     "message": "<strong>Beta version.</strong> Grilled Phish is still being tested: it can miss scams or sometimes warn about a safe site. It only checks web addresses, not what a site contains (no content filter, no antivirus). Stay careful."
+  },
+  "linkTitleNew": {
+    "message": "Grilled Phish: this website was created very recently. Click to see more before opening it."
+  },
+  "linkBadgeNew": {
+    "message": "⚠️ Very new website"
+  },
+  "dlgTitleNew": {
+    "message": "⚠️ Careful: this website is very new"
+  },
+  "dlgNewAdvice": {
+    "message": "Real banks, shops and public offices have had their websites for years. If a message or a phone call sent you here, be extra careful."
+  },
+  "banNoTypeNew": {
+    "message": "Think twice before typing passwords, codes or card numbers here."
+  },
+  "badgeCaution": {
+    "message": "Grilled Phish: very new website — be careful"
+  },
+  "popNew": {
+    "message": "Very new website: be careful"
+  },
+  "optStrictH": {
+    "message": "🔒 Strict mode"
+  },
+  "optStrictP": {
+    "message": "Useful when setting up Grilled Phish for someone who shouldn't open suspicious websites on their own. Everything suspicious is fully blocked, like a fake: very new websites and likely typing mistakes too. Opening one always needs the checkbox and the 5-second wait, and \"I really meant this\" answers are not remembered."
+  },
+  "optStrictCheck": {
+    "message": "Strict mode: block everything suspicious"
   }
 }

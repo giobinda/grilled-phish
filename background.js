@@ -276,6 +276,7 @@ async function listStatus() {
 // Drawn by the browser itself, so a phishing page can neither fake nor hide it.
 const BADGES = {
   danger: { text: '!', color: '#d40000', title: chrome.i18n.getMessage('badgeDanger') },
+  caution: { text: '?', color: '#c77700', title: chrome.i18n.getMessage('badgeCaution') },
   trusted: { text: '✓', color: '#1a7f37', title: chrome.i18n.getMessage('badgeTrusted') },
 };
 chrome.tabs.onUpdated.addListener((tabId, change) => {
@@ -327,7 +328,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     (async () => {
       const danger = await dangerFor(msg.url);
       const typo = danger ? null : await typoFor(msg.url);
-      sendResponse({ danger, typo });
+      sendResponse({ danger, typo, strict: await isStrict() });
     })().catch(() => sendResponse({ danger: null, typo: null }));
     return true;
   }
@@ -346,7 +347,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     if (msg.type === 'typoOk' && !fromExtensionPage) return false;
     (async () => {
       await allowNav(msg.url);
-      if (msg.type === 'typoOk') await rememberTypoOk(msg.url);
+      if (msg.type === 'typoOk' && !(await isStrict())) await rememberTypoOk(msg.url);
       sendResponse(true);
     })().catch(() => sendResponse(false));
     return true;
@@ -405,12 +406,18 @@ async function dangerFor(url) {
   return r.verdict === 'danger' ? r : null;
 }
 
+async function isStrict() {
+  const { strictMode = false } = await chrome.storage.sync.get({ strictMode: false });
+  return strictMode === true;
+}
+
 async function typoFor(url) {
   if (!isWeb(url)) return null;
   const r = D.analyzeUrl(url, { trusted: await getTrusted() });
   if (r.verdict === 'trusted' || r.verdict === 'ignore') return null;
+  // Strict mode: earlier "I really meant this" answers don't count.
   const { typoOk = [] } = await chrome.storage.local.get({ typoOk: [] });
-  if (typoOk.includes(D.registrableDomain(hostOf(url)))) return null;
+  if (!(await isStrict()) && typoOk.includes(D.registrableDomain(hostOf(url)))) return null;
   const s = D.typoSuggestion(hostOf(url), await getIndex());
   return s ? { domain: s.domain } : null;
 }
