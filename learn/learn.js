@@ -67,7 +67,7 @@ function load(code) {
 function h(tag, attrs = {}, html) {
   const e = document.createElement(tag);
   for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
-  if (html != null) e.innerHTML = html; // bundled translation strings only
+  if (html != null) GP_richText(e, html); // only <strong>, <b>, <code>, <mark> become formatting
   return e;
 }
 

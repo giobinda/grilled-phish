@@ -22,7 +22,7 @@ li span { font: bold 24px ui-monospace, Menlo, Consolas, monospace; word-break: 
 li button { background: transparent; color: var(--bad); border: 2px solid var(--bad); font-size: 16px; padding: 8px 14px; }
 h2 { font-size: 28px; margin: 40px 0 8px; }
 label.check { display: flex; gap: 12px; align-items: center; font-weight: 600; margin: 16px 0 8px; }
-label.check input { width: 26px; height: 26px; }
+label.check input { flex: none; width: 26px; height: 26px; }
 select { font: 20px system-ui, sans-serif; padding: 10px; border-radius: 10px; border: 2px solid var(--line);
   background: var(--card); color: var(--fg); }
 code { font-size: 0.9em; }

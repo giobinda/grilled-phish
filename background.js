@@ -71,6 +71,19 @@ function updateCache(domain, entry) {
   return cacheWrite;
 }
 
+// Firefox: asking a registry how old a site is sends that site's name outside
+// the browser, which Firefox counts as "browsing activity". It is declared as
+// optional (manifest), so no lookup happens until the person agrees (Settings).
+const IS_FIREFOX = chrome.runtime.getURL('').startsWith('moz-extension:');
+async function ageLookupsAllowed() {
+  if (!IS_FIREFOX) return true;
+  try {
+    return await chrome.permissions.contains({ data_collection: ['browsingActivity'] });
+  } catch {
+    return false; // Firefox too old for the consent API: stay off
+  }
+}
+
 // ---------------------------------------------------------------- network
 async function fetchJson(url) {
   const ctrl = new AbortController();
@@ -376,7 +389,8 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     .map((d) => String(d).toLowerCase())
     .filter((d) => DOMAIN_RE.test(d))
     .slice(0, 60);
-  Promise.all(domains.map(async (d) => [d, await domainAge(d)]))
+  ageLookupsAllowed()
+    .then((ok) => (ok ? Promise.all(domains.map(async (d) => [d, await domainAge(d)])) : []))
     .then((pairs) => sendResponse(Object.fromEntries(pairs)))
     .catch(() => sendResponse({}));
   return true; // async response

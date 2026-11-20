@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Inbox — Mail</title>
+<!-- A generic, made-up webmail page used only for store screenshots. -->
+<style>
+  body { margin: 0; font: 16px/1.5 system-ui, sans-serif; background: #eef1f5; color: #1d2330; }
+  .top { background: #3b4a63; color: #fff; padding: 14px 24px; font-weight: 600; font-size: 18px; }
+  .wrap { display: flex; gap: 0; height: calc(100vh - 54px); }
+  .side { width: 230px; background: #f7f8fb; border-right: 1px solid #d9dee7; padding: 16px; }
+  .side div { padding: 8px 12px; border-radius: 8px; margin-bottom: 4px; color: #3b4a63; }
+  .side .on { background: #dfe6f3; font-weight: 600; }
+  .mail { flex: 1; background: #fff; padding: 28px 40px; }
+  h1 { font-size: 24px; margin: 0 0 6px; }
+  .from { color: #5b6475; margin-bottom: 24px; font-size: 15px; }
+  .body p { margin: 0 0 14px; max-width: 640px; }
+  .btn { display: inline-block; background: #1a56db; color: #fff; padding: 10px 18px; border-radius: 6px; text-decoration: none; font-weight: 600; }
+  a { color: #1a56db; }
+</style></head>
+<body>
+  <div class="top">✉️ Mail</div>
+  <div class="wrap">
+    <div class="side"><div class="on">Inbox (3)</div><div>Sent</div><div>Drafts</div><div>Spam</div></div>
+    <div class="mail">
+      <h1>Your account has been limited</h1>
+      <div class="from">From: PayPal Service &lt;service@paypa1-support.com&gt; · 09:41</div>
+      <div class="body">
+        <p>Dear customer,</p>
+        <p>We noticed unusual activity on your account. To avoid permanent suspension, please confirm your details <strong>within 24 hours</strong>.</p>
+        <p><a class="btn" id="cta" href="https://paypa1.com/verify">Restore my account</a></p>
+        <p>Or copy this address: <a id="plain" href="https://www.paypal.com.account-verify.xyz/login">www.paypal.com/login</a></p>
+        <p>Your real bank, for comparison: <a href="https://www.paypal.com/">www.paypal.com</a></p>
+        <p>Thank you,<br>The Security Team</p>
+      </div>
+    </div>
+  </div>
+</body></html>

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "__MSG_extName__",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "__MSG_extDescription__",
   "icons": {
     "16": "icons/icon-16.png",
@@ -50,8 +50,12 @@
   },
   "browser_specific_settings": {
     "gecko": {
-      "id": "grilled-phish@local",
-      "strict_min_version": "115.0"
+      "id": "grilled-phish@giobinda.github.io",
+      "strict_min_version": "140.0",
+      "data_collection_permissions": {
+        "required": ["none"],
+        "optional": ["browsingActivity"]
+      }
     }
   },
   "default_locale": "en"

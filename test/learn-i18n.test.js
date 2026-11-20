@@ -42,3 +42,16 @@ for (const code of Object.keys(T)) {
     }
   });
 }
+
+test('every tag used in the guide and translations is one lib/rich-text.js renders', () => {
+  const allowed = new Set(require('fs').readFileSync(require('path').join(__dirname, '..', 'lib', 'rich-text.js'), 'utf8')
+    .match(/const TAG = \/<\(\\\/\?\)\(([a-z|]+)\)>/)[1].split('|'));
+  const fs = require('fs'), path = require('path');
+  const root = path.join(__dirname, '..');
+  const files = ['learn/learn.js', ...fs.readdirSync(path.join(root, 'learn', 'i18n')).map((f) => `learn/i18n/${f}`),
+    ...fs.readdirSync(path.join(root, '_locales')).map((d) => `_locales/${d}/messages.json`)];
+  for (const f of files) {
+    const text = fs.readFileSync(path.join(root, f), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+    for (const m of text.matchAll(/<\/?([a-z]+)>/g)) assert.ok(allowed.has(m[1]), `${f}: <${m[1]}> would show as raw text`);
+  }
+});

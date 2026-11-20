@@ -53,12 +53,26 @@
 
   const ageCheck = document.getElementById('ageCheck');
   const ageDays = document.getElementById('ageDays');
-  chrome.storage.sync.get({ ageCheck: true, ageDays: 30 }).then((v) => {
-    ageCheck.checked = v.ageCheck !== false;
+  // Firefox asks the person before any site name is sent to a registry
+  // ("browsing activity", optional in the manifest). Chrome needs no extra step.
+  const IS_FIREFOX = chrome.runtime.getURL('').startsWith('moz-extension:');
+  const AGE_PERMISSION = { data_collection: ['browsingActivity'] };
+  const ageGranted = async () => {
+    if (!IS_FIREFOX) return true;
+    try { return await chrome.permissions.contains(AGE_PERMISSION); } catch { return false; }
+  };
+  chrome.storage.sync.get({ ageCheck: true, ageDays: 30 }).then(async (v) => {
+    ageCheck.checked = v.ageCheck !== false && await ageGranted();
     ageDays.value = String(v.ageDays);
     ageDays.disabled = !ageCheck.checked;
   });
-  ageCheck.addEventListener('change', () => {
+  ageCheck.addEventListener('change', async () => {
+    if (ageCheck.checked && IS_FIREFOX) {
+      // Must be asked straight from the click, before anything else is awaited.
+      let ok = false;
+      try { ok = await chrome.permissions.request(AGE_PERMISSION); } catch { ok = false; }
+      if (!ok) ageCheck.checked = false;
+    }
     ageDays.disabled = !ageCheck.checked;
     chrome.storage.sync.set({ ageCheck: ageCheck.checked });
   });

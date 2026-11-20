@@ -31,6 +31,11 @@ A browser extension that catches **look-alike scam links**, like `paypa1.com`, `
 
 ## Install
 
+**From the stores:** coming soon. Only links listed *here* are the real Grilled Phish; any other copy in a
+store is not ours.
+
+**From this repository (developers and testers)**
+
 **Chrome / Edge / Brave**
 1. Open `chrome://extensions`
 2. Turn on **Developer mode** (top right)
@@ -42,6 +47,13 @@ A browser extension that catches **look-alike scam links**, like `paypa1.com`, `
 3. In `about:addons` → Grilled Phish → Permissions, allow access to all websites
    (Firefox asks for this separately). Temporary add-ons are removed when Firefox restarts.
    For a permanent install it has to be signed through addons.mozilla.org.
+   Firefox 140 or newer is needed. In Firefox the age check is off until you turn it on in the settings:
+   Firefox then asks you to allow it, because it sends website names to the public domain registry.
+
+**Building the store package:** `tools/package.sh` creates `dist/grilled-phish-<version>.zip` (tests must
+pass; it checks that no keys, tests or tools are inside). Everything else needed for the stores (listing in
+12 languages, screenshots, permission justifications) is in [`store/`](store/README.md). Privacy policy:
+[PRIVACY.md](PRIVACY.md).
 
 Then open the extension's settings and **add the sites you really use** (your bank, email provider…),
 so that copies of those sites get blocked too.
