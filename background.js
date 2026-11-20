@@ -21,8 +21,8 @@
  *   { type: 'typoOk', url }    (warning page: "I really meant this address", remembered)
  *
  * Before a page loads (webNavigation), addresses that are certainly fake open
- * our warning page instead, and addresses the person TYPED that are one letter
- * off a very popular site ask "did you mean...?".
+ * our warning page instead, and addresses one letter off a very popular site
+ * ask "did you mean...?".
  */
 'use strict';
 
@@ -444,7 +444,6 @@ function showWarning(tabId, url) {
 }
 
 if (chrome.webNavigation) {
-  // Certain fakes, however the address was opened (typed, bookmark, another app).
   chrome.webNavigation.onBeforeNavigate.addListener(async ({ tabId, frameId, url, documentLifecycle }) => {
     if (frameId !== 0 || tabId < 0 || !isWeb(url) || documentLifecycle === 'prerender') return;
     const skip = skipBack.get(tabId);
@@ -457,17 +456,11 @@ if (chrome.webNavigation) {
     }
     try {
       if (await isAllowed(url)) return;
-      if (await dangerFor(url)) showWarning(tabId, url);
-    } catch { /* never break browsing */ }
-  });
-
-  // Typing mistakes: only for addresses typed in the address bar.
-  chrome.webNavigation.onCommitted.addListener(async ({ tabId, frameId, url, transitionType, transitionQualifiers = [] }) => {
-    if (frameId !== 0 || tabId < 0 || transitionType !== 'typed' || !isWeb(url)) return;
-    if (transitionQualifiers.includes('forward_back')) return;
-    try {
-      if (await isAllowed(url)) return;
-      if (await typoFor(url)) showWarning(tabId, url);
+      // Certain fakes, then likely typing mistakes ("githhub.com"), whether typed,
+      // clicked in an email or chat, or opened from a bookmark. Checked before the
+      // page loads: a typo site with a broken certificate would otherwise stop at
+      // the browser's own error page and never reach us.
+      if (await dangerFor(url) || await typoFor(url)) showWarning(tabId, url);
     } catch { /* never break browsing */ }
   });
 }

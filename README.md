@@ -63,9 +63,9 @@ DHL…), plus whatever you add as trusted.
 - **Certain fakes are stopped before they load.** Opening `paypa1.com` from the address bar, a bookmark or
   another app (an email program) shows a full-page warning instead of the site: go back, go to the real
   site, or open it anyway after ticking the box and waiting 5 seconds.
-- **"Did you mean github.com?"** An address *typed* in the address bar that is one keystroke away
-  (extra, missing, wrong or swapped letter) from one of the 10,000 most visited sites gets a gentle question.
-  Only for typed addresses, only for names of 5+ letters, never for numbers or hyphens alone
+- **"Did you mean github.com?"** Opening an address, typed or clicked, that is one keystroke away
+  (extra, missing, wrong or swapped letter) from one of the 10,000 most visited sites gets a gentle question
+  before anything loads. Only for names of 5+ letters, never for numbers or hyphens alone
   (`site2`/`site3`, `my-shop`/`myshop`). Answering "I really meant this" is remembered.
   On the current list, under 1% of real sites ranked 10,001–100,000 would be one keystroke from a top site.
 - Browsers don't let extensions read the address bar while you type, so this happens right after Enter.
